@@ -5,6 +5,7 @@ output [7:0] out;
 
 /*Write your code here*/
 
+assign {carry, out} = x + y;
 
 /*End of code*/
 
