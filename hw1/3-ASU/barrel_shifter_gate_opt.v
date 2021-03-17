@@ -50,20 +50,16 @@ module Mux8(output out,
     wire [7:0] dec;      // decoded value
     wire [7:0] w0;
 
-    // 3 to 8 decoder
     not #1 n0[2:0](sel_inv[2:0], sel[2:0]);
 
-    and #1 (dec[0], sel_inv[2], sel_inv[1], sel_inv[0]);
-    and #1 (dec[1], sel_inv[2], sel_inv[1], sel    [0]);
-    and #1 (dec[2], sel_inv[2], sel    [1], sel_inv[0]);
-    and #1 (dec[3], sel_inv[2], sel    [1], sel    [0]);
-    and #1 (dec[4], sel    [2], sel_inv[1], sel_inv[0]);
-    and #1 (dec[5], sel    [2], sel_inv[1], sel    [0]);
-    and #1 (dec[6], sel    [2], sel    [1], sel_inv[0]);
-    and #1 (dec[7], sel    [2], sel    [1], sel    [0]);
-
-    // 
-    and #1 a0[7:0](w0[7:0], dec[7:0], in[7:0]);
+    and #1 (w0[0], in[0], sel_inv[2], sel_inv[1], sel_inv[0]);
+    and #1 (w0[1], in[1], sel_inv[2], sel_inv[1], sel    [0]);
+    and #1 (w0[2], in[2], sel_inv[2], sel    [1], sel_inv[0]);
+    and #1 (w0[3], in[3], sel_inv[2], sel    [1], sel    [0]);
+    and #1 (w0[4], in[4], sel    [2], sel_inv[1], sel_inv[0]);
+    and #1 (w0[5], in[5], sel    [2], sel_inv[1], sel    [0]);
+    and #1 (w0[6], in[6], sel    [2], sel    [1], sel_inv[0]);
+    and #1 (w0[7], in[7], sel    [2], sel    [1], sel    [0]);
 
     or #1 o0(out, w0[0], w0[1], w0[2], w0[3], w0[4], w0[5], w0[6], w0[7]);
 
