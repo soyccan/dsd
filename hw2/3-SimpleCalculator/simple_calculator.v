@@ -21,9 +21,40 @@ module simple_calculator(
     output       Carry;
 
 // declaration of wire/reg
+wire [7:0] alu_x;
+wire [7:0] alu_y;
+wire [7:0] alu_out;
+wire [7:0] busW;
+wire [7:0] busX;
+wire [7:0] busY;
+wire carry;
     
 // submodule instantiation
-  
+register_file rf(
+    Clk  ,
+    WEN  ,
+    RW   ,
+    busW ,
+    RX   ,
+    RY   ,
+    busX ,
+    busY
+);
+
+assign alu_x = Sel ? busX : DataIn;
+
+assign alu_y = busY;
+
+alu_always alu(
+    Ctrl,
+    alu_x,
+    alu_y,
+    carry,
+    alu_out
+);
+
+assign busW = alu_out;
+
 
 
 endmodule

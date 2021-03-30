@@ -21,6 +21,8 @@ module alu_always_tb;
    initial begin
        $fsdbDumpfile("alu_always.fsdb");
        $fsdbDumpvars;
+       $dumpfile("alu_always.vcd");
+       $dumpvars;
    end
 
     initial begin

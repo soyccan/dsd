@@ -8,23 +8,37 @@ module register_file(
     busX ,
     busY
 );
-input        Clk, WEN;
+input  Clk, WEN;
 input  [2:0] RW, RX, RY;
 input  [7:0] busW;
-output [7:0] busX, busY;
+output reg [7:0] busX, busY;
     
 // write your design here, you can delcare your own wires and regs. 
 // The code below is just an eaxmple template
-reg [7:0] r0_w, r1_w, r2_w, r3_w, r4_w, r5_w, r6_w, r7_w;
-reg [7:0] r0_r, r1_r, r2_r, r3_r, r4_r, r5_r, r6_r, r7_r;
+reg [7:0] nxt_reg[0:7];
+reg [7:0] _reg[0:7];
 
-    
-always@(*) begin
+integer i;
+
+always @* begin
+
+    busX = _reg[RX];
+    busY = _reg[RY];
+
+    for (i = 0; i < 8; i = i + 1) begin
+        nxt_reg[i] = _reg[i];
+    end
+
+    if (WEN && RW != 0) begin
+        nxt_reg[RW] = busW;
+    end
 
 end
 
-always@(posedge Clk) begin
-
-end	
+always @(posedge Clk) begin
+    for (i = 0; i < 8; i = i + 1) begin
+        _reg[i] <= nxt_reg[i];
+    end
+end 
 
 endmodule

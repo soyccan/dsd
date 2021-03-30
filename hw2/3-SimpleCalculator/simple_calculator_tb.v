@@ -31,6 +31,8 @@ module simple_calculator_tb;
     initial begin
        $fsdbDumpfile("simple_calc.fsdb");
        $fsdbDumpvars;
+       $dumpfile("simple_calc.vcd");
+       $dumpvars;
     end
     
     // clock generation
@@ -49,11 +51,15 @@ module simple_calculator_tb;
     parameter C = A*B;
     
     // simulation
-    integer err_count;
+    integer err_count, j;
     initial begin
         // initialization
         Clk = 1'b1;
         err_count = 0;
+
+        for (j = 0; j < 8; j = j + 1) begin
+            u_calc.rf._reg[j] = 8'b0;
+        end
         
         // 4-bit x 4-bit unsigned multiplication
         $display( "4-bit x 4-bit unsigned multiplication" );

@@ -21,6 +21,8 @@ module alu_assign_tb;
    initial begin
        $fsdbDumpfile("alu_assign.fsdb");
        $fsdbDumpvars;
+	   $dumpfile("alu_assign.vcd");
+	   $dumpvars;
    end
 
     initial begin
