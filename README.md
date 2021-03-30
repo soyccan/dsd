@@ -13,3 +13,15 @@ Topics:
 - Ripple-carry adder and carry-select adder
 - Barrel shifter
 - NCSim (Incisive): ncverilog and nWave
+
+
+## HW2
+Task: Arithmetic Logic Unit (ALU) and Register File
+
+Topics:
+- Testbench
+- Continuous assignment
+- Procedural assignment
+- Conditional block
+- Always block
+- Sequential logic
