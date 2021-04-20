@@ -12,7 +12,7 @@
 // For different condition
 `ifdef RV32I
     `define IMEM_INIT "./pattern/inst_RV32I.txt"
-    
+
     `ifdef RTL
         `include "CHIP.v"
     `endif
@@ -41,29 +41,29 @@
 module RISCV_tb;
 
     reg         clk, rst_n ;
-    
+
     wire        mem_wen_D  ;
     wire [31:0] mem_addr_D ;
     wire [31:0] mem_wdata_D;
     wire [31:0] mem_rdata_D;
-    
+
     wire [31:0] mem_addr_I ;
     wire [31:0] mem_rdata_I;
-    
+
     reg  [31:0] mem_data_ans [0:31];
 
     integer i;
-    
+
     integer eof;
     reg eof_find;
 
     integer error_num;
-    
+
     // Note the design is connected at testbench, include:
     // 1. CHIP (RISCV + D_cache + I_chache)
     // 2. memory for data
     // 3. memory for instruction
-    
+
     CHIP chip0(
         clk,
         rst_n,
@@ -75,39 +75,48 @@ module RISCV_tb;
         // for mem_I
         mem_addr_I,
         mem_rdata_I);
-    
+
     memory mem_I(
         .clk(clk),
         .wen(1'b0),
         .a(mem_addr_I[6:2]),
         .d(32'd0),
         .q(mem_rdata_I));
-    
+
     memory mem_D(
         .clk(clk),
         .wen(mem_wen_D),
         .a(mem_addr_D[6:2]),
         .d(mem_wdata_D),
         .q(mem_rdata_D));
-       
+
     `ifdef SDF
         initial $sdf_annotate(`SDFFILE, chip0);
     `endif
-    
+
     // Initialize the data memory
     initial begin
-        $fsdbDumpfile("RISCV.fsdb");            
+
+        // $monitor("rd_data=%d JAl=%d Jalr=%d pc=%d pc+4=%d write_back_data=%d",
+        //          chip0.rd_data,
+        //          chip0.Jal,
+        //          chip0.Jalr,
+        //          chip0.pc,
+        //          chip0.pc_nxt,
+        //          chip0.write_back_data);
+
+        $fsdbDumpfile("RISCV.fsdb");
         $fsdbDumpvars(0,RISCV_tb,"+mda");
 
         $display("------------------------------------------------------------\n");
         $display("START!!! Simulation Start .....\n");
         $display("------------------------------------------------------------\n");
-        
+
         clk = 1;
         rst_n = 1'b1;
         #(`CYCLE*0.5) rst_n = 1'b0;
         #(`CYCLE*2.0) rst_n = 1'b1;
-        
+
         for (i=0; i<32; i=i+1) mem_D.mem[i]    = 32'h00_00_00_00; // reset data in mem_D
         $readmemh (`DMEM_DATA, mem_D.mem);                        // initialize data in mem_D
         for (i=0; i<32; i=i+1) mem_data_ans[i] = 32'h00_00_00_00;
@@ -159,7 +168,7 @@ module RISCV_tb;
             $finish;
         end
     end
-        
+
     always #(`CYCLE*0.5) clk = ~clk;
-        
+
 endmodule
