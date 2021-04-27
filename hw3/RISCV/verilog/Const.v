@@ -23,8 +23,11 @@
 `define ALU_OP_BRANCH     2'd3  // Branch
 
 
-// Control unit output "ALUSrc"
+// Control unit output "ALUSrc1" and "ALUSrc2"
 `define ALU_SRC_REG 1'b0
+// Control unit output "ALUSrc1"
+`define ALU_SRC_PC  1'b1
+// Control unit output "ALUSrc2"
 `define ALU_SRC_IMM 1'b1
 
 

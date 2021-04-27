@@ -12,8 +12,6 @@ file: RISCV_tb.v
 		errors: 0, warnings: 0
 	module worklib.Imm_Gen:v
 		errors: 0, warnings: 0
-	module worklib.Branch:v
-		errors: 0, warnings: 0
 	module worklib.CHIP:v
 		errors: 0, warnings: 0
 	module worklib.RISCV_tb:v
@@ -24,19 +22,17 @@ file: RISCV_tb.v
 	Generating native compiled code:
 		worklib.ALU:v <0x555c7bd6>
 			streams:   2, words:  1872
-		worklib.Branch:v <0x0a32b62c>
-			streams:   1, words:   303
-		worklib.CHIP:v <0x1c5e4e3a>
-			streams:  22, words:  3458
-		worklib.Control:v <0x2f2297e9>
-			streams:   1, words:  6278
+		worklib.CHIP:v <0x47a12c11>
+			streams:  23, words:  3573
+		worklib.Control:v <0x14ca5b2b>
+			streams:   1, words:  6849
 		worklib.Imm_Gen:v <0x4fb1aa88>
 			streams:   2, words:  1232
 		worklib.PC:v <0x08f38613>
 			streams:   2, words:   451
 		worklib.RISCV_tb:v <0x674a670b>
 			streams:   7, words: 11502
-		worklib.Registers:v <0x01c645f5>
+		worklib.Registers:v <0x53b5b840>
 			streams:   5, words:  7711
 		worklib.memory:v <0x3bfbcb94>
 			streams:   4, words:  1916
@@ -44,13 +40,13 @@ file: RISCV_tb.v
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                  Instances  Unique
-		Modules:                 10       9
+		Modules:                  9       8
 		Registers:               32      29
 		Scalar wires:            21       -
-		Vectored wires:          35       -
-		Always blocks:           11       9
+		Vectored wires:          34       -
+		Always blocks:           10       8
 		Initial blocks:           1       1
-		Cont. assignments:       21      24
+		Cont. assignments:       22      25
 		Pseudo assignments:      10      10
 		Simulation timescale:  10ps
 	Writing initial simulation snapshot: worklib.RISCV_tb:v
@@ -137,12 +133,9 @@ Opening include file Registers.v
 Opening include file PC.v
 Opening include file Control.v
 Opening include file Const.v
-Opening include file ALU_Control.v
 Opening include file ALU.v
 Opening include file Const.v
 Opening include file Imm_Gen.v
-Opening include file Const.v
-Opening include file Branch.v
 Opening include file Const.v
 
 Inferred memory devices in process
@@ -170,13 +163,13 @@ Inferred memory devices in process
 |      PC_o_reg       | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
 ===============================================================================
 
-Statistics for case statements in always block at line 16 in file
+Statistics for case statements in always block at line 17 in file
 	'Control.v'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|            27            |     no/auto      |
-|            38            |     no/auto      |
+|            29            |     no/auto      |
+|            41            |     no/auto      |
 ===============================================
 Warning:  ALU.v:17: signed to unsigned assignment occurs. (VER-318)
 Warning:  ALU.v:18: signed to unsigned assignment occurs. (VER-318)
@@ -190,9 +183,9 @@ Statistics for case statements in always block at line 12 in file
 ===============================================
 Presto compilation completed successfully.
 Current design is now '/home/raid7_2/userb07/b7902143/hw3/Registers.db:Registers'
-Loaded 7 designs.
+Loaded 6 designs.
 Current design is 'Registers'.
-Registers PC Control ALU Imm_Gen Branch CHIP
+Registers PC Control ALU Imm_Gen CHIP
 source CHIP_syn.sdc
 Current design is 'CHIP'.
 Using operating conditions 'slow' found in library 'slow'.
@@ -209,7 +202,7 @@ Information: Evaluating DesignWare library utilization. (UISN-27)
 ============================================================================
 
 
-Information: There are 15 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+Information: There are 14 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
 
 
 Warning: Operating condition slow set on design CHIP has different process,
@@ -221,10 +214,10 @@ typical is characterized. Delays may be inaccurate as a result. (OPT-998)
   Processing 'ALU'
   Processing 'Imm_Gen'
   Processing 'Registers'
-  Processing 'Branch'
   Processing 'Control'
   Processing 'PC'
   Processing 'CHIP'
+Information: Added key list 'DesignWare' to design 'CHIP'. (DDB-72)
 
   Updating timing information
 Information: Updating design information... (UID-85)
@@ -232,7 +225,6 @@ Information: Updating design information... (UID-85)
   Beginning Implementation Selection
   ----------------------------------
   Processing 'CHIP_DW01_add_0'
-  Processing 'CHIP_DW01_add_1'
   Mapping 'ALU_DW_cmp_0'
   Processing 'ALU_DW01_sub_0'
   Processing 'ALU_DW01_add_0'
@@ -246,45 +238,44 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:12  140464.9      0.00       0.0     292.4                                0.00  
-    0:00:12  140464.9      0.00       0.0     292.4                                0.00  
-    0:00:12  140464.9      0.00       0.0     292.4                                0.00  
-    0:00:12  140464.9      0.00       0.0     292.4                                0.00  
-    0:00:12  140464.9      0.00       0.0     292.4                                0.00  
-    0:00:14   66444.7      6.89    3092.5     285.3                                0.00  
-    0:00:16   68819.4      3.55    1373.8     283.3                                0.00  
-    0:00:17   68408.6      3.43    1399.1     279.1                                0.00  
-    0:00:17   68479.9      3.16    1345.2     277.3                                0.00  
-    0:00:18   68466.3      3.10    1375.7     275.4                                0.00  
-    0:00:18   68610.6      2.76    1106.5     268.6                                0.00  
-    0:00:19   68591.9      2.75    1093.1     263.9                                0.00  
-    0:00:19   68673.4      2.64    1053.5     257.8                                0.00  
-    0:00:19   68714.1      2.32     871.8     257.4                                0.00  
-    0:00:20   68858.4      2.17     803.7     255.6                                0.00  
-    0:00:20   68926.3      2.03     705.9     253.8                                0.00  
-    0:00:20   68948.4      1.92     701.1     238.9                                0.00  
-    0:00:20   69070.6      1.91     683.0     238.9                                0.00  
-    0:00:20   69094.4      1.87     679.4     238.9                                0.00  
-    0:00:20   69070.6      1.86     626.2     228.6                                0.00  
-    0:00:20   69238.6      1.84     592.6     223.4                                0.00  
-    0:00:20   69252.2      1.80     592.5     223.4                                0.00  
-    0:00:20   69253.9      1.79     585.0     223.4                                0.00  
-    0:00:21   69247.1      1.77     578.9     223.4                                0.00  
-    0:00:21   69247.1      1.77     578.9     223.4                                0.00  
-    0:00:21   69247.1      1.77     578.9     223.4                                0.00  
-    0:00:21   69384.6      1.77     575.7     202.8                                0.00  
-    0:00:21   69495.0      1.77     575.0     178.1                                0.00  
-    0:00:21   69646.0      1.77     562.8     153.3                                0.00  
-    0:00:21   69776.7      1.77     531.5     127.8                                0.00  
-    0:00:21   69934.6      1.89     513.2     108.0                                0.00  
-    0:00:21   70051.7      1.89     512.5      88.2                                0.00  
-    0:00:21   70233.3      1.89     490.2      70.3                                0.00  
-    0:00:21   70425.1      1.89     471.4      52.3                                0.00  
-    0:00:21   70476.0      1.89     471.2      41.1                                0.00  
-    0:00:21   70476.0      1.89     471.2      41.1                                0.00  
-    0:00:22   70773.1      1.44     361.6      41.1 PC_U/PC_o_reg[31]/D            0.00  
-    0:00:23   71343.4      1.04     257.7      35.8 PC_U/PC_o_reg[5]/D             0.00  
-    0:00:23   72453.5      0.00       0.0      22.9                                0.00  
+    0:00:13  141381.5      0.00       0.0     302.3                                0.00  
+    0:00:13  141381.5      0.00       0.0     302.3                                0.00  
+    0:00:13  141381.5      0.00       0.0     302.3                                0.00  
+    0:00:13  141381.5      0.00       0.0     302.3                                0.00  
+    0:00:13  141381.5      0.00       0.0     302.3                                0.00  
+    0:00:15   67519.2      6.64    3368.0     296.6                                0.00  
+    0:00:16   69610.4      4.47    2216.6     296.2                                0.00  
+    0:00:17   69259.0      4.46    2091.4     293.2                                0.00  
+    0:00:18   69293.0      3.91    1723.2     290.3                                0.00  
+    0:00:18   69515.3      3.50    1423.4     287.3                                0.00  
+    0:00:19   69491.6      3.33    1346.5     283.2                                0.00  
+    0:00:19   69576.4      3.17    1237.2     278.5                                0.00  
+    0:00:20   69666.4      2.84    1111.3     273.8                                0.00  
+    0:00:20   69763.1      2.72    1064.7     269.0                                0.00  
+    0:00:20   69865.0      2.46     941.2     265.7                                0.00  
+    0:00:20   69951.6      2.18     819.7     263.9                                0.00  
+    0:00:20   70014.4      2.17     813.4     263.9                                0.00  
+    0:00:21   70056.8      2.16     821.9     263.9                                0.00  
+    0:00:21   70158.6      2.09     733.4     259.2                                0.00  
+    0:00:21   70272.4      1.81     695.3     259.2                                0.00  
+    0:00:21   70292.7      1.78     686.1     259.2                                0.00  
+    0:00:21   70391.2      1.74     597.4     254.4                                0.00  
+    0:00:21   70391.2      1.74     597.4     254.4                                0.00  
+    0:00:21   70391.2      1.74     597.4     254.4                                0.00  
+    0:00:21   70391.2      1.74     597.4     254.4                                0.00  
+    0:00:21   70487.9      1.74     597.3     212.9                                0.00  
+    0:00:21   70688.2      1.74     588.8     172.7                                0.00  
+    0:00:21   70779.9      1.74     574.0     152.8                                0.00  
+    0:00:21   70861.4      1.74     574.4     137.9                                0.00  
+    0:00:21   70936.0      1.74     575.0     124.7                                0.00  
+    0:00:22   71058.3      1.74     569.8     111.6                                0.00  
+    0:00:22   71105.8      1.74     569.8     100.2                                0.00  
+    0:00:22   71153.3      1.74     569.7      88.9                                0.00  
+    0:00:22   71202.5      1.74     570.0      79.4                                0.00  
+    0:00:22   71202.5      1.74     570.0      79.4                                0.00  
+    0:00:22   71316.3      1.46     412.4      79.4 Registers_U/register_reg[2][31]/D      0.00  
+    0:00:23   71703.3      0.86     159.1      76.0 Registers_U/register_reg[2][31]/D      0.00  
+    0:00:24   72299.1      0.00       0.0      69.4                                0.00  
 
 
 
@@ -295,9 +286,9 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:23   72453.5      0.00       0.0      22.9                                0.00  
-    0:00:23   72453.5      0.00       0.0      22.9                                0.00  
-    0:00:24   72085.2      0.00       0.0      24.7                                0.00  
+    0:00:24   72299.1      0.00       0.0      69.4                                0.00  
+    0:00:24   72299.1      0.00       0.0      69.4                                0.00  
+    0:00:24   72175.1      0.00       0.0      73.6                                0.00  
 
 
   Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
@@ -307,8 +298,8 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:24   72085.2      0.00       0.0      24.7                                0.00  
-    0:00:24   72166.7      0.00       0.0       0.0                                0.00  
+    0:00:24   72175.1      0.00       0.0      73.6                                0.00  
+    0:00:25   72295.7      0.00       0.0       0.0                                0.00  
 
 
   Beginning Area-Recovery Phase  (cleanup)
@@ -318,26 +309,30 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:24   72166.7      0.00       0.0       0.0                                0.00  
-    0:00:24   72166.7      0.00       0.0       0.0                                0.00  
-    0:00:25   70987.0      0.01       0.0       0.0                                0.00  
-    0:00:25   69963.4      0.03       0.2       0.0                                0.00  
-    0:00:25   69128.3      0.03       0.2       0.0                                0.00  
-    0:00:25   68602.1      0.03       0.2       0.0                                0.00  
-    0:00:25   68244.0      0.02       0.1       0.0                                0.00  
-    0:00:26   68019.9      0.02       0.1       0.0                                0.00  
-    0:00:26   67875.6      0.07       0.8       0.0                                0.00  
-    0:00:26   67875.6      0.07       0.8       0.0                                0.00  
-    0:00:26   67872.2      0.00       0.0       0.0                                0.00  
-    0:00:26   66555.1      0.19      18.5       0.0                                0.00  
-    0:00:26   66363.2      0.20      19.3       0.0                                0.00  
-    0:00:26   66361.6      0.19      19.0       0.0                                0.00  
-    0:00:26   66361.6      0.19      19.0       0.0                                0.00  
-    0:00:26   66361.6      0.19      19.0       0.0                                0.00  
-    0:00:26   66361.6      0.19      19.0       0.0                                0.00  
-    0:00:26   66361.6      0.19      19.0       0.0                                0.00  
-    0:00:26   66361.6      0.19      19.0       0.0                                0.00  
-    0:00:27   66500.7      0.00       0.0       0.0                                0.00  
+    0:00:25   72295.7      0.00       0.0       0.0                                0.00  
+    0:00:25   72295.7      0.00       0.0       0.0                                0.00  
+    0:00:25   71148.2      0.09       4.1       0.0                                0.00  
+    0:00:25   70146.8      0.09       3.6       0.0                                0.00  
+    0:00:25   69337.1      0.10       3.9       0.0                                0.00  
+    0:00:26   68575.0      0.10       3.9       0.0                                0.00  
+    0:00:26   68059.0      0.10       4.0       0.0                                0.00  
+    0:00:26   67738.1      0.10       4.1       0.0                                0.00  
+    0:00:26   67604.0      0.10       4.1       0.0                                0.00  
+    0:00:26   67604.0      0.10       4.1       0.0                                0.00  
+    0:00:27   67634.6      0.00       0.0       0.0                                0.00  
+    0:00:27   65275.2      2.23     646.1       0.0                                0.00  
+    0:00:27   65078.3      2.23     645.7       0.0                                0.00  
+    0:00:27   64968.0      2.23     645.7       0.0                                0.00  
+    0:00:27   64934.0      2.23     645.7       0.0                                0.00  
+    0:00:27   64934.0      2.23     645.7       0.0                                0.00  
+    0:00:27   64934.0      2.23     645.7       0.0                                0.00  
+    0:00:27   64934.0      2.23     645.7       0.0                                0.00  
+    0:00:27   64934.0      2.23     645.7       0.0                                0.00  
+    0:00:28   65604.5      1.55     374.4       0.0 Registers_U/register_reg[2][31]/D      0.00  
+    0:00:29   66030.6      1.28     323.1       0.0 Registers_U/register_reg[25][31]/D      0.00  
+    0:00:30   66398.9      1.16     292.4       0.0 Registers_U/register_reg[25][31]/D      0.00  
+    0:00:31   66945.5      0.61     118.0       0.0 Registers_U/register_reg[1][23]/D      0.00  
+    0:00:31   67154.2      0.00       0.0       0.0                                0.00  
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
 
 
@@ -354,7 +349,7 @@ Information: Updating design information... (UID-85)
 Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
 Writing verilog file '/home/raid7_2/userb07/b7902143/hw3/CHIP_syn.v'.
 Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
-Warning: Verilog writer has added 4 nets to module CHIP using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 3 nets to module CHIP using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
 Writing ddc file 'CHIP_syn.ddc'.
 report_timing
  
@@ -365,7 +360,7 @@ Report : timing
         -max_paths 1
 Design : CHIP
 Version: N-2017.09-SP2
-Date   : Wed Apr 21 02:38:52 2021
+Date   : Tue Apr 27 10:54:53 2021
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -373,9 +368,9 @@ Date   : Wed Apr 21 02:38:52 2021
 Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
-  Startpoint: mem_rdata_I[12]
+  Startpoint: mem_rdata_I[15]
               (input port clocked by CLK)
-  Endpoint: PC_U/PC_o_reg[31]
+  Endpoint: Registers_U/register_reg[13][31]
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -388,84 +383,81 @@ Wire Load Model Mode: top
   --------------------------------------------------------------------------
   clock CLK (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
-  input external delay                                    0.10       0.60 r
-  mem_rdata_I[12] (in)                                    0.02       0.62 r
-  U248/Y (BUFX16)                                         0.06       0.69 r
-  Registers_U/RS2addr_i[0] (Registers)                    0.00       0.69 r
-  Registers_U/U39/Y (INVX3)                               0.05       0.74 f
-  Registers_U/U289/Y (AND2X2)                             0.19       0.93 f
-  Registers_U/U357/Y (NAND2XL)                            0.25       1.18 r
-  Registers_U/U5/Y (INVX4)                                0.13       1.30 f
-  Registers_U/U7/Y (INVX6)                                0.38       1.68 r
-  Registers_U/U2349/Y (OAI22XL)                           0.19       1.88 f
-  Registers_U/U2351/Y (NOR4X1)                            0.22       2.10 r
-  Registers_U/U2359/Y (AO22X1)                            0.18       2.28 r
-  Registers_U/U226/Y (NOR2BX4)                            0.13       2.41 r
-  Registers_U/RS2data_o[4] (Registers)                    0.00       2.41 r
-  U283/Y (BUFX20)                                         0.30       2.71 r
-  U325/Y (AO22X4)                                         0.25       2.96 r
-  ALU_U/Op2_i[4] (ALU)                                    0.00       2.96 r
-  ALU_U/sub_18/B[4] (ALU_DW01_sub_0)                      0.00       2.96 r
-  ALU_U/sub_18/U32/Y (CLKINVX1)                           0.09       3.06 f
-  ALU_U/sub_18/U2_4/CO (ADDFXL)                           0.45       3.51 f
-  ALU_U/sub_18/U2_5/CO (ADDFHX1)                          0.21       3.72 f
-  ALU_U/sub_18/U2_6/CO (ADDFHX1)                          0.20       3.92 f
-  ALU_U/sub_18/U2_7/CO (ADDFXL)                           0.29       4.21 f
-  ALU_U/sub_18/U2_8/CO (ADDFHX1)                          0.22       4.43 f
-  ALU_U/sub_18/U2_9/CO (ADDFHX2)                          0.16       4.59 f
-  ALU_U/sub_18/U2_10/CO (ADDFHX2)                         0.15       4.73 f
-  ALU_U/sub_18/U2_11/CO (ADDFHX2)                         0.14       4.88 f
-  ALU_U/sub_18/U2_12/CO (ADDFXL)                          0.28       5.16 f
-  ALU_U/sub_18/U2_13/CO (ADDFHX1)                         0.22       5.37 f
-  ALU_U/sub_18/U2_14/CO (ADDFX2)                          0.23       5.60 f
-  ALU_U/sub_18/U2_15/CO (ADDFHX2)                         0.15       5.75 f
-  ALU_U/sub_18/U2_16/CO (ADDFHX1)                         0.19       5.94 f
-  ALU_U/sub_18/U2_17/CO (ADDFXL)                          0.30       6.24 f
-  ALU_U/sub_18/U2_18/CO (ADDFHX2)                         0.17       6.41 f
-  ALU_U/sub_18/U2_19/CO (ADDFXL)                          0.29       6.70 f
-  ALU_U/sub_18/U2_20/CO (ADDFHX2)                         0.17       6.88 f
-  ALU_U/sub_18/U2_21/CO (ADDFHX2)                         0.16       7.03 f
-  ALU_U/sub_18/U2_22/CO (ADDFHX4)                         0.13       7.17 f
-  ALU_U/sub_18/U2_23/CO (ADDFHX4)                         0.13       7.30 f
-  ALU_U/sub_18/U2_24/CO (ADDFHX4)                         0.13       7.42 f
-  ALU_U/sub_18/U2_25/CO (ADDFHX4)                         0.12       7.54 f
-  ALU_U/sub_18/U2_26/CO (ADDFHX2)                         0.14       7.68 f
-  ALU_U/sub_18/U2_27/CO (ADDFXL)                          0.29       7.98 f
-  ALU_U/sub_18/U2_28/CO (ADDFHX2)                         0.17       8.15 f
-  ALU_U/sub_18/U2_29/CO (ADDFHX2)                         0.15       8.29 f
-  ALU_U/sub_18/U2_30/S (ADDFX1)                           0.18       8.47 f
-  ALU_U/sub_18/DIFF[30] (ALU_DW01_sub_0)                  0.00       8.47 f
-  ALU_U/U37/Y (AO22X2)                                    0.21       8.68 f
-  ALU_U/U116/Y (OR3X6)                                    0.17       8.85 f
-  ALU_U/U112/Y (CLKBUFX20)                                0.22       9.07 f
-  ALU_U/U111/Y (NOR3X6)                                   0.11       9.18 r
-  ALU_U/U114/Y (NAND4X4)                                  0.08       9.26 f
-  ALU_U/U290/Y (NOR4X4)                                   0.12       9.38 r
-  ALU_U/Zero_o (ALU)                                      0.00       9.38 r
-  Branch_U/ALUZero_i (Branch)                             0.00       9.38 r
-  Branch_U/U2/Y (AND2X4)                                  0.12       9.50 r
-  Branch_U/BranchTaken_o (Branch)                         0.00       9.50 r
-  U316/Y (INVX8)                                          0.04       9.54 f
-  U363/Y (NAND3X1)                                        0.12       9.66 r
-  U315/Y (BUFX6)                                          0.10       9.75 r
-  U323/Y (BUFX20)                                         0.15       9.90 r
-  U346/Y (OR2X1)                                          0.15      10.05 r
-  U289/Y (NAND3X1)                                        0.10      10.15 f
-  PC_U/PC_i[31] (PC)                                      0.00      10.15 f
-  PC_U/PC_o_reg[31]/D (EDFFTRXL)                          0.00      10.15 f
-  data arrival time                                                 10.15
+  input external delay                                    0.10       0.60 f
+  mem_rdata_I[15] (in)                                    0.07       0.67 f
+  Registers_U/RS2addr_i[3] (Registers)                    0.00       0.67 f
+  Registers_U/U362/Y (NOR2X1)                             0.16       0.83 r
+  Registers_U/U361/Y (BUFX6)                              0.13       0.96 r
+  Registers_U/U314/Y (NAND2X2)                            0.12       1.08 f
+  Registers_U/U124/Y (BUFX20)                             0.16       1.24 f
+  Registers_U/U385/Y (OAI221X4)                           0.31       1.54 r
+  Registers_U/U19/Y (NOR4X2)                              0.05       1.59 f
+  Registers_U/U435/Y (AO22X4)                             0.17       1.76 f
+  Registers_U/U1134/Y (NOR2BX4)                           0.10       1.86 f
+  Registers_U/U434/Y (BUFX20)                             0.22       2.09 f
+  Registers_U/RS2data_o[0] (Registers)                    0.00       2.09 f
+  U376/Y (AO22X4)                                         0.26       2.35 f
+  ALU_U/Op2_i[0] (ALU)                                    0.00       2.35 f
+  ALU_U/add_17/B[0] (ALU_DW01_add_0)                      0.00       2.35 f
+  ALU_U/add_17/U1/Y (AND2X2)                              0.15       2.50 f
+  ALU_U/add_17/U1_1/CO (ADDFHX4)                          0.13       2.63 f
+  ALU_U/add_17/U1_2/CO (ADDFHX4)                          0.13       2.76 f
+  ALU_U/add_17/U1_3/CO (ADDFHX4)                          0.13       2.89 f
+  ALU_U/add_17/U1_4/CO (ADDFHX4)                          0.12       3.01 f
+  ALU_U/add_17/U1_5/CO (ADDFX2)                           0.22       3.23 f
+  ALU_U/add_17/U1_6/CO (ADDFHX4)                          0.14       3.36 f
+  ALU_U/add_17/U1_7/CO (ADDFXL)                           0.28       3.65 f
+  ALU_U/add_17/U1_8/CO (ADDFXL)                           0.31       3.96 f
+  ALU_U/add_17/U1_9/CO (ADDFXL)                           0.31       4.27 f
+  ALU_U/add_17/U1_10/CO (ADDFXL)                          0.31       4.59 f
+  ALU_U/add_17/U1_11/CO (ADDFXL)                          0.31       4.90 f
+  ALU_U/add_17/U1_12/CO (ADDFXL)                          0.32       5.22 f
+  ALU_U/add_17/U1_13/CO (ADDFHX2)                         0.17       5.39 f
+  ALU_U/add_17/U1_14/CO (ADDFHX2)                         0.14       5.54 f
+  ALU_U/add_17/U1_15/CO (ADDFXL)                          0.29       5.83 f
+  ALU_U/add_17/U1_16/CO (ADDFHX2)                         0.17       6.00 f
+  ALU_U/add_17/U1_17/CO (ADDFHX2)                         0.15       6.15 f
+  ALU_U/add_17/U1_18/CO (ADDFHX2)                         0.14       6.29 f
+  ALU_U/add_17/U1_19/CO (ADDFXL)                          0.29       6.58 f
+  ALU_U/add_17/U1_20/CO (ADDFHX2)                         0.17       6.75 f
+  ALU_U/add_17/U1_21/CO (ADDFHX1)                         0.19       6.94 f
+  ALU_U/add_17/U1_22/CO (ADDFHX2)                         0.16       7.10 f
+  ALU_U/add_17/U1_23/CO (ADDFHX2)                         0.15       7.25 f
+  ALU_U/add_17/U1_24/CO (ADDFHX2)                         0.15       7.39 f
+  ALU_U/add_17/U1_25/CO (ADDFHX2)                         0.15       7.54 f
+  ALU_U/add_17/U1_26/CO (ADDFHX2)                         0.14       7.68 f
+  ALU_U/add_17/U1_27/CO (ADDFXL)                          0.28       7.96 f
+  ALU_U/add_17/U1_28/CO (ADDFHX1)                         0.22       8.18 f
+  ALU_U/add_17/U1_29/CO (CMPR32X2)                        0.22       8.40 f
+  ALU_U/add_17/U1_30/CO (ADDFXL)                          0.30       8.70 f
+  ALU_U/add_17/U1_31/S (ADDFXL)                           0.24       8.94 f
+  ALU_U/add_17/SUM[31] (ALU_DW01_add_0)                   0.00       8.94 f
+  ALU_U/U22/Y (AO22X2)                                    0.24       9.18 f
+  ALU_U/U174/Y (AOI221X4)                                 0.27       9.44 r
+  ALU_U/U14/Y (INVX8)                                     0.04       9.49 f
+  ALU_U/U12/Y (CLKINVX12)                                 0.03       9.52 r
+  ALU_U/U13/Y (CLKINVX20)                                 0.17       9.69 f
+  ALU_U/Res_o[31] (ALU)                                   0.00       9.69 f
+  U377/Y (INVX20)                                         0.06       9.75 r
+  U21/Y (OAI221X2)                                        0.10       9.85 f
+  Registers_U/RDdata_i[31] (Registers)                    0.00       9.85 f
+  Registers_U/U143/Y (NAND2X4)                            0.10       9.94 r
+  Registers_U/U87/Y (CLKBUFX20)                           0.15      10.09 r
+  Registers_U/U777/Y (OAI2BB2XL)                          0.11      10.20 f
+  Registers_U/register_reg[13][31]/D (DFFQX1)             0.00      10.20 f
+  data arrival time                                                 10.20
 
   clock CLK (rise edge)                                  10.00      10.00
   clock network delay (ideal)                             0.50      10.50
   clock uncertainty                                      -0.10      10.40
-  PC_U/PC_o_reg[31]/CK (EDFFTRXL)                         0.00      10.40 r
-  library setup time                                     -0.25      10.15
-  data required time                                                10.15
+  Registers_U/register_reg[13][31]/CK (DFFQX1)            0.00      10.40 r
+  library setup time                                     -0.18      10.22
+  data required time                                                10.22
   --------------------------------------------------------------------------
-  data required time                                                10.15
-  data arrival time                                                -10.15
+  data required time                                                10.22
+  data arrival time                                                -10.20
   --------------------------------------------------------------------------
-  slack (MET)                                                        0.00
+  slack (MET)                                                        0.02
 
 
 1
@@ -475,30 +467,30 @@ report_area
 Report : area
 Design : CHIP
 Version: N-2017.09-SP2
-Date   : Wed Apr 21 02:38:52 2021
+Date   : Tue Apr 27 10:54:53 2021
 ****************************************
 
 Library(s) Used:
 
     typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
 
-Number of ports:                         1013
-Number of nets:                          5912
-Number of cells:                         4977
-Number of combinational cells:           3899
-Number of sequential cells:              1067
+Number of ports:                          909
+Number of nets:                          5792
+Number of cells:                         4983
+Number of combinational cells:           3908
+Number of sequential cells:              1066
 Number of macros/black boxes:               0
-Number of buf/inv:                        716
+Number of buf/inv:                        731
 Number of references:                      36
 
-Combinational area:              39192.966021
-Buf/Inv area:                     5686.289984
+Combinational area:              39846.464989
+Buf/Inv area:                     6898.233597
 Noncombinational area:           27307.771660
 Macro/Black Box area:                0.000000
-Net Interconnect area:          699536.889893
+Net Interconnect area:          701123.546173
 
-Total cell area:                 66500.737681
-Total area:                     766037.627573
+Total cell area:                 67154.236649
+Total area:                     768277.782822
 1
 quit
 
