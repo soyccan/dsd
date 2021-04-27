@@ -3,7 +3,9 @@
 module Control(input [6:0] Opcode_i,
                input [6:0] Funct7_i,
                input [2:0] Funct3_i,
-               output reg ALUSrc_o,
+               output reg Load_o,
+               output reg ALUSrc1_o,
+               output reg ALUSrc2_o,
                output reg RegWrite_o,
                output reg MemToReg_o,
                output reg MemRead_o,
@@ -14,7 +16,8 @@ module Control(input [6:0] Opcode_i,
                output reg [3:0] ALUCtl_o);
 
 always @* begin
-    ALUSrc_o   = `ALU_SRC_REG;
+    ALUSrc1_o  = `ALU_SRC_REG;
+    ALUSrc2_o  = `ALU_SRC_REG;
     RegWrite_o = 1'b0;
     MemToReg_o = 1'b0;
     MemRead_o  = 1'b0;
@@ -23,10 +26,12 @@ always @* begin
     Jal_o      = 1'b0;
     Jalr_o     = 1'b0;
     ALUCtl_o   = `ALU_CTL_ADD;
+    Load_o     = 1'b0;
 
     case (Opcode_i)
         `OPCODE_OP: begin
-            ALUSrc_o   = `ALU_SRC_REG;
+            ALUSrc1_o  = `ALU_SRC_REG;
+            ALUSrc2_o  = `ALU_SRC_REG;
             RegWrite_o = 1'b1;
             MemToReg_o = 1'b0;
             MemRead_o  = 1'b0;
@@ -50,7 +55,8 @@ always @* begin
 
         `OPCODE_LOAD: begin
             // lw
-            ALUSrc_o   = `ALU_SRC_IMM;
+            ALUSrc1_o  = `ALU_SRC_REG;
+            ALUSrc2_o  = `ALU_SRC_IMM;
             RegWrite_o = 1'b1;
             MemToReg_o = 1'b1;
             MemRead_o  = 1'b1;
@@ -58,12 +64,14 @@ always @* begin
             Branch_o   = 1'b0;
             Jal_o      = 1'b0;
             Jalr_o     = 1'b0;
-            ALUCtl_o = `ALU_CTL_ADD;
+            ALUCtl_o   = `ALU_CTL_ADD;
+            Load_o     = 1'b1;
         end
 
         `OPCODE_STORE: begin
             // sw
-            ALUSrc_o   = `ALU_SRC_IMM;
+            ALUSrc1_o  = `ALU_SRC_REG;
+            ALUSrc2_o  = `ALU_SRC_IMM;
             RegWrite_o = 1'b0;
             MemToReg_o = 1'bx;
             MemRead_o  = 1'b0;
@@ -71,12 +79,13 @@ always @* begin
             Branch_o   = 1'b0;
             Jalr_o     = 1'b0;
             Jal_o      = 1'b0;
-            ALUCtl_o = `ALU_CTL_ADD;
+            ALUCtl_o   = `ALU_CTL_ADD;
         end
 
         `OPCODE_BRANCH: begin
             // beq
-            ALUSrc_o   = `ALU_SRC_REG;
+            ALUSrc1_o  = `ALU_SRC_PC;
+            ALUSrc2_o  = `ALU_SRC_IMM;
             RegWrite_o = 1'b0;
             MemToReg_o = 1'bx;
             MemRead_o  = 1'b0;
@@ -84,12 +93,13 @@ always @* begin
             Branch_o   = 1'b1;
             Jal_o      = 1'b0;
             Jalr_o     = 1'b0;
-            ALUCtl_o   = `ALU_CTL_XOR;
+            ALUCtl_o   = `ALU_CTL_ADD;
         end
 
         `OPCODE_JAL: begin
             // jal
-            ALUSrc_o = 1'bx;
+            ALUSrc1_o  = `ALU_SRC_PC;
+            ALUSrc2_o  = `ALU_SRC_IMM;
             RegWrite_o = 1'b1;
             MemToReg_o = 1'bx;
             MemRead_o  = 1'b0;
@@ -97,12 +107,13 @@ always @* begin
             Branch_o   = 1'b0;
             Jal_o      = 1'b1;
             Jalr_o     = 1'b0;
-            ALUCtl_o   = 4'bx;
+            ALUCtl_o   = `ALU_CTL_ADD;
         end
 
         `OPCODE_JALR: begin
             // jalr
-            ALUSrc_o   = `ALU_SRC_IMM;
+            ALUSrc1_o  = `ALU_SRC_REG;
+            ALUSrc2_o  = `ALU_SRC_IMM;
             RegWrite_o = 1'b1;
             MemToReg_o = 1'bx;
             MemRead_o  = 1'b0;
@@ -110,7 +121,7 @@ always @* begin
             Branch_o   = 1'b0;
             Jal_o      = 1'b0;
             Jalr_o     = 1'b1;
-            ALUCtl_o = `ALU_CTL_ADD;
+            ALUCtl_o   = `ALU_CTL_ADD;
         end
     endcase
 end
