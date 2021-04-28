@@ -2,7 +2,7 @@
 
 `timescale 1 ns/10 ps
 
-`define CYCLE 10 // You can modify your clock frequency
+`define CYCLE 2.9 // You can modify your clock frequency
 `define END_CYCLE 40 // You can modify your maximum cycles
 
 `include "memory.v"
@@ -96,15 +96,6 @@ module RISCV_tb;
 
     // Initialize the data memory
     initial begin
-
-        // $monitor("rd_data=%d JAl=%d Jalr=%d pc=%d pc+4=%d write_back_data=%d",
-        //          chip0.rd_data,
-        //          chip0.Jal,
-        //          chip0.Jalr,
-        //          chip0.pc,
-        //          chip0.pc_nxt,
-        //          chip0.write_back_data);
-
         $fsdbDumpfile("RISCV.fsdb");
         $fsdbDumpvars(0,RISCV_tb,"+mda");
 
