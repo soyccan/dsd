@@ -2,7 +2,7 @@
 
 `timescale 1 ns/10 ps
 
-`define CYCLE 2.9 // You can modify your clock frequency
+`define CYCLE 10 // You can modify your clock frequency
 `define END_CYCLE 40 // You can modify your maximum cycles
 
 `include "memory.v"

@@ -168,9 +168,10 @@ ALU ALU_U(
 
 assign rst = ~rst_n;
 
+// PC uses incrementer/decrementer instead of adder/subtractor
 // assign pc_plus_2 = pc + 3'd2;
-assign pc_plus_4 = pc + 3'd4;
-assign pc_minus_4 = pc - 3'd4;
+assign pc_plus_4 = {pc[31:2] + 1'b1, pc[1:0]};
+assign pc_minus_4 = {pc[31:2] - 1'b1, pc[1:0]};
 assign pc_nxt_norm = pc_plus_4;
 
 // address is multiple of 2
@@ -235,3 +236,4 @@ end
 
 
 endmodule
+

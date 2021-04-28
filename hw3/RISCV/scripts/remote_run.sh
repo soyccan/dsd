@@ -56,7 +56,7 @@ if (( mode & 2 )); then
          source /usr/cad/synopsys/CIC/synthesis.cshrc
          source /usr/cad/synopsys/CIC/verdi.cshrc
          design_vision -no_gui -f dv.cmd
-        ' | tee syn.log
+        ' | tee syn/syn.log
 
     # Download gate-level verilog
     scp -o "ControlPath=$SOCKET" \

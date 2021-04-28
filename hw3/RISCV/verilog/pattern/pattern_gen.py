@@ -1,9 +1,10 @@
 import random
+import ctypes
 
 class write_pattern(object):
     def __init__(self):
         self.counter = 0
-        
+
     def write_line(self, str_in):
         assert(len(str_in) == 8)
         substr_0 = str_in[0:2]
@@ -26,17 +27,25 @@ def add_underline(str_in):
 
 if __name__ == '__main__':
     # Modify your test pattern here
-    x = random.randint(1,100)
-    y = random.randint(1,100)
+    # x, y are unsigned
+    x = random.randint((1<<31)-1,(1<<32)-1)
+    y = random.randint(1,(1<<32)-1)
+
+    # neg_x is unsigned
+    neg_x = (x ^ 0xffffffff) + 1
+
+    # _x, _y are signed
+    _x = ctypes.c_int(x).value
+    _y = ctypes.c_int(y).value
 
     data1 = '{:x}'.format(x).zfill(8).upper()
     data2 = '{:x}'.format(y).zfill(8).upper()
     and_result = '{:x}'.format(x & y).zfill(8).upper()
     or_result = '{:x}'.format(x | y).zfill(8).upper()
-    slt_result = '{:x}'.format(x < y).zfill(8).upper()
-    add_result = '{:x}'.format(x + x).zfill(8).upper()
-    sub_result = '{:x}'.format(2*x - x).zfill(8).upper()
-    
+    slt_result = '{:x}'.format(_x < _y).zfill(8).upper()
+    add_result = '{:x}'.format((x + x) & 0xffffffff).zfill(8).upper()
+    sub_result = '{:x}'.format((2*x + neg_x) & 0xffffffff).zfill(8).upper()
+
     with open('data.txt', 'w') as f_data:
         data = write_pattern()
         f_data.write(data.write_line(data1) + '\n')
