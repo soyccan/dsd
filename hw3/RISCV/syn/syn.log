@@ -1,0 +1,450 @@
+Platform = amd64
+Platform = LINUX
+#######################################################
+#         32BIT is the default mode                   #
+#    If you want to run 64BIT mode,                   #
+#    please set the LD_LIBRARY_PATH and SHLIB_PATH    #
+#    to path of 64BIT by yourself.                    #
+#######################################################
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version N-2017.09-SP2 for linux64 - Nov 27, 2017 
+
+                    Copyright (c) 1988 - 2017 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/raid7_2/userb07/b7902143/.synopsys_dv_prefs.tcl
+# This is to be read by design_vision by:
+#   design_vision -no_gui -f dv.cmd
+read_verilog CHIP.v
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/dw_foundation.sldb'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/gtech.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/standard.sldb'
+  Loading link library 'typical'
+  Loading link library 'slow'
+  Loading link library 'fast'
+  Loading link library 'gtech'
+Loading verilog file '/home/raid7_2/userb07/b7902143/hw3/CHIP.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file Registers.v
+Opening include file PC.v
+Opening include file Control.v
+Opening include file Const.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/hw3/CHIP.v
+Opening include file Registers.v
+Opening include file PC.v
+Opening include file Control.v
+Opening include file Const.v
+Opening include file ALU.v
+Opening include file Const.v
+Opening include file Imm_Gen.v
+Opening include file Const.v
+
+Inferred memory devices in process
+	in routine Registers line 28 in file
+		'Registers.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    register_reg     | Flip-flop |  992  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|   Registers/24   |   32   |   32    |      5       |
+|   Registers/25   |   32   |   32    |      5       |
+======================================================
+
+Inferred memory devices in process
+	in routine PC line 11 in file
+		'PC.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      PC_o_reg       | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Statistics for case statements in always block at line 50 in file
+	'Control.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            61            |     no/auto      |
+|            72            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine Control line 31 in file
+		'Control.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   load_state_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Statistics for case statements in always block at line 23 in file
+	'ALU.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            26            |     no/auto      |
+===============================================
+Warning:  Imm_Gen.v:16: signed to unsigned assignment occurs. (VER-318)
+Warning:  Imm_Gen.v:19: signed to unsigned assignment occurs. (VER-318)
+Warning:  Imm_Gen.v:22: signed to unsigned assignment occurs. (VER-318)
+Warning:  Imm_Gen.v:26: signed to unsigned assignment occurs. (VER-318)
+
+Statistics for case statements in always block at line 8 in file
+	'Imm_Gen.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            13            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine CHIP line 221 in file
+		'/home/raid7_2/userb07/b7902143/hw3/CHIP.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+| mem_rdata_D_buf_reg | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+| mem_rdata_I_buf_reg | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/hw3/Registers.db:Registers'
+Loaded 6 designs.
+Current design is 'Registers'.
+Registers PC Control ALU Imm_Gen CHIP
+source CHIP_syn.sdc
+Current design is 'CHIP'.
+Using operating conditions 'slow' found in library 'slow'.
+Using operating conditions 'fast' found in library 'fast'.
+Warning: Setting attribute 'fix_multiple_port_nets' on design 'CHIP'. (UIO-59)
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | N-2017.09-DWBB_201709.2 |     *     |
+| Licensed DW Building Blocks        | N-2017.09-DWBB_201709.2 |     *     |
+============================================================================
+
+
+Information: There are 12 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Operating condition slow set on design CHIP has different process,
+voltage and temperatures parameters than the parameters at which target library 
+typical is characterized. Delays may be inaccurate as a result. (OPT-998)
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'ALU'
+  Processing 'Imm_Gen'
+  Processing 'Registers'
+  Processing 'Control'
+  Processing 'PC'
+Information: The register 'PC_o_reg[0]' is a constant and will be removed. (OPT-1206)
+  Processing 'CHIP'
+Information: Added key list 'DesignWare' to design 'CHIP'. (DDB-72)
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'CHIP_DW01_dec_0'
+  Processing 'CHIP_DW01_inc_0'
+  Processing 'ALU_DW01_add_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:08  138558.8      0.00       0.0     125.1                                0.00  
+    0:00:08  138558.8      0.00       0.0     125.1                                0.00  
+    0:00:08  138558.8      0.00       0.0     125.1                                0.00  
+    0:00:08  138558.8      0.00       0.0     125.1                                0.00  
+    0:00:08  138558.8      0.00       0.0     125.1                                0.00  
+    0:00:10   64940.8      6.92    3019.1     120.4                                0.00  
+    0:00:11   67099.9      4.64    1884.1     120.1                                0.00  
+    0:00:12   67040.5      4.56    1823.9     119.0                                0.00  
+    0:00:13   67262.9      4.46    1807.7     117.1                                0.00  
+    0:00:13   67196.7      4.21    1643.7     114.8                                0.00  
+    0:00:13   67315.5      4.14    1648.1     112.9                                0.00  
+    0:00:13   67359.6      4.04    1617.0     111.0                                0.00  
+    0:00:14   67556.5      3.62    1378.3     110.0                                0.00  
+    0:00:14   67554.8      3.44    1263.5     109.0                                0.00  
+    0:00:14   67563.3      3.42    1251.2     109.0                                0.00  
+    0:00:14   67585.4      3.40    1242.6     109.0                                0.00  
+    0:00:14   67592.2      3.33    1202.9     109.0                                0.00  
+    0:00:14   67621.0      3.27    1174.0     108.0                                0.00  
+    0:00:14   67702.5      3.21    1128.0     107.7                                0.00  
+    0:00:15   67743.2      3.14    1101.5     107.7                                0.00  
+    0:00:15   67858.7      3.08    1072.3     107.6                                0.00  
+    0:00:15   67896.0      3.05    1056.6     107.6                                0.00  
+    0:00:15   67926.6      3.02    1038.0     106.6                                0.00  
+    0:00:15   67901.1      3.01    1033.4     106.6                                0.00  
+    0:00:15   67901.1      3.01    1033.4     106.6                                0.00  
+    0:00:15   67901.1      3.01    1033.4     106.6                                0.00  
+    0:00:15   68096.3      3.01    1029.2      94.4                                0.00  
+    0:00:15   68250.8      3.01    1003.4      84.8                                0.00  
+    0:00:15   68415.4      3.24    1037.4      74.4                                0.00  
+    0:00:15   68629.3      3.46    1041.2      64.0                                0.00  
+    0:00:15   68804.1      3.70    1106.2      53.7                                0.00  
+    0:00:15   68912.7      3.92    1141.4      46.1                                0.00  
+    0:00:15   69011.2      4.03    1144.2      39.6                                0.00  
+    0:00:15   69096.1      4.13    1147.3      33.0                                0.00  
+    0:00:15   69180.9      4.28    1172.9      26.5                                0.00  
+    0:00:15   69180.9      4.28    1172.9      26.5                                0.00  
+    0:00:16   69865.0      1.99     535.4      24.5 Registers_U/register_reg[23][0]/D      0.00  
+    0:00:17   70245.2      0.83     233.0      24.5 Registers_U/register_reg[12][26]/D      0.00  
+    0:00:17   70440.4      0.00       0.0      24.5                                0.00  
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:17   70440.4      0.00       0.0      24.5                                0.00  
+    0:00:17   70440.4      0.00       0.0      24.5                                0.00  
+    0:00:18   70345.3      0.00       0.0      26.3                                0.00  
+    0:00:19   69954.9      0.00       0.0      30.6                                0.00  
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:19   69954.9      0.00       0.0      30.6                                0.00  
+    0:00:19   70196.0      0.00       0.0       0.0                                0.00  
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:19   70196.0      0.00       0.0       0.0                                0.00  
+    0:00:19   70196.0      0.00       0.0       0.0                                0.00  
+    0:00:19   68148.9      0.08       5.0       0.0                                0.00  
+    0:00:19   67057.5      0.08       2.9       0.0                                0.00  
+    0:00:20   66132.4      0.08       3.0       0.0                                0.00  
+    0:00:20   65667.3      0.03       1.0       0.0                                0.00  
+    0:00:20   65422.9      0.03       1.0       0.0                                0.00  
+    0:00:20   65249.8      0.07       2.0       0.0                                0.00  
+    0:00:20   65249.8      0.07       2.0       0.0                                0.00  
+    0:00:21   65232.8      0.00       0.0       0.0                                0.00  
+    0:00:21   64294.1      0.99     284.1       0.0                                0.00  
+    0:00:21   64073.5      0.98     282.8       0.0                                0.00  
+    0:00:21   64037.8      0.98     282.8       0.0                                0.00  
+    0:00:21   64029.3      0.98     282.8       0.0                                0.00  
+    0:00:21   64029.3      0.98     282.8       0.0                                0.00  
+    0:00:21   64029.3      0.98     282.8       0.0                                0.00  
+    0:00:21   64029.3      0.98     282.8       0.0                                0.00  
+    0:00:21   64029.3      0.98     282.8       0.0                                0.00  
+    0:00:22   64227.9      0.16      13.3       0.0 Registers_U/register_reg[22][31]/D      0.00  
+    0:00:22   64272.1      0.00       0.0       0.0                                0.00  
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'Registers_U/clk_i': 1088 load(s), 1 driver(s)
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/raid7_2/userb07/b7902143/hw3/CHIP_syn.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Writing verilog file '/home/raid7_2/userb07/b7902143/hw3/CHIP_syn.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Verilog writer has added 2 nets to module CHIP using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Writing ddc file 'CHIP_syn.ddc'.
+report_timing
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : CHIP
+Version: N-2017.09-SP2
+Date   : Thu Apr 29 04:11:17 2021
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: mem_rdata_I_buf_reg[15]
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: Registers_U/register_reg[10][31]
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock CLK (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.50       0.50
+  mem_rdata_I_buf_reg[15]/CK (EDFFTRX4)                   0.00 #     0.50 r
+  mem_rdata_I_buf_reg[15]/Q (EDFFTRX4)                    0.15       0.65 f
+  Registers_U/RS2addr_i[3] (Registers)                    0.00       0.65 f
+  Registers_U/U77/Y (INVX3)                               0.11       0.76 r
+  Registers_U/U57/Y (INVX4)                               0.07       0.82 f
+  Registers_U/U11/Y (NOR2X2)                              0.22       1.04 r
+  Registers_U/U79/Y (AND2X2)                              0.14       1.18 r
+  Registers_U/U193/Y (INVX3)                              0.05       1.23 f
+  Registers_U/U470/Y (CLKBUFX3)                           0.16       1.39 f
+  Registers_U/U316/Y (BUFX16)                             0.12       1.51 f
+  Registers_U/U313/Y (OR2XL)                              0.20       1.71 f
+  Registers_U/U315/Y (NAND2X1)                            0.14       1.85 r
+  Registers_U/U266/Y (NOR4X2)                             0.10       1.95 f
+  Registers_U/U353/Y (AO22X4)                             0.18       2.13 f
+  Registers_U/U17/Y (NAND2X8)                             0.07       2.19 r
+  Registers_U/U322/Y (INVX20)                             0.19       2.39 f
+  Registers_U/RS2data_o[0] (Registers)                    0.00       2.39 f
+  U229/Y (AO22X4)                                         0.21       2.60 f
+  ALU_U/Op2_i[0] (ALU)                                    0.00       2.60 f
+  ALU_U/U12/Y (INVX3)                                     0.08       2.67 r
+  ALU_U/U98/Y (XNOR2X4)                                   0.13       2.80 f
+  ALU_U/add_1_root_add_21_2/B[0] (ALU_DW01_add_0)         0.00       2.80 f
+  ALU_U/add_1_root_add_21_2/U1_0/CO (ADDFHX4)             0.16       2.97 f
+  ALU_U/add_1_root_add_21_2/U1_1/CO (ADDFX1)              0.21       3.18 f
+  ALU_U/add_1_root_add_21_2/U1_2/CO (ADDFHX2)             0.16       3.33 f
+  ALU_U/add_1_root_add_21_2/U1_3/CO (ADDFHX2)             0.15       3.48 f
+  ALU_U/add_1_root_add_21_2/U1_4/CO (ADDFHX2)             0.15       3.64 f
+  ALU_U/add_1_root_add_21_2/U1_5/CO (ADDFHX4)             0.13       3.76 f
+  ALU_U/add_1_root_add_21_2/U1_6/CO (ADDFXL)              0.29       4.05 f
+  ALU_U/add_1_root_add_21_2/U1_7/CO (ADDFHX2)             0.17       4.22 f
+  ALU_U/add_1_root_add_21_2/U1_8/CO (ADDFHX1)             0.19       4.41 f
+  ALU_U/add_1_root_add_21_2/U1_9/CO (ADDFHX1)             0.20       4.60 f
+  ALU_U/add_1_root_add_21_2/U1_10/CO (ADDFXL)             0.30       4.90 f
+  ALU_U/add_1_root_add_21_2/U1_11/CO (ADDFXL)             0.31       5.21 f
+  ALU_U/add_1_root_add_21_2/U1_12/CO (ADDFXL)             0.31       5.53 f
+  ALU_U/add_1_root_add_21_2/U1_13/CO (ADDFXL)             0.31       5.84 f
+  ALU_U/add_1_root_add_21_2/U1_14/CO (ADDFXL)             0.31       6.15 f
+  ALU_U/add_1_root_add_21_2/U1_15/CO (ADDFXL)             0.32       6.47 f
+  ALU_U/add_1_root_add_21_2/U1_16/CO (ADDFX2)             0.24       6.71 f
+  ALU_U/add_1_root_add_21_2/U1_17/CO (ADDFX2)             0.22       6.93 f
+  ALU_U/add_1_root_add_21_2/U1_18/CO (ADDFHX1)            0.22       7.15 f
+  ALU_U/add_1_root_add_21_2/U1_19/CO (ADDFHX4)            0.14       7.29 f
+  ALU_U/add_1_root_add_21_2/U1_20/CO (ADDFHX2)            0.15       7.44 f
+  ALU_U/add_1_root_add_21_2/U1_21/CO (ADDFHX4)            0.13       7.57 f
+  ALU_U/add_1_root_add_21_2/U1_22/CO (ADDFHX2)            0.14       7.71 f
+  ALU_U/add_1_root_add_21_2/U1_23/CO (ADDFX1)             0.21       7.92 f
+  ALU_U/add_1_root_add_21_2/U1_24/CO (ADDFHX2)            0.17       8.09 f
+  ALU_U/add_1_root_add_21_2/U1_25/CO (ADDFHX4)            0.13       8.22 f
+  ALU_U/add_1_root_add_21_2/U1_26/CO (ADDFHX2)            0.14       8.36 f
+  ALU_U/add_1_root_add_21_2/U1_27/CO (ADDFHX2)            0.15       8.50 f
+  ALU_U/add_1_root_add_21_2/U1_28/CO (ADDFHX2)            0.15       8.65 f
+  ALU_U/add_1_root_add_21_2/U1_29/CO (ADDFHX2)            0.15       8.79 f
+  ALU_U/add_1_root_add_21_2/U1_30/CO (ADDFHX2)            0.15       8.95 f
+  ALU_U/add_1_root_add_21_2/U1_31/S (ADDFHX4)             0.17       9.11 f
+  ALU_U/add_1_root_add_21_2/SUM[31] (ALU_DW01_add_0)      0.00       9.11 f
+  ALU_U/U85/Y (AOI222X2)                                  0.15       9.27 r
+  ALU_U/U3/Y (INVX4)                                      0.08       9.35 f
+  ALU_U/Res_o[31] (ALU)                                   0.00       9.35 f
+  U252/Y (INVX12)                                         0.06       9.42 r
+  U253/Y (CLKINVX20)                                      0.17       9.59 f
+  U292/Y (NAND2X8)                                        0.07       9.66 r
+  U240/Y (NAND3X1)                                        0.09       9.75 f
+  Registers_U/RDdata_i[31] (Registers)                    0.00       9.75 f
+  Registers_U/U97/Y (AND2X2)                              0.20       9.95 f
+  Registers_U/U106/Y (CLKINVX8)                           0.15      10.11 r
+  Registers_U/U778/Y (OAI2BB2XL)                          0.12      10.23 f
+  Registers_U/register_reg[10][31]/D (DFFQXL)             0.00      10.23 f
+  data arrival time                                                 10.23
+
+  clock CLK (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.50      10.50
+  clock uncertainty                                      -0.10      10.40
+  Registers_U/register_reg[10][31]/CK (DFFQXL)            0.00      10.40 r
+  library setup time                                     -0.17      10.23
+  data required time                                                10.23
+  --------------------------------------------------------------------------
+  data required time                                                10.23
+  data arrival time                                                -10.23
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.01
+
+
+1
+report_area
+ 
+****************************************
+Report : area
+Design : CHIP
+Version: N-2017.09-SP2
+Date   : Thu Apr 29 04:11:17 2021
+****************************************
+
+Library(s) Used:
+
+    typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
+
+Number of ports:                          761
+Number of nets:                          5420
+Number of cells:                         4718
+Number of combinational cells:           3615
+Number of sequential cells:              1095
+Number of macros/black boxes:               0
+Number of buf/inv:                        584
+Number of references:                      50
+
+Combinational area:              35587.688465
+Buf/Inv area:                     5226.294620
+Noncombinational area:           28684.363079
+Macro/Black Box area:                0.000000
+Net Interconnect area:          678443.457397
+
+Total cell area:                 64272.051544
+Total area:                     742715.508942
+1
+quit
+
+Thank you...

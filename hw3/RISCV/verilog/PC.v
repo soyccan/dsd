@@ -13,7 +13,7 @@ always @(posedge Clk_i) begin
         PC_o <= 32'b0;
     end
     else if (PCWrite_i) begin
-        PC_o <= PC_i;
+        PC_o <= {PC_i[31:1], 1'b0};
     end
 end
 

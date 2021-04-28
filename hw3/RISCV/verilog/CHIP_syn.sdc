@@ -3,7 +3,7 @@ current_design [get_designs CHIP]
 #You may modified the clock constraints
 #or add more constraints for your design
 ####################################################
-set cycle  3
+set cycle  10
 ####################################################
 
 #The following are design spec. for synthesis
