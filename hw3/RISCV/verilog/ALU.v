@@ -3,21 +3,30 @@
 module ALU(input [3:0] ALUCtl_i,
            input [31:0] Op1_i,
            input [31:0] Op2_i,
-           output reg [31:0] Res_o,
-           output Zero_o,
-           output reg Overflow_o);
+           output reg [31:0] Res_o);
 
-assign Zero_o = ~|Res_o;
+wire [32:0] adder_op1;
+wire [32:0] adder_op2;
+wire [32:0] adder_res;
+wire sub;
+
+// sub, slt
+assign sub = ALUCtl_i != `ALU_CTL_ADD;
+
+// signed extension & negation
+assign adder_op1 = {Op1_i[31], Op1_i};
+assign adder_op2 = {Op2_i[31], Op2_i} ^ {33{sub}};
+
+// with carry in `sub`
+assign adder_res = adder_op1 + adder_op2 + sub;
 
 always @* begin
-    Overflow_o = 1'b0;
     Res_o = 32'b0;
 
     case (ALUCtl_i)
-        `ALU_CTL_ADD:  {Overflow_o, Res_o} = $signed(Op1_i) + $signed(Op2_i);
-        `ALU_CTL_SUB:  {Overflow_o, Res_o} = $signed(Op1_i) - $signed(Op2_i);
+        `ALU_CTL_ADD, `ALU_CTL_SUB: Res_o = adder_res;
         // `ALU_CTL_SUBU: {Overflow_o, Res_o} = Op1_i - Op2_i; // for bltu, bgeu
-        `ALU_CTL_SLT:  Res_o = $signed(Op1_i) < $signed(Op2_i);
+        `ALU_CTL_SLT: Res_o = adder_res[32];
         // `ALU_CTL_SLTU: Res_o = Op1_i < Op2_i;
         `ALU_CTL_XOR:  Res_o = Op1_i ^ Op2_i;
         `ALU_CTL_OR:   Res_o = Op1_i | Op2_i;

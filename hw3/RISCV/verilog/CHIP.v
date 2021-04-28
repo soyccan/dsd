@@ -46,8 +46,6 @@ endfunction
 
 
 //////// Parameter ////////
-localparam LOAD_STATE_NORM = 1'b0;
-localparam LOAD_STATE_CONT = 1'b1;
 
 
 //////// Reg & Wire Declaration ////////
@@ -79,8 +77,6 @@ wire [31:0] alu_op1;
 wire [31:0] alu_op2;
 wire [31:0] alu_res;
 wire [31:0] alu_res_as_addr;
-wire alu_zero;
-wire alu_overflow;
 
 wire [31:0] data_from_mem;
 wire [31:0] data_to_mem;
@@ -95,17 +91,13 @@ wire MemWrite;
 wire Branch;
 wire PCWrite;
 wire Jal;
-wire Jalr;
 // wire Compressed;
 wire BranchTaken;
 wire Flush;
-wire Load;
 
 wire [1:0] ALUOp;
 wire [3:0] ALUCtl;
 
-reg load_state;
-reg nxt_load_state;
 wire Stall;
 
 
@@ -127,10 +119,11 @@ PC PC_U(
 // );
 
 Control Control_U(
+    .clk(clk),
+    .rst(rst),
     .Opcode_i(inst[6:0]),
     .Funct7_i(inst[31:25]),
     .Funct3_i(inst[14:12]),
-    // .ALUOp_o(ALUOp),
     .ALUSrc1_o(ALUSrc1),
     .ALUSrc2_o(ALUSrc2),
     .RegWrite_o(RegWrite),
@@ -139,9 +132,8 @@ Control Control_U(
     .MemWrite_o(MemWrite),
     .Branch_o(Branch),
     .Jal_o(Jal),
-    .Jalr_o(Jalr),
     .ALUCtl_o(ALUCtl),
-    .Load_o(Load)
+    .StallLoad_o(Stall)
 );
 
 Registers Registers_U(
@@ -165,26 +157,11 @@ ALU ALU_U(
     .ALUCtl_i(ALUCtl),
     .Op1_i(alu_op1),
     .Op2_i(alu_op2),
-    .Res_o(alu_res),
-    .Zero_o(alu_zero),
-    .Overflow_o(alu_overflow)
+    .Res_o(alu_res)
 );
 
 
 //////// Finite-State Machine ////////
-always @(posedge clk) begin
-    if (rst)
-        load_state <= LOAD_STATE_NORM;
-    else
-        load_state <= nxt_load_state;
-end
-
-always @* begin
-    if (load_state == LOAD_STATE_NORM && Load)
-        nxt_load_state = LOAD_STATE_CONT;
-    else
-        nxt_load_state = LOAD_STATE_NORM;
-end
 
 
 //////// Combinational Logic ////////
@@ -210,7 +187,7 @@ assign alu_op2 = ALUSrc2 ? imm_val : rs2_data;
 // If register file supports forwarding, this causes a loop
 // Note: use pc rather than pc+4 since the input buffer makes PC exceed one
 // cycle
-assign rd_data = Jal || Jalr ? pc : write_back_data;
+assign rd_data = Jal ? pc : write_back_data;
 
 assign data_to_mem = rs2_data;
 
@@ -218,9 +195,7 @@ assign write_back_data = MemToReg ? data_from_mem : alu_res;
 
 assign PCWrite = !Stall;
 
-assign Flush = BranchTaken || Jal || Jalr;
-
-assign Stall = Load && load_state == LOAD_STATE_NORM;
+assign Flush = BranchTaken || Jal;
 
 
 // Data memory

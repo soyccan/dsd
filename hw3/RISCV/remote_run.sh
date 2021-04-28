@@ -15,7 +15,7 @@ ssh_pid=$!
 
 
 # ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-#     'rm -rf ~/hw3/*'
+    # 'rm -rf ~/hw3/*'
 
 scp -r -o "ControlPath=$SOCKET" \
     "$proj_root/verilog/".* \
@@ -32,13 +32,15 @@ ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
      source /usr/cad/synopsys/CIC/synthesis.cshrc
      source /usr/cad/synopsys/CIC/verdi.cshrc
      design_vision -no_gui -f dv.cmd
+     ncverilog RISCV_tb.v \
+               +incdir+lib \
+               +access+r \
+               +define+RV32I+SYN
     ' | tee remote.log
-     # ncverilog RISCV_tb.v \
-     #           +incdir+lib \
-     #           +access+r \
-     #           +define+RV32I+SYN
 
-
+scp -o "ControlPath=$SOCKET" \
+    b7902143@cad30.ee.ntu.edu.tw:~/hw3/CHIP_syn.{v,sdf,ddc} \
+    ./syn/
 
                # +define+RV32I+RTL
                # +define+RV32I+SYN
