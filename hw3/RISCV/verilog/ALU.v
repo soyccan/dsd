@@ -24,7 +24,7 @@ assign adder_op2 = {Op2_i[31], Op2_i} ^ {33{neg}};
 assign {overflow, AdderRes_o} = adder_op1 + adder_op2 + neg;
 
 always @* begin
-    Res_o = 32'b0;
+    Res_o = AdderRes_o;
 
     case (ALUCtl_i)
         `ALU_CTL_ADD, `ALU_CTL_SUB: Res_o = AdderRes_o;
@@ -37,6 +37,7 @@ always @* begin
         // `ALU_CTL_SLL:  Res_o = Op1_i << shft_amt;
         // `ALU_CTL_SRL:  Res_o = Op1_i >> shft_amt;
         // `ALU_CTL_SRA:  Res_o = $signed(Op1_i) >>> shft_amt;
+        default: Res_o = AdderRes_o;
     endcase
 end
 

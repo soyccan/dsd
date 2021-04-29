@@ -24,7 +24,7 @@ ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
      unzip ${PREFIX}.zip
      cd RISCV/verilog
      cp -fv ~/${PREFIX}/* .
-     sed -i 's/define CYCLE 10/define CYCLE 3.43/' RISCV_tb.v
+     sed -i 's/define CYCLE 10/define CYCLE 4/' RISCV_tb.v
      ln -sf /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v .
      source /usr/cad/cadence/cshrc
      ncverilog RISCV_tb.v +access+r +define+RV32I+RTL

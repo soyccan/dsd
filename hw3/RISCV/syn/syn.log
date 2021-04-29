@@ -98,7 +98,7 @@ Statistics for case statements in always block at line 26 in file
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|            29            |     no/auto      |
+|            29            |    auto/auto     |
 ===============================================
 Warning:  ImmGen.v:16: signed to unsigned assignment occurs. (VER-318)
 Warning:  ImmGen.v:19: signed to unsigned assignment occurs. (VER-318)
@@ -121,8 +121,11 @@ source CHIP_syn.sdc
 Current design is 'CHIP'.
 Using operating conditions 'slow' found in library 'slow'.
 Using operating conditions 'fast' found in library 'fast'.
+Warning: The -area_high_effort_script option is ignored. To enable further area optimization, use the optimize_netlist -area command. (OPT-1341)
+Warning: The -timing_high_effort_script option is ignored.  (OPT-1342)
+Information: Performing power optimization. (PWR-850)
+Alib files are up-to-date.
 Warning: Setting attribute 'fix_multiple_port_nets' on design 'CHIP'. (UIO-59)
-Information: Checking out the license 'DesignWare'. (SEC-104)
 Information: Evaluating DesignWare library utilization. (UISN-27)
 
 ============================================================================
@@ -132,547 +135,237 @@ Information: Evaluating DesignWare library utilization. (UISN-27)
 | Licensed DW Building Blocks        | N-2017.09-DWBB_201709.2 |     *     |
 ============================================================================
 
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
 
 Information: There are 11 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
 
+  Simplifying Design 'CHIP'
 
+  Loading target library 'slow'
+  Loading target library 'fast'
+Loaded alib file './alib-52/typical.db.alib'
+Loaded alib file './alib-52/slow.db.alib'
+Loaded alib file './alib-52/fast.db.alib'
 Warning: Operating condition slow set on design CHIP has different process,
 voltage and temperatures parameters than the parameters at which target library 
 typical is characterized. Delays may be inaccurate as a result. (OPT-998)
+  Building model 'DW01_NAND2'
+Information: Ungrouping hierarchy PC_U before Pass 1 (OPT-776)
+Information: Ungrouping hierarchy Control_U before Pass 1 (OPT-776)
+Information: Ungrouping hierarchy ImmGen_U before Pass 1 (OPT-776)
+Information: Ungrouping hierarchy ALU_U before Pass 1 (OPT-776)
+Information: Ungrouping 4 of 6 hierarchies before Pass 1 (OPT-775)
+Information: State dependent leakage is now switched from on to off.
 
   Beginning Pass 1 Mapping
   ------------------------
-  Processing 'ALU'
-  Processing 'ImmGen'
   Processing 'RegFile'
-  Processing 'Control'
-  Processing 'PC'
-Information: The register 'PC_o_reg[0]' is a constant and will be removed. (OPT-1206)
   Processing 'CHIP'
 Information: Added key list 'DesignWare' to design 'CHIP'. (DDB-72)
+Information: The register 'PC_U/PC_o_reg[0]' is a constant and will be removed. (OPT-1206)
+ Implement Synthetic for 'CHIP'.
 
   Updating timing information
 Information: Updating design information... (UID-85)
+Information: The library cell 'HOLDX1' in the library 'typical' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+Information: Complementing port 'rst_i' in design 'RegFile'.
+	 The new name of the port is 'rst_i_BAR'. (OPT-319)
 
-  Beginning Implementation Selection
-  ----------------------------------
-  Processing 'CHIP_DW01_inc_0'
-  Processing 'ALU_DW01_add_0'
-
-  Beginning Mapping Optimizations  (High effort)
+  Beginning Mapping Optimizations  (Ultra High effort)
   -------------------------------
-Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
-Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+Information: Ungrouping hierarchy RegFile_U 'RegFile' #insts = 4344. (OPT-777)
   Mapping Optimization (Phase 1)
   Mapping Optimization (Phase 2)
   Mapping Optimization (Phase 3)
   Mapping Optimization (Phase 4)
   Mapping Optimization (Phase 5)
+  Mapping Optimization (Phase 6)
+  Mapping Optimization (Phase 7)
+  Mapping Optimization (Phase 8)
+  Mapping Optimization (Phase 9)
 
-                                  TOTAL                                                  
-   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
-  --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:37  126213.6      0.78     691.3      61.6                                0.00  
-    0:00:38  112566.5      0.84    1259.6      63.1                                0.00  
-    0:00:38  112566.5      0.84    1259.6      63.1                                0.00  
-    0:00:38  112561.4      0.84    1254.6      63.1                                0.00  
-    0:00:38  112561.4      0.84    1254.6      63.1                                0.00  
-    0:00:40   70674.6      4.08    5599.6      57.3                                0.00  
-    0:00:42   71477.5      3.93    5846.0      57.2                                0.00  
-    0:00:43   71270.4      3.65    5450.5      57.2                                0.00  
-    0:00:43   71248.4      3.71    5538.5      57.2                                0.00  
-    0:00:43   71297.6      3.59    5460.7      57.2                                0.00  
-    0:00:43   71390.9      3.43    5216.0      57.2                                0.00  
-    0:00:44   71350.2      3.33    5006.2      57.2                                0.00  
-    0:00:44   71340.0      3.30    5092.3      57.2                                0.00  
-    0:00:44   71380.8      3.23    4921.0      57.2                                0.00  
-    0:00:44   71362.1      3.05    4667.3      57.2                                0.00  
-    0:00:44   71377.4      3.05    4665.4      57.2                                0.00  
-    0:00:44   71411.3      2.95    4452.2      57.2                                0.00  
-    0:00:44   71474.1      2.91    4401.9      57.2                                0.00  
-    0:00:44   71514.9      2.82    4374.9      57.2                                0.00  
-    0:00:44   71533.5      2.81    4362.2      57.2                                0.00  
-    0:00:44   71570.9      2.79    4353.4      57.2                                0.00  
-    0:00:44   71592.9      2.79    4347.7      57.2                                0.00  
-    0:00:45   71669.3      2.77    4281.6      57.2                                0.00  
-    0:00:45   71728.7      2.75    4210.9      57.2                                0.00  
-    0:00:45   71728.7      2.75    4210.9      57.2                                0.00  
-    0:00:45   71728.7      2.75    4210.9      57.2                                0.00  
-    0:00:45   71830.6      2.82    4236.2      49.7                                0.00  
-    0:00:45   71896.8      2.82    4228.9      44.2                                0.00  
-    0:00:45   71998.6      2.82    4247.3      36.8                                0.00  
-    0:00:45   72064.8      2.82    4247.4      31.3                                0.00  
-    0:00:45   72141.2      2.86    4264.4      25.8                                0.00  
-    0:00:45   72215.9      2.86    4277.3      20.3                                0.00  
-    0:00:45   72241.3      2.86    4279.7      18.5                                0.00  
-    0:00:45   72261.7      2.86    4279.7      16.7                                0.00  
-    0:00:45   72278.7      2.86    4279.7      14.9                                0.00  
-    0:00:45   72278.7      2.86    4279.7      14.9                                0.00  
-    0:00:46   72558.8      2.53    3978.5      14.9 RegFile_U/register_reg[30][31]/D      0.00  
-    0:00:47   72916.9      2.36    3738.6      14.9 RegFile_U/register_reg[30][31]/D      0.00  
-    0:00:47   73317.5      2.28    3597.4      14.9 RegFile_U/register_reg[16][17]/D      0.00  
-    0:00:48   73680.7      2.18    3389.7      14.9 RegFile_U/register_reg[25][28]/D      0.00  
-    0:00:48   74183.2      2.01    3169.0      14.9 RegFile_U/register_reg[14][3]/D      0.00  
-    0:00:49   74563.4      1.90    2942.3      14.9 RegFile_U/register_reg[6][30]/D      0.00  
-    0:00:49   75079.4      1.84    2842.2      14.9 RegFile_U/register_reg[0][17]/D      0.00  
-    0:00:50   78105.9      1.60    2424.0      14.9 RegFile_U/register_reg[26][25]/D      0.00  
-    0:00:52   78998.7      1.41    2088.4      15.0 RegFile_U/register_reg[26][22]/D      0.00  
-    0:00:52   79703.1      1.35    1987.2      15.0 RegFile_U/register_reg[26][22]/D      0.00  
-    0:00:53   80202.1      1.29    1864.3      15.0 RegFile_U/register_reg[29][17]/D      0.00  
-    0:00:54   81010.1      1.17    1729.7      15.0 RegFile_U/register_reg[9][9]/D      0.00  
-    0:00:54   81480.3      1.11    1643.5      15.1 RegFile_U/register_reg[2][17]/D      0.00  
-    0:00:55   81902.9      1.07    1592.2      15.1 RegFile_U/register_reg[29][17]/D      0.00  
-    0:00:56   82079.5      1.05    1539.7      15.1 RegFile_U/register_reg[26][29]/D      0.00  
-    0:00:56   82142.3      1.04    1508.1      15.1 RegFile_U/register_reg[29][18]/D      0.00  
-    0:00:56   82254.3      1.02    1489.0      15.1 RegFile_U/register_reg[8][30]/D      0.00  
-    0:00:57   82497.0      1.00    1460.4      15.1 RegFile_U/register_reg[29][18]/D      0.00  
-    0:00:57   82620.9      0.99    1442.0      15.1 RegFile_U/register_reg[29][18]/D      0.00  
-    0:00:57   82531.0      0.98    1434.4      15.1 RegFile_U/register_reg[2][28]/D      0.00  
-    0:01:04   84550.9      0.94    1348.7      15.7                                0.00  
-    0:01:04   84970.1      0.93    1279.5      15.7                                0.00  
-    0:01:04   85798.5      0.92    1221.4      15.7                                0.00  
-    0:01:05   85915.6      0.91    1175.9      15.7                                0.00  
-    0:01:05   86036.1      0.90    1154.9      15.7                                0.00  
-    0:01:05   86073.5      0.86    1123.0      15.7                                0.00  
-    0:01:05   86214.3      0.83    1104.6      15.2                                0.00  
-    0:01:06   86514.8      0.78    1009.2      13.3                                0.00  
-    0:01:06   86630.2      0.76     960.5      13.3                                0.00  
-    0:01:06   86667.5      0.73     946.3       9.5                                0.00  
-    0:01:06   86779.6      0.71     920.0       9.5                                0.00  
-    0:01:07   86925.6      0.69     908.0       9.5                                0.00  
-    0:01:07   87020.6      0.66     885.9       5.7                                0.00  
-    0:01:07   87465.3      0.63     837.5       5.7                                0.00  
-    0:01:07   87562.1      0.62     825.5       5.7                                0.00  
-    0:01:08   87538.3      0.61     813.6       5.7                                0.00  
-    0:01:08   87633.4      0.60     783.3       5.7                                0.00  
-    0:01:08   88106.9      0.58     764.0       5.7                                0.00  
-    0:01:08   88252.9      0.57     742.9       5.7                                0.00  
-    0:01:09   88421.0      0.55     727.3       5.7                                0.00  
-    0:01:09   88485.5      0.55     722.4       5.7                                0.00  
-    0:01:09   88695.9      0.54     708.2       5.7                                0.00  
-    0:01:09   88960.7      0.50     650.1       5.7                                0.00  
-    0:01:10   89495.4      0.49     634.2       5.7                                0.00  
-    0:01:10   89719.5      0.47     590.9       5.7                                0.00  
-    0:01:10   89857.0      0.46     569.2       5.7                                0.00  
-    0:01:10   90389.9      0.45     551.7       5.7                                0.00  
-    0:01:10   90491.8      0.44     539.2       5.7                                0.00  
-    0:01:11   90629.3      0.44     532.5       5.7                                0.00  
-    0:01:11   90907.7      0.43     531.7       5.7                                0.00  
-    0:01:11   90948.4      0.42     527.5       5.7                                0.00  
-    0:01:11   91094.4      0.41     508.1       5.7                                0.00  
-    0:01:11   91209.8      0.41     498.1       5.7                                0.00  
-    0:01:12   91635.8      0.39     483.7       5.7                                0.00  
-    0:01:12   91960.0      0.39     475.4       5.7                                0.00  
-    0:01:12   92345.3      0.38     467.0       5.7                                0.00  
-    0:01:12   92722.2      0.38     456.3       5.7                                0.00  
-    0:01:12   93170.3      0.37     448.3       3.9                                0.00  
-    0:01:13   93258.6      0.36     437.3       3.9                                0.00  
-    0:01:13   93469.0      0.36     429.2       3.9                                0.00  
-    0:01:13   93985.0      0.36     408.7       3.9                                0.00  
-    0:01:13   94699.6      0.36     395.5       3.9                                0.00  
-    0:01:13   94956.0      0.36     392.2       3.9                                0.00  
-    0:01:14   95354.8      0.36     385.7       4.0                                0.00  
-    0:01:14   95504.2      0.36     379.8       4.0                                0.00  
-    0:01:14   95526.3      0.36     375.7       4.0                                0.00  
-    0:01:14   95797.9      0.36     368.1       4.0                                0.00  
-    0:01:14   95881.0      0.36     359.5       4.0                                0.00  
-    0:01:14   95926.9      0.36     357.9       4.0                                0.00  
-    0:01:14   95908.2      0.36     357.0       4.0                                0.00  
-    0:01:14   96247.7      0.36     349.9       4.0                                0.00  
+  Beginning Constant Register Removal
+  -----------------------------------
 
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+  Global Optimization (Phase 31)
+  Mapping 'CHIP_DP_OP_50J1_122_4672_5'
 
+  Beginning Isolate Ports
+  -----------------------
 
-  Beginning Delay Optimization Phase
-  ----------------------------------
-
-                                  TOTAL                                                  
-   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
-  --------- --------- --------- --------- --------- ------------------------- -----------
-    0:01:14   96247.7      0.36     349.9       4.0                                0.00  
-    0:01:15   96313.9      0.32     344.2       4.0 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:15   96415.7      0.31     342.9       4.0 RegFile_U/register_reg[17][16]/D      0.00  
-    0:01:15   96597.3      0.31     341.2       4.0 RegFile_U/register_reg[15][21]/D      0.00  
-    0:01:16   96721.2      0.30     323.9       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:16   96806.1      0.30     318.0       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:16   96930.0      0.29     320.4       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:16   97065.8      0.29     306.9       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:16   97108.3      0.28     301.5       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:17   97162.6      0.28     293.9       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:17   97203.3      0.27     291.1       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:17   97281.4      0.27     286.5       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:17   97318.7      0.27     285.9       2.2 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:17   97334.0      0.26     285.0       2.2 RegFile_U/register_reg[17][16]/D      0.00  
-    0:01:18   97476.6      0.26     273.6       2.2 RegFile_U/register_reg[17][16]/D      0.00  
-    0:01:18   97682.0      0.25     261.5       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:19   97760.1      0.24     257.6       2.3 RegFile_U/register_reg[0][0]/D      0.00  
-    0:01:19   97770.2      0.24     255.6       2.3 RegFile_U/register_reg[3][20]/D      0.00  
-    0:01:19   97797.4      0.23     252.7       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:19   97843.2      0.23     245.5       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:19   97914.5      0.23     244.4       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:19   97933.2      0.23     244.3       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:20   98013.0      0.22     242.1       2.3 RegFile_U/register_reg[0][0]/D      0.00  
-    0:01:20   98035.0      0.22     235.1       2.3 RegFile_U/register_reg[14][0]/D      0.00  
-    0:01:20   98079.2      0.22     231.2       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:21   98342.3      0.21     213.3       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:21   98340.6      0.21     210.3       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:21   98315.1      0.21     208.4       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:21   98299.8      0.20     206.4       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:21   98349.1      0.20     202.8       2.3 RegFile_U/register_reg[26][27]/D      0.00  
-    0:01:21   98372.8      0.20     201.1       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:21   98547.6      0.20     195.9       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:22   98588.4      0.20     194.1       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:22   98654.6      0.19     191.3       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:22   98681.7      0.19     191.1       2.3 RegFile_U/register_reg[12][25]/D      0.00  
-    0:01:22   98705.5      0.19     190.3       2.3 RegFile_U/register_reg[8][29]/D      0.00  
-    0:01:22   98654.6      0.19     188.1       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:22   98780.2      0.18     184.0       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:22   98773.4      0.18     183.4       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:23   98895.6      0.18     180.0       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:23   98892.2      0.18     178.4       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:23   98890.5      0.18     176.6       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:23   98922.8      0.18     175.2       2.3 RegFile_U/register_reg[8][29]/D      0.00  
-    0:01:23   98919.4      0.18     173.4       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:23   98948.2      0.18     172.9       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:23   98980.5      0.17     172.2       2.3 RegFile_U/register_reg[8][29]/D      0.00  
-    0:01:24   98990.7      0.17     170.6       2.3 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:24   99026.3      0.17     169.1       2.3 RegFile_U/register_reg[15][20]/D      0.00  
-    0:01:24   99343.7      0.17     162.9       2.3 RegFile_U/register_reg[12][20]/D      0.00  
-    0:01:24   99550.8      0.17     162.7       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:24   99591.5      0.17     158.3       2.3 RegFile_U/register_reg[11][31]/D      0.00  
-    0:01:24   99613.6      0.17     157.3       2.2 RegFile_U/register_reg[0][30]/D      0.00  
-    0:01:25   99749.4      0.16     158.5       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:25   99781.7      0.16     158.0       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:25   99825.8      0.16     156.3       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:25   99832.6      0.16     155.5       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:25   99842.8      0.16     154.4       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:25   99852.9      0.16     154.2       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:25   99859.7      0.16     153.4       2.2 RegFile_U/register_reg[19][0]/D      0.00  
-    0:01:26   99941.2      0.15     151.2       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:26   99956.5      0.15     148.6       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:26  100012.5      0.15     148.1       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:26  100185.6      0.15     144.6       2.2 RegFile_U/register_reg[19][0]/D      0.00  
-    0:01:26  100195.8      0.15     144.5       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:27  100234.9      0.15     144.6       2.2 RegFile_U/register_reg[24][0]/D      0.00  
-    0:01:27  100352.0      0.15     140.8       2.2 RegFile_U/register_reg[13][20]/D      0.00  
-    0:01:27  100419.9      0.15     140.2       2.2 RegFile_U/register_reg[30][20]/D      0.00  
-    0:01:27  100511.5      0.14     135.9       2.2 RegFile_U/register_reg[1][12]/D      0.00  
-    0:01:27  100503.1      0.14     134.6       2.2 RegFile_U/register_reg[22][28]/D      0.00  
-    0:01:27  100531.9      0.14     132.5       2.2 RegFile_U/register_reg[17][16]/D      0.00  
-    0:01:28  100555.7      0.14     131.4       2.2 RegFile_U/register_reg[21][17]/D      0.00  
-    0:01:28  100547.2      0.14     130.6       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:28  100587.9      0.14     129.8       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:28  100591.3      0.14     129.6       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:28  100594.7      0.14     128.6       2.2 RegFile_U/register_reg[15][30]/D      0.00  
-    0:01:28  100671.1      0.13     127.1       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:29  100667.7      0.13     125.6       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:29  100711.8      0.13     123.8       2.2 RegFile_U/register_reg[18][16]/D      0.00  
-    0:01:29  100835.7      0.13     122.8       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:29  100895.2      0.13     121.6       2.2 RegFile_U/register_reg[18][16]/D      0.00  
-    0:01:29  100929.1      0.13     120.5       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:29  100947.8      0.13     117.7       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:29  101008.9      0.13     116.8       2.2 RegFile_U/register_reg[8][29]/D      0.00  
-    0:01:30  100986.8      0.12     115.3       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:30  101010.6      0.12     113.8       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:30  100998.7      0.12     112.8       2.2 RegFile_U/register_reg[8][29]/D      0.00  
-    0:01:30  101014.0      0.12     111.3       2.2 RegFile_U/register_reg[18][16]/D      0.00  
-    0:01:30  101012.3      0.12     110.7       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:30  100981.7      0.12     109.4       2.2 RegFile_U/register_reg[18][16]/D      0.00  
-    0:01:31  100980.0      0.12     108.3       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:31  100951.2      0.12     106.7       2.2 RegFile_U/register_reg[18][16]/D      0.00  
-    0:01:31  100968.1      0.12     106.5       2.2 RegFile_U/register_reg[8][29]/D      0.00  
-    0:01:31  101010.6      0.12     106.3       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:31  101020.8      0.12     106.2       2.2 RegFile_U/register_reg[24][26]/D      0.00  
-    0:01:31  101182.0      0.12     105.2       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:31  101219.4      0.12     104.9       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:32  101187.1      0.11     104.6       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:32  101241.4      0.11     103.1       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:32  101273.7      0.11     101.4       2.2 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:32  101397.6      0.11     100.8       2.3 RegFile_U/register_reg[16][18]/D      0.00  
-    0:01:32  101470.6      0.11      97.0       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:33  101514.7      0.11      95.4       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:33  101497.7      0.11      93.3       2.3 RegFile_U/register_reg[30][23]/D      0.00  
-    0:01:33  101619.9      0.10      90.2       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:33  101760.8      0.10      88.0       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:33  101903.4      0.10      86.1       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:34  101967.9      0.10      83.5       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:34  102046.0      0.10      81.6       2.3 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:34  102029.0      0.10      80.0       2.3 RegFile_U/register_reg[22][26]/D      0.00  
-    0:01:34  102057.9      0.09      78.5       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:34  102056.2      0.09      77.6       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:34  102052.8      0.09      77.3       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:35  102110.5      0.09      76.6       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:35  102110.5      0.09      72.8       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:35  102113.9      0.09      72.1       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:35  102136.0      0.09      71.9       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:35  102169.9      0.09      70.8       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:35  102175.0      0.09      70.8       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:36  102178.4      0.09      70.5       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:36  102200.5      0.09      70.1       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:36  102271.7      0.09      70.1       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:36  102276.8      0.09      69.7       2.3 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:36  102351.5      0.09      69.6       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:37  102351.5      0.09      69.4       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:37  102365.1      0.09      68.8       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:37  102344.7      0.09      68.5       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:38  102407.5      0.08      66.1       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:38  102465.2      0.08      65.7       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:38  102443.2      0.08      65.6       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:38  102448.3      0.08      64.4       2.2 RegFile_U/register_reg[19][26]/D      0.00  
-    0:01:38  102494.1      0.08      62.8       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:38  102489.0      0.08      62.5       2.2 RegFile_U/register_reg[0][27]/D      0.00  
-    0:01:38  102511.1      0.08      62.1       2.2 RegFile_U/register_reg[0][27]/D      0.00  
-    0:01:38  102509.4      0.08      61.7       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:39  102696.1      0.08      60.9       2.2 RegFile_U/register_reg[22][30]/D      0.00  
-    0:01:39  102726.6      0.08      59.7       2.2 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:39  102855.6      0.08      59.6       2.2 RegFile_U/register_reg[14][30]/D      0.00  
-    0:01:39  102942.2      0.08      58.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:39  102988.0      0.08      58.0       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:39  102989.7      0.08      57.3       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:39  102999.9      0.08      56.0       2.2 RegFile_U/register_reg[30][13]/D      0.00  
-    0:01:40  103006.7      0.08      54.5       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:40  103050.9      0.07      54.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:40  103091.6      0.07      53.6       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:40  103081.4      0.07      52.8       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:40  103101.8      0.07      52.5       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:40  103128.9      0.07      50.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103142.5      0.07      49.5       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103086.5      0.07      49.3       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103081.4      0.07      49.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103139.1      0.07      48.5       2.2 RegFile_U/register_reg[0][27]/D      0.00  
-    0:01:41  103088.2      0.07      48.1       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103084.8      0.07      47.7       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103084.8      0.07      48.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103105.2      0.07      47.5       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103140.8      0.07      47.0       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:41  103145.9      0.07      47.0       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103162.9      0.07      46.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103149.3      0.07      46.7       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103149.3      0.07      46.5       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103171.4      0.07      46.5       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103169.7      0.07      46.5       2.2 RegFile_U/register_reg[9][30]/D      0.00  
-    0:01:42  103164.6      0.07      46.0       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103205.3      0.06      46.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103207.0      0.06      46.1       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103198.5      0.06      45.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:42  103230.8      0.06      44.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103188.3      0.06      43.8       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103241.0      0.06      43.7       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103254.5      0.06      43.1       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103280.0      0.06      42.3       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103329.2      0.06      42.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103358.1      0.06      41.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103459.9      0.06      40.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103463.3      0.06      40.4       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103444.6      0.06      40.3       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:43  103443.0      0.06      40.3       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:44  103473.5      0.06      40.2       2.2 RegFile_U/register_reg[13][31]/D      0.00  
-    0:01:46  103611.0      0.06      40.0       2.4                                0.00  
-    0:01:46  103690.8      0.06      39.7       2.4 RegFile_U/register_reg[0][27]/D      0.00  
-    0:01:46  103695.9      0.06      38.4       2.4 RegFile_U/register_reg[29][30]/D      0.00  
-    0:01:47  103716.2      0.06      38.0       2.4 RegFile_U/register_reg[4][0]/D      0.00  
-    0:01:47  103762.1      0.06      36.0       2.4 RegFile_U/register_reg[19][30]/D      0.00  
-    0:01:47  103753.6      0.05      33.2       2.4 RegFile_U/register_reg[19][30]/D      0.00  
-    0:01:47  103757.0      0.05      32.6       2.4 RegFile_U/register_reg[1][1]/D      0.00  
-    0:01:47  103880.9      0.05      31.1       2.4 RegFile_U/register_reg[1][31]/D      0.00  
-    0:01:48  104213.6      0.05      29.7       2.4 RegFile_U/register_reg[12][22]/D      0.00  
-    0:01:48  104512.3      0.05      28.3       2.4 RegFile_U/register_reg[9][22]/D      0.00  
-    0:01:48  104614.2      0.05      27.9       2.4 RegFile_U/register_reg[1][31]/D      0.00  
-    0:01:48  104836.5      0.05      27.2       2.4 RegFile_U/register_reg[20][30]/D      0.00  
-    0:01:48  104865.4      0.05      26.5       2.4 RegFile_U/register_reg[1][31]/D      0.00  
-    0:01:48  104839.9      0.05      26.5       2.4 RegFile_U/register_reg[20][30]/D      0.00  
-    0:01:48  104940.1      0.04      24.9       2.4 RegFile_U/register_reg[20][30]/D      0.00  
-    0:01:48  105247.3      0.04      24.7       2.4 RegFile_U/register_reg[8][30]/D      0.00  
-    0:01:49  105322.0      0.04      24.2       2.4 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:49  105325.4      0.04      24.0       2.4 RegFile_U/register_reg[19][31]/D      0.00  
-    0:01:49  105301.6      0.04      23.6       2.4 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:49  105340.6      0.04      23.4       2.4 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:49  105340.6      0.04      23.4       2.4 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:51  105647.9      0.04      20.5       2.5                                0.00  
-    0:01:51  105675.0      0.04      16.8       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:51  105697.1      0.04      15.7       2.5 RegFile_U/register_reg[19][26]/D      0.00  
-    0:01:52  105683.5      0.04      14.7       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:52  105675.0      0.04      14.8       2.5 RegFile_U/register_reg[2][28]/D      0.00  
-    0:01:52  105680.1      0.03      13.2       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:52  105727.7      0.03      13.0       2.5 RegFile_U/register_reg[19][22]/D      0.00  
-    0:01:52  105787.1      0.03      11.7       2.5 RegFile_U/register_reg[7][26]/D      0.00  
-    0:01:52  105797.2      0.03      11.6       2.5 RegFile_U/register_reg[16][29]/D      0.00  
-    0:01:52  105831.2      0.03      10.9       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:53  105812.5      0.03      11.0       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:53  105838.0      0.03      10.5       2.5 RegFile_U/register_reg[18][25]/D      0.00  
-    0:01:53  105892.3      0.03      10.2       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:53  105909.3      0.03      10.2       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:53  105926.2      0.03       9.9       2.5 RegFile_U/register_reg[25][25]/D      0.00  
-    0:01:53  106007.7      0.03       9.6       2.5 RegFile_U/register_reg[20][4]/D      0.00  
-    0:01:53  106060.3      0.03       9.3       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:53  106085.8      0.03       8.8       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:54  106163.9      0.02       8.4       2.6 RegFile_U/register_reg[16][29]/D      0.00  
-    0:01:54  106155.4      0.02       8.3       2.5 RegFile_U/register_reg[17][22]/D      0.00  
-    0:01:54  106170.7      0.02       8.3       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:54  106152.0      0.02       8.3       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:54  106202.9      0.02       7.9       2.5 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:54  106197.8      0.02       7.8       3.5 RegFile_U/register_reg[16][29]/D      0.00  
-    0:01:54  106180.9      0.02       7.8       3.5 RegFile_U/register_reg[2][27]/D      0.00  
-    0:01:54  106221.6      0.02       7.8       3.5 RegFile_U/register_reg[16][29]/D      0.00  
-    0:01:54  106260.6      0.02       7.5       3.5 RegFile_U/register_reg[20][4]/D      0.00  
-    0:01:55  106296.3      0.02       7.3       3.5 RegFile_U/register_reg[24][22]/D      0.00  
-    0:01:55  106294.6      0.02       7.2       3.5 RegFile_U/register_reg[12][14]/D      0.00  
-    0:01:55  106294.6      0.02       6.9       3.5 RegFile_U/register_reg[27][14]/D      0.00  
-    0:01:55  106330.2      0.02       5.6       3.5 RegFile_U/register_reg[16][22]/D      0.00  
-    0:01:55  106292.9      0.02       5.6       3.5 RegFile_U/register_reg[20][4]/D      0.00  
-    0:01:55  106386.2      0.02       5.2       3.5 RegFile_U/register_reg[22][4]/D      0.00  
-    0:01:55  106447.3      0.02       4.9       3.5 RegFile_U/register_reg[7][18]/D      0.00  
-    0:01:55  106466.0      0.02       4.7       3.5 RegFile_U/register_reg[30][20]/D      0.00  
-    0:01:55  106508.5      0.02       4.7       3.5 RegFile_U/register_reg[12][19]/D      0.00  
-    0:01:55  106455.8      0.01       4.0       3.5 RegFile_U/register_reg[0][17]/D      0.00  
-    0:01:56  106489.8      0.01       3.7       3.4 RegFile_U/register_reg[25][14]/D      0.00  
-    0:01:56  106500.0      0.01       3.5       3.4 RegFile_U/register_reg[24][28]/D      0.00  
-    0:01:56  106615.4      0.01       3.1       3.4 RegFile_U/register_reg[9][25]/D      0.00  
-    0:01:56  106741.0      0.01       2.8       3.4 RegFile_U/register_reg[13][11]/D      0.00  
-    0:01:56  106851.3      0.01       2.6       3.4 RegFile_U/register_reg[30][13]/D      0.00  
-    0:01:56  106944.7      0.01       2.6       3.4 RegFile_U/register_reg[14][20]/D      0.00  
-    0:01:56  107165.3      0.01       2.5       3.4 RegFile_U/register_reg[20][20]/D      0.00  
-    0:01:56  107112.7      0.01       2.4       3.4 RegFile_U/register_reg[15][30]/D      0.00  
-    0:01:56  107163.7      0.01       2.3       3.4 RegFile_U/register_reg[3][26]/D      0.00  
-    0:01:56  107199.3      0.01       2.3       3.4 RegFile_U/register_reg[21][27]/D      0.00  
-    0:01:57  107175.5      0.01       2.0       3.4 RegFile_U/register_reg[8][10]/D      0.00  
-    0:01:57  107192.5      0.01       1.6       3.4 RegFile_U/register_reg[9][31]/D      0.00  
-    0:01:57  107168.7      0.01       1.6       3.4 RegFile_U/register_reg[14][0]/D      0.00  
-    0:01:57  107204.4      0.01       1.5       3.4 RegFile_U/register_reg[14][0]/D      0.00  
-    0:01:57  107199.3      0.01       1.4       3.4 RegFile_U/register_reg[13][16]/D      0.00  
-    0:01:57  107236.6      0.01       1.3       3.4 RegFile_U/register_reg[16][29]/D      0.00  
-    0:01:57  107285.9      0.01       1.0       3.4 RegFile_U/register_reg[14][8]/D      0.00  
-    0:01:57  107360.5      0.01       0.7       3.4 RegFile_U/register_reg[0][8]/D      0.00  
-    0:01:57  107440.3      0.01       0.6       3.4 RegFile_U/register_reg[25][31]/D      0.00  
-    0:01:57  107572.7      0.01       0.5       3.4 RegFile_U/register_reg[22][31]/D      0.00  
-    0:01:58  107694.9      0.01       0.4       3.4 RegFile_U/register_reg[18][15]/D      0.00  
-    0:01:58  107817.2      0.01       0.4       3.4 RegFile_U/register_reg[28][15]/D      0.00  
-    0:01:58  107842.6      0.01       0.3       3.4 RegFile_U/register_reg[14][13]/D      0.00  
-    0:01:58  107829.0      0.00       0.3       3.4 RegFile_U/register_reg[1][25]/D      0.00  
-    0:01:58  107900.3      0.00       0.3       3.4 RegFile_U/register_reg[14][13]/D      0.00  
-    0:01:58  107946.2      0.00       0.2       3.4 RegFile_U/register_reg[13][23]/D      0.00  
-    0:01:58  107886.7      0.00       0.2       3.4 RegFile_U/register_reg[9][4]/D      0.00  
-    0:01:58  107917.3      0.00       0.2       3.4 RegFile_U/register_reg[14][13]/D      0.00  
-    0:01:58  107947.8      0.00       0.2       3.4 RegFile_U/register_reg[21][11]/D      0.00  
-    0:01:58  108007.3      0.00       0.1       3.4 RegFile_U/register_reg[11][14]/D      0.00  
-    0:01:59  108058.2      0.00       0.1       3.4 RegFile_U/register_reg[28][9]/D      0.00  
-    0:01:59  108068.4      0.00       0.1       3.4 RegFile_U/register_reg[2][24]/D      0.00  
-    0:01:59  108049.7      0.00       0.0       3.4 RegFile_U/register_reg[4][0]/D      0.00  
-    0:01:59  108009.0      0.00       0.0       3.4 RegFile_U/register_reg[26][30]/D      0.00  
-    0:01:59  108009.0      0.00       0.0       3.4                                0.00  
-    0:02:00  107959.7      0.00       0.0       3.4                                0.00  
-    0:02:00  107959.7      0.00       0.0       3.4                                0.00  
-
-
-  Beginning Design Rule Fixing  (max_transition)  (max_fanout)  (max_capacitance)
+  Beginning Delay Optimization
   ----------------------------
 
-                                  TOTAL                                                  
-   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
-  --------- --------- --------- --------- --------- ------------------------- -----------
-    0:02:00  107959.7      0.00       0.0       3.4                                0.00  
-    0:02:01  107849.4      0.00       0.0       0.0 RegFile_U/net69134             0.00  
-    0:02:01  107849.4      0.00       0.0       0.0                                0.00  
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:56   92776.5      0.75     574.4      23.3                           13215039.0000      0.00  
+    0:00:59   96926.6      0.00       0.0      26.3                           14211717.0000      0.00  
+    0:00:59   96926.6      0.00       0.0      26.3                           14211717.0000      0.00  
+    0:01:00   96310.5      0.00       0.0      26.3                           13989937.0000      0.00  
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+
+  Beginning Delay Optimization HSVT Pass
+  --------------------------------------
+    0:01:07   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:07   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:07   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:07   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:10   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:10   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:10   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:10   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:12   94996.7      0.00       0.0      26.1                           13749328.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
 
 
-  Beginning Area-Recovery Phase  (cleanup)
-  -----------------------------
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
 
-                                  TOTAL                                                  
-   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
-  --------- --------- --------- --------- --------- ------------------------- -----------
-    0:02:01  107849.4      0.00       0.0       0.0                                0.00  
-    0:02:01  107849.4      0.00       0.0       0.0                                0.00  
-    0:02:01  105233.7      0.23      90.6       0.0                                0.00  
-    0:02:02  104442.7      0.19      68.6       0.0                                0.00  
-    0:02:02  104152.5      0.19      68.6       0.0                                0.00  
-    0:02:02  104069.3      0.19      68.6       0.0                                0.00  
-    0:02:02  104030.3      0.20      70.5       0.0                                0.00  
-    0:02:02  104030.3      0.20      70.5       0.0                                0.00  
-    0:02:03  104115.1      0.05      13.0       0.0 RegFile_U/register_reg[9][30]/D      0.00  
-    0:02:03  104179.6      0.04      13.1       0.0 RegFile_U/register_reg[9][30]/D      0.00  
-    0:02:04  104269.6      0.04      10.7       0.0 RegFile_U/register_reg[9][30]/D      0.00  
-    0:02:04  104427.4      0.03      10.1       0.0 RegFile_U/register_reg[9][30]/D      0.00  
-    0:02:05  104449.5      0.03       9.3       0.0 RegFile_U/register_reg[9][30]/D      0.00  
-    0:02:05  104512.3      0.03       8.5       0.0                                0.00  
-    0:02:05  104508.9      0.03       8.1       0.0                                0.00  
-    0:02:05  104546.3      0.03       7.5       0.0                                0.00  
-    0:02:06  104542.9      0.03       7.3       0.0                                0.00  
-    0:02:06  104561.5      0.02       6.3       0.0                                0.00  
-    0:02:06  104595.5      0.02       6.2       0.0                                0.00  
-    0:02:06  104610.8      0.02       5.9       0.0                                0.00  
-    0:02:06  104707.5      0.02       4.9       0.0                                0.00  
-    0:02:07  104746.6      0.02       4.6       0.0                                0.00  
-    0:02:07  104765.2      0.02       4.4       0.0                                0.00  
-    0:02:07  104783.9      0.02       4.4       0.0                                0.00  
-    0:02:07  104766.9      0.02       4.2       0.0                                0.00  
-    0:02:07  104836.5      0.02       3.6       0.0                                0.00  
-    0:02:07  104885.7      0.01       3.1       0.0                                0.00  
-    0:02:08  104899.3      0.01       2.8       0.0                                0.00  
-    0:02:08  104907.8      0.01       2.4       0.0                                0.00  
-    0:02:08  104928.2      0.01       2.4       0.0                                0.00  
-    0:02:09   93876.4      0.75     434.4       0.0                                0.00  
-    0:02:09   92550.7      0.73     430.7       0.0                                0.00  
-    0:02:09   92431.9      0.73     440.3       0.0                                0.00  
-    0:02:09   92394.6      0.73     440.3       0.0                                0.00  
-    0:02:09   92394.6      0.73     440.3       0.0                                0.00  
-    0:02:09   92394.6      0.73     440.3       0.0                                0.00  
-    0:02:09   92394.6      0.73     440.3       0.0                                0.00  
-    0:02:09   92394.6      0.73     440.3       0.0                                0.00  
-    0:02:10   92827.4      0.20      98.1       0.0 RegFile_U/register_reg[1][25]/D      0.00  
-    0:02:10   93202.5      0.15      65.2       0.0 RegFile_U/register_reg[30][16]/D      0.00  
-    0:02:11   93389.3      0.12      46.6       0.0 RegFile_U/register_reg[11][2]/D      0.00  
-    0:02:11   93407.9      0.11      41.5       0.0 RegFile_U/register_reg[9][30]/D      0.00  
-    0:02:12   93531.8      0.09      31.7       0.0 RegFile_U/register_reg[8][24]/D      0.00  
-    0:02:12   93637.1      0.09      32.0       0.0 RegFile_U/register_reg[26][28]/D      0.00  
-    0:02:13   93642.2      0.08      30.1       0.0 RegFile_U/register_reg[30][26]/D      0.00  
-    0:02:13   93650.6      0.08      28.4       0.0 RegFile_U/register_reg[8][24]/D      0.00  
-    0:02:13   93701.6      0.08      28.4       0.0 RegFile_U/register_reg[26][28]/D      0.00  
-    0:02:14   94086.9      0.07      25.4       0.0 RegFile_U/register_reg[7][28]/D      0.00  
-    0:02:14   94229.5      0.06      22.0       0.0 RegFile_U/register_reg[9][13]/D      0.00  
-    0:02:15   94424.7      0.05      16.8       0.0 RegFile_U/register_reg[27][14]/D      0.00  
-    0:02:15   94428.1      0.05      15.3       0.0 RegFile_U/register_reg[27][14]/D      0.00  
-    0:02:16   94516.3      0.04      11.6       0.0 RegFile_U/register_reg[8][19]/D      0.00  
-    0:02:16   94594.4      0.04       9.8       0.0 RegFile_U/register_reg[15][24]/D      0.00  
-    0:02:16   94611.4      0.03       9.5       0.0 RegFile_U/register_reg[9][13]/D      0.00  
-    0:02:17   94692.9      0.03       9.1       0.0 RegFile_U/register_reg[13][22]/D      0.00  
-    0:02:17   94708.1      0.03       7.8       0.0 RegFile_U/register_reg[15][28]/D      0.00  
-    0:02:17   94765.8      0.03       7.6       0.0 RegFile_U/register_reg[9][13]/D      0.00  
-    0:02:17   94779.4      0.03       7.5       0.0 RegFile_U/register_reg[30][25]/D      0.00  
-    0:02:18   94877.9      0.03       6.5       0.0 RegFile_U/register_reg[15][22]/D      0.00  
-    0:02:18   94911.8      0.02       6.3       0.0 RegFile_U/register_reg[15][22]/D      0.00  
-    0:02:18   94932.2      0.02       6.2       0.0 RegFile_U/register_reg[9][22]/D      0.00  
-    0:02:18   94996.7      0.02       5.9       0.0 RegFile_U/register_reg[30][25]/D      0.00  
-    0:02:18   95010.3      0.02       5.3       0.0 RegFile_U/register_reg[10][26]/D      0.00  
-    0:02:19   94983.1      0.02       5.1       0.0 RegFile_U/register_reg[29][11]/D      0.00  
-    0:02:19   95064.6      0.02       3.1       0.0 RegFile_U/register_reg[19][20]/D      0.00  
-    0:02:19   95132.5      0.02       2.9       0.0 RegFile_U/register_reg[14][29]/D      0.00  
-    0:02:20   95169.8      0.01       2.8       0.0 RegFile_U/register_reg[12][29]/D      0.00  
-    0:02:20   95251.3      0.01       2.7       0.0 RegFile_U/register_reg[1][30]/D      0.00  
-    0:02:20   95298.8      0.01       1.9       0.0 RegFile_U/register_reg[15][29]/D      0.00  
-    0:02:20   95258.1      0.01       1.6       0.0 RegFile_U/register_reg[15][29]/D      0.00  
-    0:02:20   95332.8      0.01       1.4       0.0 RegFile_U/register_reg[15][28]/D      0.00  
-    0:02:20   95336.2      0.01       1.2       0.0 RegFile_U/register_reg[27][4]/D      0.00  
-    0:02:21   95356.5      0.01       0.8       0.0 RegFile_U/register_reg[15][26]/D      0.00  
-    0:02:21   95363.3      0.01       0.7       0.0 RegFile_U/register_reg[29][11]/D      0.00  
-    0:02:21   95366.7      0.01       0.6       0.0 RegFile_U/register_reg[23][10]/D      0.00  
-    0:02:21   95436.3      0.01       0.6       0.0 RegFile_U/register_reg[8][29]/D      0.00  
-    0:02:22   95468.6      0.01       0.6       0.0 RegFile_U/register_reg[1][21]/D      0.00  
-    0:02:22   95470.3      0.01       0.5       0.0 RegFile_U/register_reg[21][13]/D      0.00  
-    0:02:22   95470.3      0.01       0.5       0.0 RegFile_U/register_reg[11][31]/D      0.00  
-    0:02:22   95524.6      0.00       0.5       0.0 RegFile_U/register_reg[8][29]/D      0.00  
-    0:02:22   95519.5      0.00       0.3       0.0 RegFile_U/register_reg[8][29]/D      0.00  
-    0:02:22   95522.9      0.00       0.2       0.0 RegFile_U/register_reg[6][13]/D      0.00  
-    0:02:22   95524.6      0.00       0.2       0.0 RegFile_U/register_reg[15][25]/D      0.00  
-    0:02:23   95650.2      0.00       0.1       0.0 RegFile_U/register_reg[19][25]/D      0.00  
-    0:02:23   95906.5      0.00       0.0       0.0 RegFile_U/register_reg[11][31]/D      0.00  
-    0:02:23   95918.4      0.00       0.0       0.0 RegFile_U/register_reg[11][31]/D      0.00  
-    0:02:23   95937.0      0.00       0.0       0.0 RegFile_U/register_reg[15][21]/D      0.00  
-    0:02:23   95940.4      0.00       0.0       0.0                                0.00  
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:01:12   94664.0      0.00       0.0      26.1                           13679069.0000      0.00  
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+  Global Optimization (Phase 34)
+    0:01:13   94441.6      0.00       0.0       0.0                           13584639.0000      0.00  
+    0:01:13   94441.6      0.00       0.0       0.0                           13584639.0000      0.00  
+
+
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:01:13   94441.6      0.00       0.0       0.0                           13584639.0000      0.00  
+  Global Optimization (Phase 35)
+  Global Optimization (Phase 36)
+  Global Optimization (Phase 37)
+  Global Optimization (Phase 38)
+  Global Optimization (Phase 39)
+  Global Optimization (Phase 40)
+  Global Optimization (Phase 41)
+  Global Optimization (Phase 42)
+  Global Optimization (Phase 43)
+  Global Optimization (Phase 44)
+  Global Optimization (Phase 45)
+  Global Optimization (Phase 46)
+  Global Optimization (Phase 47)
+  Global Optimization (Phase 48)
+    0:01:16   89604.0      0.00       0.0       0.0                           12947807.0000      0.00  
+    0:01:16   89604.0      0.00       0.0       0.0                           12947807.0000      0.00  
+    0:01:16   89604.0      0.00       0.0       0.0                           12947807.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:01:16   89473.3      0.00       0.0       0.0                           12935938.0000      0.00  
+    0:01:17   87614.7      0.00       0.0       0.0                           12664098.0000      0.00  
+    0:01:17   87614.7      0.00       0.0       0.0                           12664098.0000      0.00  
+    0:01:17   87614.7      0.00       0.0       0.0                           12664098.0000      0.00  
+    0:01:18   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+
+  Beginning Delay Optimization HSVT Pass
+  --------------------------------------
+    0:01:20   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:20   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:20   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:20   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:23   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:23   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:23   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:23   87594.3      0.00       0.0       0.0                           12663076.0000      0.00  
+    0:01:26   86864.4      0.00       0.0       0.0                           12496627.0000      0.00  
+    0:01:26   86864.4      0.00       0.0       0.0                           12496627.0000      0.00  
+    0:01:26   86864.4      0.00       0.0       0.0                           12496627.0000      0.00  
+    0:01:26   86864.4      0.00       0.0       0.0                           12496627.0000      0.00  
+    0:01:29   80339.6      0.00       0.0       0.0                           10765100.0000      0.00  
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
 
 
 Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
@@ -681,14 +374,528 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   Optimization Complete
   ---------------------
 Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
-     Net 'RegFile_U/clk_i': 1023 load(s), 1 driver(s)
+     Net 'clk': 1023 load(s), 1 driver(s)
+  Loading target library 'slow'
+  Loading target library 'fast'
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+  Loading design 'CHIP'
+
+  Beginning retiming
+  ------------------
+Information: Updating design information... (UID-85)
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+  Retiming CHIP (top)
+  Preferred flip-flop is DFFSX4 with setup = 0.06
+
+
+  Retiming base-clock CLK, rising edge.
+Warning: The input port 'mem_rdata_I[26]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[29]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[26]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[30]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[25]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[18]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'rst_n' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[14]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[15]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[12]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[0]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[13]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[22]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[27]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[20]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[28]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[29]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[30]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[27]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[31]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[28]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[1]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[2]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[16]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[31]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[17]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[19]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[7]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[4]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[22]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[9]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[1]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[24]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[3]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[16]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[17]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[20]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[10]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[8]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[2]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[23]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[21]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[18]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[19]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[11]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[5]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[5]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[7]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[6]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[21]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[10]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[11]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[0]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[3]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[15]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[24]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[25]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_D[6]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[9]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[23]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[13]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[12]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[8]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[4]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+Warning: The input port 'mem_rdata_I[14]' has input rise and fall delay 
+	that is smaller than the clock-to-Q delay used by the retiming 
+	algorithm.For optimal results, make sure to set an input delay 
+	that is realistic. This can be done by using the 'set_input_delay' 
+	or 'characterize' commands. (RTDC-43)
+  Beginning minimum period retiming ...
+  ... minimum period retiming done.
+  Beginning minimum area retiming step 1 ...
+  ... minimum area retiming step 1 done.
+  Beginning minimum area retiming step 2 ...
+  5% 10% 15% 20% 25% 30% 35% 40% 45% 50% 55% 60% 65% 70% 75% 80% 85% 90% 95% 100% 
+  ... minimum area retiming step 2 done.
+  Beginning minimum area retiming step 3 ...
+  10% 20% 30% 40% 50% 60% ... 100% 
+  ... minimum area retiming step 3 done.
+  Beginning final register move ...
+  ... final register move done.
+
+Critical Loop(s) for Minimum Period Retiming
+--------------------------------------------
+---- loop from primary input to primary output ----
+
+Point                                    Incr               Path
+-----------------------------------------------------------------------------
+mem_rdata_I[8]/**outside** (**in_port**) (  0.00   0.00)    0.00   0.00 (++)
+U1208/Y (BUFX16)                         (  0.08   0.08)    0.08   0.08
+U3562/Y (NAND2BX4)                       (  0.08   0.06)    0.16   0.14
+U3584/Y (OR2X8)                          (  0.12   0.13)    0.28   0.27
+U2144/Y (NOR2X4)                         (  0.10   0.06)    0.37   0.34
+U1028/Y (BUFX12)                         (  0.17   0.14)    0.54   0.49
+U2145/Y (AOI22XL)                        (  0.28   0.13)    0.76   0.67
+U2056/Y (NAND4X1)                        (  0.17   0.14)    0.84   0.91
+U926/Y (OR4X2)                           (  0.18   0.27)    1.02   1.18
+U3930/Y (NOR2X4)                         (  0.09   0.06)    1.27   1.18
+U3931/Y (AOI21X4)                        (  0.19   0.09)    1.27   1.36
+U4070/Y (NAND2X4)                        (  0.13   0.10)    1.48   1.37
+U3404/Y (OAI21X2)                        (  0.15   0.08)    1.52   1.56
+U4072/Y (AOI21X4)                        (  0.08   0.05)    1.64   1.58
+U4073/Y (OA21X4)                         (  0.11   0.11)    1.75   1.69
+U1655/Y (NAND2X6)                        (  0.06   0.05)    1.75   1.81
+U1654/Y (INVX16)                         (  0.06   0.04)    1.86   1.81
+U1964/Y (INVX16)                         (  0.04   0.03)    1.86   1.89
+U4074/Y (BUFX20)                         (  0.07   0.08)    1.91   1.97
+U4075/Y (BUFX16)                         (  0.08   0.08)    1.99   2.06
+U4370/Y (AOI21X4)                        (  0.08   0.05)    2.14   2.06
+U4390/Y (XNOR2X4)                        (  0.14   0.12)    2.28   2.26
+U1929/Y (BUFX16)                         (  0.39   0.28)    2.66   2.55
+mem_addr_D[29]/**outside** (**out_port**) (  0.04   0.04)    2.70   2.70 (++)
+-----------------------------------------------------------------------------
+(+) I/O port resulting from a pin of a fixed register or black box
+(++) Delay may have been corrected by clock to Q (input) or setup (output)
+Registers not moved
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+
+  Retiming complete
+  -----------------
+Information: Performing power optimization. (PWR-850)
+
+Information: There are 1 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Operating condition slow set on design CHIP has different process,
+voltage and temperatures parameters than the parameters at which target library 
+typical is characterized. Delays may be inaccurate as a result. (OPT-998)
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'HOLDX1' in the library 'typical' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+
+  Beginning Mapping Optimizations  (High effort)  (Incremental)
+  -------------------------------
+
+  Beginning Incremental Implementation Selection
+  ----------------------------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:01   96133.9      0.04       6.4       0.0                           16317706.0000      0.00  
+    0:00:01   95584.0      0.04       5.3       0.0                           16152988.0000      0.00  
+    0:00:01   95584.0      0.04       5.3       0.0                           16152988.0000      0.00  
+    0:00:01   95560.2      0.04       6.3       0.0                           16146665.0000      0.00  
+    0:00:01   95560.2      0.04       6.3       0.0                           16146665.0000      0.00  
+    0:00:03   75267.8      1.22     427.1       0.0                           10850308.0000      0.00  
+    0:00:03   74992.8      1.22     475.3       0.0                           10819474.0000      0.00  
+    0:00:03   74911.4      1.22     479.9       0.0                           10816065.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:03   74896.1      1.22     481.1       0.0                           10814966.0000      0.00  
+    0:00:04   75683.7      0.33     166.0       0.1 RegFile_U/register_reg[0][28]/D 10940724.0000      0.00  
+    0:00:05   76247.2      0.21     123.4       0.1 RegFile_U/register_reg[0][26]/D 11002202.0000      0.00  
+    0:00:05   76566.3      0.17      89.2       1.8 RegFile_U/register_reg[7][0]/D 11035165.0000      0.00  
+    0:00:06   76781.9      0.14      74.5       1.8 RegFile_U/register_reg[17][28]/D 11067390.0000      0.00  
+    0:00:06   76975.4      0.13      63.4       1.8 RegFile_U/register_reg[19][29]/D 11083250.0000      0.00  
+    0:00:07   78754.3      0.12      54.6       1.9 RegFile_U/register_reg[26][30]/D 11521958.0000      0.00  
+    0:00:08   79226.1      0.09      34.6       1.9 RegFile_U/register_reg[18][29]/D 11611666.0000      0.00  
+    0:00:08   79423.0      0.08      25.0       1.9 RegFile_U/register_reg[18][29]/D 11646007.0000      0.00  
+    0:00:08   79613.2      0.07      20.3       1.9 RegFile_U/register_reg[18][29]/D 11668052.0000      0.00  
+    0:00:09   79813.4      0.06      18.1       1.9 RegFile_U/register_reg[18][29]/D 11701699.0000      0.00  
+    0:00:09   80059.6      0.05      13.9       1.9 RegFile_U/register_reg[17][24]/D 11744513.0000      0.00  
+    0:00:09   80108.8      0.05      12.3       1.9 RegFile_U/register_reg[18][29]/D 11754751.0000      0.00  
+    0:00:10   80371.9      0.04      10.0       1.9 RegFile_U/register_reg[18][29]/D 11780818.0000      0.00  
+    0:00:10   80565.4      0.03       7.0       1.9 RegFile_U/register_reg[18][29]/D 11799029.0000      0.00  
+    0:00:10   80706.3      0.03       5.7       1.9                           11810909.0000      0.00  
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:10   80706.3      0.03       5.7       1.9                           11810909.0000      0.00  
+    0:00:11   80854.0      0.02       4.2       1.9 RegFile_U/register_reg[18][29]/D 11840689.0000      0.00  
+    0:00:11   80950.7      0.02       2.9       1.9 RegFile_U/register_reg[18][29]/D 11856493.0000      0.00  
+    0:00:11   80988.0      0.02       1.8       1.9 RegFile_U/register_reg[18][29]/D 11849119.0000      0.00  
+    0:00:11   81203.6      0.01       0.9       1.9 RegFile_U/register_reg[18][29]/D 11883124.0000      0.00  
+    0:00:12   81354.7      0.01       0.4       1.9 RegFile_U/register_reg[18][29]/D 11886959.0000      0.00  
+    0:00:12   81473.5      0.00       0.1       1.9 RegFile_U/register_reg[18][29]/D 11905866.0000      0.00  
+    0:00:12   81470.1      0.00       0.0       1.9 RegFile_U/register_reg[18][29]/D 11905384.0000      0.00  
+    0:00:12   81539.7      0.00       0.0       1.9 RegFile_U/register_reg[18][29]/D 11908835.0000      0.00  
+    0:00:12   81539.7      0.00       0.0       1.9                           11908835.0000      0.00  
+    0:00:12   81539.7      0.00       0.0       1.9                           11908835.0000      0.00  
+    0:00:12   81539.7      0.00       0.0       1.9                           11908835.0000      0.00  
+    0:00:12   81519.3      0.00       0.0       1.9                           11902734.0000      0.00  
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:12   81519.3      0.00       0.0       1.9                           11902734.0000      0.00  
+    0:00:13   81465.0      0.00       0.0       0.0                           11897864.0000      0.00  
+
+
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:13   81465.0      0.00       0.0       0.0                           11897864.0000      0.00  
+    0:00:13   81465.0      0.00       0.0       0.0                           11897864.0000      0.00  
+    0:00:13   80886.2      0.04       4.1       0.0                           11815706.0000      0.00  
+    0:00:13   80767.4      0.04       3.5       0.0                           11800712.0000      0.00  
+    0:00:13   80767.4      0.04       3.5       0.0                           11800712.0000      0.00  
+    0:00:13   80767.4      0.04       3.5       0.0                           11800712.0000      0.00  
+    0:00:13   80767.4      0.04       3.5       0.0                           11800712.0000      0.00  
+    0:00:14   80731.7      0.00       0.0       0.0                           11795745.0000      0.00  
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'clk': 1023 load(s), 1 driver(s)
 Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
 Information: Writing timing information to file '/home/raid7_2/userb07/b7902143/hw3/CHIP_syn.sdf'. (WT-3)
 Information: Updating design information... (UID-85)
 Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
 Writing verilog file '/home/raid7_2/userb07/b7902143/hw3/CHIP_syn.v'.
 Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
-Warning: Verilog writer has added 12 nets to module CHIP using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
 Writing ddc file 'CHIP_syn.ddc'.
 report_timing
  
@@ -699,7 +906,7 @@ Report : timing
         -max_paths 1
 Design : CHIP
 Version: N-2017.09-SP2
-Date   : Thu Apr 29 21:24:22 2021
+Date   : Thu Apr 29 23:02:38 2021
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -707,9 +914,9 @@ Date   : Thu Apr 29 21:24:22 2021
 Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
-  Startpoint: mem_rdata_I[13]
+  Startpoint: mem_rdata_I[28]
               (input port clocked by CLK)
-  Endpoint: RegFile_U/register_reg[25][0]
+  Endpoint: RegFile_U/register_reg[16][2]
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -723,53 +930,30 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
   input external delay                                    0.10       0.60 f
-  mem_rdata_I[13] (in)                                    0.06       0.66 f
-  RegFile_U/RS2addr_i[1] (RegFile)                        0.00       0.66 f
-  RegFile_U/U2508/Y (CLKINVX12)                           0.05       0.72 r
-  RegFile_U/U2507/Y (CLKINVX12)                           0.03       0.75 f
-  RegFile_U/U1522/Y (AND2X8)                              0.12       0.87 f
-  RegFile_U/U2590/Y (AND2X8)                              0.12       0.99 f
-  RegFile_U/U2505/Y (INVX20)                              0.11       1.10 r
-  RegFile_U/U1787/Y (AOI2BB2X4)                           0.11       1.21 r
-  RegFile_U/U2097/Y (NAND4X4)                             0.06       1.27 f
-  RegFile_U/U1516/Y (OAI32X2)                             0.19       1.47 r
-  RegFile_U/U301/Y (AND2X8)                               0.11       1.57 r
-  RegFile_U/RS2data_o[6] (RegFile)                        0.00       1.57 r
-  U423/Y (INVX8)                                          0.03       1.60 f
-  U532/Y (OAI2BB2X4)                                      0.10       1.70 r
-  ALU_U/Op2_i[6] (ALU)                                    0.00       1.70 r
-  ALU_U/U175/Y (XOR2X4)                                   0.14       1.84 r
-  ALU_U/add_1_root_add_24_2/B[6] (ALU_DW01_add_1)         0.00       1.84 r
-  ALU_U/add_1_root_add_24_2/U688/Y (NOR2X8)               0.08       1.92 f
-  ALU_U/add_1_root_add_24_2/U470/Y (NOR2X8)               0.08       2.00 r
-  ALU_U/add_1_root_add_24_2/U469/Y (NAND2X4)              0.05       2.06 f
-  ALU_U/add_1_root_add_24_2/U311/Y (OAI21X4)              0.12       2.18 r
-  ALU_U/add_1_root_add_24_2/U477/Y (AND2X8)               0.10       2.28 r
-  ALU_U/add_1_root_add_24_2/U578/Y (NOR2X8)               0.04       2.32 f
-  ALU_U/add_1_root_add_24_2/U478/Y (INVX16)               0.08       2.40 r
-  ALU_U/add_1_root_add_24_2/U569/Y (OAI2BB1X4)            0.14       2.54 r
-  ALU_U/add_1_root_add_24_2/U421/Y (AOI21X4)              0.06       2.59 f
-  ALU_U/add_1_root_add_24_2/SUM[32] (ALU_DW01_add_1)      0.00       2.59 f
-  ALU_U/U331/Y (OAI2BB2X4)                                0.10       2.69 f
-  ALU_U/U159/Y (OR3X6)                                    0.14       2.83 f
-  ALU_U/Res_o[0] (ALU)                                    0.00       2.83 f
-  U376/Y (NAND2X8)                                        0.06       2.88 r
-  U381/Y (NAND2X8)                                        0.05       2.93 f
-  RegFile_U/RDdata_i[0] (RegFile)                         0.00       2.93 f
-  RegFile_U/U1296/Y (AND2X8)                              0.15       3.09 f
-  RegFile_U/U1039/Y (CLKMX2X2)                            0.15       3.23 f
-  RegFile_U/register_reg[25][0]/D (DFFQX2)                0.00       3.23 f
-  data arrival time                                                  3.23
+  mem_rdata_I[28] (in)                                    0.03       0.63 f
+  U1235/Y (INVXL)                                         0.15       0.78 r
+  U1098/Y (NOR2X1)                                        0.12       0.90 f
+  U892/Y (NAND3X4)                                        0.14       1.04 r
+  U842/Y (OR2X1)                                          0.35       1.39 r
+  U759/Y (NOR2X1)                                         0.19       1.58 f
+  U2219/Y (CLKBUFX3)                                      0.43       2.01 f
+  U5093/Y (AOI21XL)                                       0.35       2.37 r
+  U2135/Y (OAI211XL)                                      0.19       2.55 f
+  U3515/Y (OAI21X2)                                       0.31       2.86 r
+  U4031/Y (BUFX12)                                        0.23       3.09 r
+  U4939/Y (OAI21XL)                                       0.12       3.22 f
+  RegFile_U/register_reg[16][2]/D (DFFQX1)                0.00       3.22 f
+  data arrival time                                                  3.22
 
   clock CLK (rise edge)                                   3.00       3.00
   clock network delay (ideal)                             0.50       3.50
   clock uncertainty                                      -0.10       3.40
-  RegFile_U/register_reg[25][0]/CK (DFFQX2)               0.00       3.40 r
-  library setup time                                     -0.17       3.23
-  data required time                                                 3.23
+  RegFile_U/register_reg[16][2]/CK (DFFQX1)               0.00       3.40 r
+  library setup time                                     -0.18       3.22
+  data required time                                                 3.22
   --------------------------------------------------------------------------
-  data required time                                                 3.23
-  data arrival time                                                 -3.23
+  data required time                                                 3.22
+  data arrival time                                                 -3.22
   --------------------------------------------------------------------------
   slack (MET)                                                        0.00
 
@@ -781,30 +965,30 @@ report_area -hierarchy
 Report : area
 Design : CHIP
 Version: N-2017.09-SP2
-Date   : Thu Apr 29 21:24:22 2021
+Date   : Thu Apr 29 23:02:38 2021
 ****************************************
 
 Library(s) Used:
 
     typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
 
-Number of ports:                          729
-Number of nets:                          6382
-Number of cells:                         5782
-Number of combinational cells:           4748
-Number of sequential cells:              1027
+Number of ports:                          163
+Number of nets:                          5996
+Number of cells:                         5930
+Number of combinational cells:           4906
+Number of sequential cells:              1024
 Number of macros/black boxes:               0
-Number of buf/inv:                       1149
-Number of references:                      81
+Number of buf/inv:                        561
+Number of references:                     143
 
-Combinational area:              61861.742444
-Buf/Inv area:                    13088.651419
-Noncombinational area:           34078.700106
+Combinational area:              50886.354217
+Buf/Inv area:                     8212.021316
+Noncombinational area:           29845.384680
 Macro/Black Box area:                0.000000
-Net Interconnect area:          704483.570038
+Net Interconnect area:          713676.975586
 
-Total cell area:                 95940.442550
-Total area:                     800424.012588
+Total cell area:                 80731.738897
+Total area:                     794408.714483
 
 Hierarchical area distribution
 ------------------------------
@@ -813,17 +997,10 @@ Hierarchical area distribution
                                   -------------------  ------------------------------ 
 Hierarchical cell                 Absolute    Percent  Combi-      Noncombi-   Black-
                                   Total       Total    national    national    boxes   Design
---------------------------------  ----------  -------  ----------  ----------  ------  ---------------
-CHIP                              95940.4425    100.0   6270.1956      0.0000  0.0000  CHIP
-ALU_U                             10549.3409     11.0   5114.2662      0.0000  0.0000  ALU
-ALU_U/add_1_root_add_24_2          5435.0748      5.7   5435.0748      0.0000  0.0000  ALU_DW01_add_1
-Control_U                           468.4824      0.5    468.4824      0.0000  0.0000  Control
-ImmGen_U                            424.3500      0.4    424.3500      0.0000  0.0000  ImmGen
-PC_U                               1342.6434      1.4    397.1916    945.4518  0.0000  PC
-RegFile_U                         76052.0069     79.3  42918.7586  33133.2483  0.0000  RegFile
-add_159                             833.4234      0.9    833.4234      0.0000  0.0000  CHIP_DW01_inc_1
---------------------------------  ----------  -------  ----------  ----------  ------  ---------------
-Total                                                  61861.7424  34078.7001  0.0000
+--------------------------------  ----------  -------  ----------  ----------  ------  ---------
+CHIP                              80731.7389    100.0  50886.3542  29845.3847  0.0000  CHIP
+--------------------------------  ----------  -------  ----------  ----------  ------  ---------
+Total                                                  50886.3542  29845.3847  0.0000
 
 1
 quit
