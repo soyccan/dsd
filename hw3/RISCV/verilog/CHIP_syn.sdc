@@ -32,7 +32,23 @@ set_output_delay $t_out -clock CLK [all_outputs]
 #Compile and save files
 #You may modified setting of compile
 #####################################################
-compile -map_effort high
+
+# compile -map_effort high
+
+# Optimize timing with high effort
+compile_ultra -timing_high_effort_script -area_high_effort_script
+
+# Optimize area with high effort
+# optimize_netlist -area
+
+optimize_registers -print_critical_loop
+
+# Don't touch slack > 0
+# dont_touch noncritical_blocks
+
+# Incremental optimization
+compile -map_effort high -incremental_mapping
+
 write_sdf -version 2.1 CHIP_syn.sdf
 write -format verilog -hier -output CHIP_syn.v
 write -format ddc     -hier -output CHIP_syn.ddc
