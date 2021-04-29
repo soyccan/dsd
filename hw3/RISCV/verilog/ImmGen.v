@@ -1,7 +1,7 @@
 `include "Const.v"
 
-module Imm_Gen(input  [31:0] Inst_i,
-               output reg [31:0] Imm_o);
+module ImmGen(input  [31:0] Inst_i,
+              output reg [31:0] Imm_o);
 
 wire [6:0] opcode = Inst_i[6:0];
 

@@ -6,12 +6,12 @@
 // ISA: RV32I
 // ==============================
 
-`include "Registers.v"
+`include "RegFile.v"
 `include "PC.v"
 `include "Control.v"
 `include "ALU.v"
-`include "Imm_Gen.v"
-// `include "Decompressor.v"
+`include "ImmGen.v"
+//`include "Decompressor.v"
 
 
 module CHIP(
@@ -49,13 +49,6 @@ endfunction
 
 
 //////// Reg & Wire Declaration ////////
-// Buffering FF so that first cycle can be fully utilized
-// Otherwise first cycle is only half utilized since
-// testbench feeds input at negedge
-// input
-reg [31:0] mem_rdata_D_buf;
-reg [31:0] mem_rdata_I_buf;
-
 wire [31:0] inst;
 wire [31:0] inst_raw;
 
@@ -65,7 +58,6 @@ wire [31:0] pc_nxt;
 wire [31:0] pc_nxt_norm; // next PC in normal case (without branch)
 // wire [31:0] pc_plus_2;
 wire [31:0] pc_plus_4;
-wire [31:0] pc_minus_4;
 wire [31:0] pc;
 
 wire [31:0] rs1_data;
@@ -76,6 +68,7 @@ wire [31:0] imm_val;
 wire [31:0] alu_op1;
 wire [31:0] alu_op2;
 wire [31:0] alu_res;
+wire [31:0] alu_adder_res;
 wire [31:0] alu_res_as_addr;
 
 wire [31:0] data_from_mem;
@@ -89,16 +82,12 @@ wire MemToReg;
 wire MemRead;
 wire MemWrite;
 wire Branch;
-wire PCWrite;
 wire Jal;
 // wire Compressed;
 wire BranchTaken;
-wire Flush;
 
 wire [1:0] ALUOp;
 wire [3:0] ALUCtl;
-
-wire Stall;
 
 
 //////// Submodule Instantiation ////////
@@ -106,7 +95,6 @@ wire Stall;
 PC PC_U(
     .Clk_i(clk),
     .Rst_i(rst),
-    .PCWrite_i(PCWrite),
     .PC_i(pc_nxt),
     .PC_o(pc)
 );
@@ -119,8 +107,6 @@ PC PC_U(
 // );
 
 Control Control_U(
-    .clk(clk),
-    .rst(rst),
     .Opcode_i(inst[6:0]),
     .Funct7_i(inst[31:25]),
     .Funct3_i(inst[14:12]),
@@ -132,11 +118,10 @@ Control Control_U(
     .MemWrite_o(MemWrite),
     .Branch_o(Branch),
     .Jal_o(Jal),
-    .ALUCtl_o(ALUCtl),
-    .StallLoad_o(Stall)
+    .ALUCtl_o(ALUCtl)
 );
 
-Registers Registers_U(
+RegFile RegFile_U(
     .clk_i(clk),
     .rst_i(rst),
     .RS1addr_i(inst[19:15]),
@@ -148,7 +133,7 @@ Registers Registers_U(
     .RS2data_o(rs2_data)
 );
 
-Imm_Gen Imm_Gen_U(
+ImmGen ImmGen_U(
     .Inst_i(inst),
     .Imm_o(imm_val)
 );
@@ -157,7 +142,8 @@ ALU ALU_U(
     .ALUCtl_i(ALUCtl),
     .Op1_i(alu_op1),
     .Op2_i(alu_op2),
-    .Res_o(alu_res)
+    .Res_o(alu_res),
+    .AdderRes_o(alu_adder_res)
 );
 
 
@@ -171,68 +157,46 @@ assign rst = ~rst_n;
 // PC uses incrementer/decrementer instead of adder/subtractor
 // assign pc_plus_2 = pc + 3'd2;
 assign pc_plus_4 = {pc[31:2] + 1'b1, pc[1:0]};
-assign pc_minus_4 = {pc[31:2] - 1'b1, pc[1:0]};
 assign pc_nxt_norm = pc_plus_4;
 
 // address is multiple of 2
-assign alu_res_as_addr = { alu_res[31:1], 1'b0 };
+assign alu_res_as_addr = { alu_adder_res[31:1], 1'b0 };
 
 assign BranchTaken = Branch && (rs1_data == rs2_data);
 
-assign pc_nxt = Flush ? alu_res_as_addr : pc_nxt_norm;
+assign pc_nxt = BranchTaken || Jal ? alu_res_as_addr : pc_nxt_norm;
 
-assign alu_op1 = ALUSrc1 ? pc_minus_4 : rs1_data;
+assign alu_op1 = ALUSrc1 ? pc : rs1_data;
 assign alu_op2 = ALUSrc2 ? imm_val : rs2_data;
 
 // TODO: Following code cause never-ending simulation
 // If register file supports forwarding, this causes a loop
-// Note: use pc rather than pc+4 since the input buffer makes PC exceed one
-// cycle
-assign rd_data = Jal ? pc : write_back_data;
+assign rd_data = Jal ? pc_plus_4 : write_back_data;
 
 assign data_to_mem = rs2_data;
 
 assign write_back_data = MemToReg ? data_from_mem : alu_res;
 
-assign PCWrite = !Stall;
-
-assign Flush = BranchTaken || Jal;
-
 
 // Data memory
 assign mem_wen_D = MemWrite;
 
-assign mem_addr_D = alu_res;
+assign mem_addr_D = alu_adder_res;
 
 assign mem_wdata_D = LE32(data_to_mem);
 
-assign data_from_mem = BE32(mem_rdata_D_buf);
+assign data_from_mem = BE32(mem_rdata_D);
 
 
 // Instruction memory
 assign mem_addr_I = pc;
 
-assign inst_raw = BE32(mem_rdata_I_buf);
+assign inst_raw = BE32(mem_rdata_I);
 
 assign inst = inst_raw;
 
 
 //////// Sequential Logic ////////
-always @(posedge clk) begin
-    if (rst || Flush) begin
-        mem_rdata_D_buf <= 32'b0;
-        mem_rdata_I_buf <= 32'h13000000; // nop (big-endian)
-    end
-    else if (Stall) begin
-        // input buffer
-        mem_rdata_D_buf <= mem_rdata_D;
-    end
-    else begin
-        // input buffer
-        mem_rdata_D_buf <= mem_rdata_D;
-        mem_rdata_I_buf <= mem_rdata_I;
-   end
-end
 
 
 endmodule

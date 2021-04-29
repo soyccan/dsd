@@ -3,17 +3,18 @@
 
 
 // ALU Control unit output "ALUctl"
-`define ALU_CTL_ADD  4'd0
-`define ALU_CTL_SUB  4'd1
-`define ALU_CTL_SUBU 4'd2
-`define ALU_CTL_SLT  4'd3
-`define ALU_CTL_SLTU 4'd4
-`define ALU_CTL_XOR  4'd5
-`define ALU_CTL_OR   4'd6
-`define ALU_CTL_AND  4'd7
-`define ALU_CTL_SLL  4'd8
-`define ALU_CTL_SRL  4'd9
-`define ALU_CTL_SRA  4'd10
+// Resembles funct3 as best as possible
+`define ALU_CTL_ADD  4'b0000
+`define ALU_CTL_SUB  4'b1000
+`define ALU_CTL_SUBU 4'b1001
+`define ALU_CTL_SLL  4'b0001
+`define ALU_CTL_SLT  4'b0010
+`define ALU_CTL_SLTU 4'b0011
+`define ALU_CTL_XOR  4'b0100
+`define ALU_CTL_SRL  4'b0101
+`define ALU_CTL_SRA  4'b1101
+`define ALU_CTL_OR   4'b0110
+`define ALU_CTL_AND  4'b0111
 
 
 // Control unit output "ALUOp"

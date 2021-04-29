@@ -1,8 +1,6 @@
 `include "Const.v"
 
-module Control(input clk,
-               input rst,
-               input [6:0] Opcode_i,
+module Control(input [6:0] Opcode_i,
                input [6:0] Funct7_i,
                input [2:0] Funct3_i,
                output reg ALUSrc1_o,
@@ -13,39 +11,7 @@ module Control(input clk,
                output reg MemWrite_o,
                output reg Branch_o,
                output reg Jal_o,      // jal, jalr
-               output reg [3:0] ALUCtl_o,
-               output StallLoad_o); // Stall due to load
-
-//// Paramater ////
-localparam LOAD_STATE_NORM = 1'b0;
-localparam LOAD_STATE_CONT = 1'b1;
-
-
-//// Regs & Wires ////
-wire load;
-reg load_state;
-reg load_state_nxt;
-
-
-//// Finite-State Machine ////
-always @(posedge clk) begin
-    if (rst)
-        load_state <= LOAD_STATE_NORM;
-    else
-        load_state <= load_state_nxt;
-end
-
-always @* begin
-    if (load_state == LOAD_STATE_NORM && load)
-        load_state_nxt = LOAD_STATE_CONT;
-    else
-        load_state_nxt = LOAD_STATE_NORM;
-end
-
-
-//// Combinational Logic ////
-assign load = Opcode_i == `OPCODE_LOAD;
-assign StallLoad_o = load && load_state == LOAD_STATE_NORM;
+               output reg [3:0] ALUCtl_o);
 
 always @* begin
     ALUSrc1_o   = `ALU_SRC_REG;

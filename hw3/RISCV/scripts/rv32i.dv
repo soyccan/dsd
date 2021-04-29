@@ -1,10 +1,10 @@
 # This is to be read by design_vision by:
-#   design_vision -no_gui -f dv.cmd
+#   design_vision -no_gui -f rv32i.dv
 
 read_verilog CHIP.v
 source CHIP_syn.sdc
 
 report_timing
-report_area
+report_area -hierarchy
 
 quit

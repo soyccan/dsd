@@ -13,6 +13,7 @@ trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 # 1: RTL simulation
 # 2: Synthesis
 # 4: Post-synthesis simulation
+# 8: Use RV32IC instead of RV32I
 mode="$1"
 
 if [[ ! "$mode" ]]; then
@@ -33,30 +34,51 @@ ssh "${args[@]}" b7902143@cad30.ee.ntu.edu.tw &
 
 # Upload files
 scp -r -o "ControlPath=$SOCKET" \
-    "$proj_root/verilog/".* \
     "$proj_root/scripts/"* \
+    "$proj_root/verilog/"* \
+    "$proj_root/verilog/.synopsys_dc.setup" \
     b7902143@cad30.ee.ntu.edu.tw:~/hw3/
 
 # Simulate RTL
 if (( mode & 1 )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        'cd ~/hw3
-         rm -rf INCA_libs
-         source /usr/cad/cadence/cshrc
-         ncverilog RISCV_tb.v \
-                   +access+r \
-                   +define+RV32I+RTL
-        ' | tee rtl.log
+    if (( mode & 8 )); then
+        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+            'cd ~/hw3
+             rm -rf INCA_libs
+             source /usr/cad/cadence/cshrc
+             ncverilog RISCV_tb.v \
+                       +access+r \
+                       +define+RV32IC+RTL
+            ' | tee rtl.log
+    else
+        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+            'cd ~/hw3
+             rm -rf INCA_libs
+             source /usr/cad/cadence/cshrc
+             ncverilog RISCV_tb.v \
+                       +access+r \
+                       +define+RV32I+RTL
+            ' | tee rtl.log
+    fi
 fi
 
 # Synthesize
 if (( mode & 2 )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        'cd ~/hw3
-         source /usr/cad/synopsys/CIC/synthesis.cshrc
-         source /usr/cad/synopsys/CIC/verdi.cshrc
-         design_vision -no_gui -f dv.cmd
-        ' | tee syn/syn.log
+    if (( mode & 8 )); then
+        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+            'cd ~/hw3
+             source /usr/cad/synopsys/CIC/synthesis.cshrc
+             source /usr/cad/synopsys/CIC/verdi.cshrc
+             design_vision -no_gui -f rv32ic.dv
+            ' | tee syn/syn.log
+    else
+        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+            'cd ~/hw3
+             source /usr/cad/synopsys/CIC/synthesis.cshrc
+             source /usr/cad/synopsys/CIC/verdi.cshrc
+             design_vision -no_gui -f rv32i.dv
+            ' | tee syn/syn.log
+    fi
 
     # Download gate-level verilog
     scp -o "ControlPath=$SOCKET" \
@@ -66,19 +88,26 @@ fi
 
 # Post-synthesis simulation
 if (( mode & 4 )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        'cd ~/hw3
-         rm -rf INCA_libs
-         source /usr/cad/cadence/cshrc
-         ncverilog RISCV_tb.v \
-                   +incdir+lib \
-                   +access+r \
-                   +define+RV32I+SYN
-        ' | tee postsyn.log
+    if (( mode & 8 )); then
+        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+            'cd ~/hw3
+             rm -rf INCA_libs
+             source /usr/cad/cadence/cshrc
+             ncverilog RISCV_tb.v \
+                       +incdir+lib \
+                       +access+r \
+                       +define+RV32IC+SYN
+            ' | tee postsyn.log
+    else
+        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+            'cd ~/hw3
+             rm -rf INCA_libs
+             source /usr/cad/cadence/cshrc
+             ncverilog RISCV_tb.v \
+                       +incdir+lib \
+                       +access+r \
+                       +define+RV32I+SYN
+            ' | tee postsyn.log
+    fi
 fi
-
-               # +define+RV32I+RTL
-               # +define+RV32I+SYN
-               # +define+RV32IC+RTL'
-               # +define+RV32IC+SYN'
 
