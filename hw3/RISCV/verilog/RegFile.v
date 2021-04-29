@@ -1,12 +1,12 @@
-module Registers(input clk_i,
-                 input rst_i,
-                 input [4:0] RS1addr_i,
-                 input [4:0] RS2addr_i,
-                 input [4:0] RDaddr_i,
-                 input [31:0] RDdata_i,
-                 input RegWrite_i,
-                 output [31:0] RS1data_o,
-                 output [31:0] RS2data_o);
+module RegFile(input clk_i,
+               input rst_i,
+               input [4:0] RS1addr_i,
+               input [4:0] RS2addr_i,
+               input [4:0] RDaddr_i,
+               input [31:0] RDdata_i,
+               input RegWrite_i,
+               output [31:0] RS1data_o,
+               output [31:0] RS2data_o);
 
 integer i;
 
@@ -31,7 +31,7 @@ always @(posedge clk_i) begin
             register[i] <= 32'b0;
         end
     end
-    else if (RegWrite_i) begin
+    else if (RegWrite_i && RDaddr_i) begin
         register[~RDaddr_i] <= RDdata_i;
     end
 end

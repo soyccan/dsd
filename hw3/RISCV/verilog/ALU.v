@@ -3,30 +3,33 @@
 module ALU(input [3:0] ALUCtl_i,
            input [31:0] Op1_i,
            input [31:0] Op2_i,
-           output reg [31:0] Res_o);
+           output reg [31:0] Res_o,
+           output [31:0] AdderRes_o);
 
 wire [32:0] adder_op1;
 wire [32:0] adder_op2;
-wire [32:0] adder_res;
-wire sub;
+wire overflow;
+wire neg;
 
-// sub, slt
-assign sub = ALUCtl_i != `ALU_CTL_ADD;
+// add(0000): 0
+// sub(1000), slt(0010): 1
+// otherwise: don't-care
+assign neg = ALUCtl_i[3] || ALUCtl_i[1];
 
 // signed extension & negation
 assign adder_op1 = {Op1_i[31], Op1_i};
-assign adder_op2 = {Op2_i[31], Op2_i} ^ {33{sub}};
+assign adder_op2 = {Op2_i[31], Op2_i} ^ {33{neg}};
 
-// with carry in `sub`
-assign adder_res = adder_op1 + adder_op2 + sub;
+// `neg` will be mapped to carry_in of adder
+assign {overflow, AdderRes_o} = adder_op1 + adder_op2 + neg;
 
 always @* begin
     Res_o = 32'b0;
 
     case (ALUCtl_i)
-        `ALU_CTL_ADD, `ALU_CTL_SUB: Res_o = adder_res;
+        `ALU_CTL_ADD, `ALU_CTL_SUB: Res_o = AdderRes_o;
         // `ALU_CTL_SUBU: {Overflow_o, Res_o} = Op1_i - Op2_i; // for bltu, bgeu
-        `ALU_CTL_SLT: Res_o = adder_res[32];
+        `ALU_CTL_SLT: Res_o = overflow;
         // `ALU_CTL_SLTU: Res_o = Op1_i < Op2_i;
         `ALU_CTL_XOR:  Res_o = Op1_i ^ Op2_i;
         `ALU_CTL_OR:   Res_o = Op1_i | Op2_i;

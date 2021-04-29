@@ -3,7 +3,7 @@
 `timescale 1 ns/10 ps
 
 `define CYCLE 10 // You can modify your clock frequency
-`define END_CYCLE 40 // You can modify your maximum cycles
+`define END_CYCLE 1000 // You can modify your maximum cycles
 
 `include "memory.v"
 `define DMEM_DATA "./pattern/data.txt"
