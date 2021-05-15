@@ -13,7 +13,7 @@ integer i;
 
 //// Wire/Reg Declaration ////
 // valid(1), dirty(1), tag(25), word0(32), word1(32), word2(32), word3(32)
-reg [154:0] sram [0:7];
+reg [154:0] sram[0:7];
 
 wire [24:0] tag_i;
 wire [2:0] index;
