@@ -19,9 +19,7 @@ module cache(
     input          mem_ready
 );
 
-cache_controller #(
-    .way(0) // direct-mapped
-) cache_controller_U (
+cache_controller cache_controller_U(
     .clk(clk),
     .proc_reset_i(proc_reset),
     .proc_read_i(proc_read),
@@ -37,14 +35,5 @@ cache_controller #(
     .mem_wdata_o(mem_wdata),
     .mem_ready_i(mem_ready)
 );
-
-always @(posedge clk) begin
-    if (proc_reset) begin
-
-    end
-    else begin
-
-    end
-end
 
 endmodule
