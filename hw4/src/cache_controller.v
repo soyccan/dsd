@@ -27,10 +27,9 @@ module cache_controller(
 
 //// Constants ////
 localparam STATE_IDLE        = 3'd0;
-localparam STATE_COMPARE     = 3'd1;
-localparam STATE_WRITEBACK   = 3'd2;
-localparam STATE_ALLOCATE    = 3'd3;
-localparam STATE_READY       = 3'd4;
+localparam STATE_WRITEBACK   = 3'd1;
+localparam STATE_ALLOCATE    = 3'd2;
+localparam STATE_READY       = 3'd3;
 
 
 //// Wire/Reg Declaration ////
@@ -42,12 +41,14 @@ wire proc_access;
     reg [154:0] sram_wdata;
     wire [24:0] sram_tag;
     wire [24:0] proc_addr_tag;
+    wire [2:0] proc_addr_index;
 `else
     // 2-way
     wire [155:0] sram_rdata;
     reg [155:0] sram_wdata;
     wire [25:0] sram_tag;
     wire [25:0] proc_addr_tag;
+    wire [1:0] proc_addr_index;
 `endif
 
 wire [127:0] sram_data;
@@ -55,7 +56,6 @@ wire sram_hit;
 wire sram_dirty;
 reg sram_write;
 
-wire [2:0] proc_addr_index;
 wire [1:0] proc_addr_offset;
 
 reg [2:0] state;

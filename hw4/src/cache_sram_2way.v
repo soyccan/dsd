@@ -21,7 +21,7 @@ wire [1:0] index;
 // valid(1), dirty(1), tag(26), word0(32), word1(32), word2(32), word3(32)
 reg [155:0] sram[0:3][0:1];
 
-reg lru[0:3];
+reg lru[0:3]; // lru[index]: the next way to be write back
 reg way;
 wire lru_nxt;
 
@@ -35,7 +35,7 @@ reg [25:0] tag[0:1];
 assign tag_i   = addr_i[29:4];
 assign index   = addr_i[3:2];
 
-assign rdata_o = hit[0] ? entry[0] : entry[1];
+assign rdata_o = entry[way];
 assign hit_o   = hit[0] || hit[1];
 
 assign lru_nxt = ~way;
@@ -79,7 +79,7 @@ always @(posedge clk) begin
             lru[i] <= 0;
         end
     end
-    else begin
+    else if (write_i) begin
         lru[index] <= lru_nxt;
     end
 end
