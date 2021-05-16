@@ -65,42 +65,41 @@ if (( mode & 2 )); then
         ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
             'cd ~/hw4
              source /usr/cad/synopsys/CIC/synthesis.cshrc
-             design_vision -no_gui -f cache_2way.dv
-            ' | tee syn/syn.log
+             design_vision -no_gui -x " \
+                 read_file -format verilog cache_2way.v \
+                 source cache_syn.sdc"
+            ' | tee syn/2way/log
+
+        # Download gate-level verilog
+        scp -o "ControlPath=$SOCKET" \
+            b7902143@cad30.ee.ntu.edu.tw:~/hw4/cache_syn.{v,sdf,ddc} \
+            ./syn/2way
     else
         ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
             'cd ~/hw4
              source /usr/cad/synopsys/CIC/synthesis.cshrc
-             design_vision -no_gui -f cache_dm.dv
-            ' | tee syn/syn.log
-    fi
+             design_vision -no_gui -x " \
+                 read_file -format verilog cache_dm.v \
+                 source cache_syn.sdc"
+            ' | tee syn/dm/log
 
-    # Download gate-level verilog
-    scp -o "ControlPath=$SOCKET" \
-        b7902143@cad30.ee.ntu.edu.tw:~/hw4/cache_{dm,2way}_syn.{v,sdf,ddc} \
-        ./syn/
+        # Download gate-level verilog
+        scp -o "ControlPath=$SOCKET" \
+            b7902143@cad30.ee.ntu.edu.tw:~/hw4/cache_syn.{v,sdf,ddc} \
+            ./syn/dm
+    fi
 fi
 
 # Post-synthesis simulation
 if (( mode & 4 )); then
-    if (( mode & 8 )); then
-        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-            'cd ~/hw4
-             rm -rf INCA_libs
-             source /usr/cad/cadence/cshrc
-             ncverilog tb_cache.v cache_2way_syn.v memory.v \
-                       /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v \
-                       +define+SDF +access+r
-            ' | tee postsyn.log
-    else
-        ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-            'cd ~/hw4
-             rm -rf INCA_libs
-             source /usr/cad/cadence/cshrc
-             ncverilog tb_cache.v cache_dm_syn.v memory.v \
-                       /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v \
-                       +define+SDF +access+r
-            ' | tee postsyn.log
-    fi
+    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
+        'cd ~/hw4
+         rm -rf INCA_libs
+         source /usr/cad/cadence/cshrc
+         source /usr/spring_soft/CIC/verdi.cshrc
+         ncverilog tb_cache.v cache_syn.v memory.v \
+                   /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v \
+                   +define+SDF +access+r
+        ' | tee postsyn.log
 fi
 

@@ -1,5 +1,10 @@
-`include "cache_sram_dm.v"
-`include "cache_sram_2way.v"
+`ifndef TWO_WAY
+    // direct-mapped
+    `include "cache_sram_dm.v"
+`else
+    // 2-way
+    `include "cache_sram_2way.v"
+`endif
 
 module cache_controller(
     input             clk,
