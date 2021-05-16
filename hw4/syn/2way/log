@@ -1,0 +1,424 @@
+Platform = amd64
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version N-2017.09-SP2 for linux64 - Nov 27, 2017 
+
+                    Copyright (c) 1988 - 2017 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/raid7_2/userb07/b7902143/.synopsys_dv_prefs.tcl
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/dw_foundation.sldb'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/gtech.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/standard.sldb'
+  Loading link library 'typical'
+  Loading link library 'slow'
+  Loading link library 'fast'
+  Loading link library 'gtech'
+Loading verilog file '/home/raid7_2/userb07/b7902143/hw4/cache_2way.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file cache_controller.v
+Opening include file cache_sram_2way.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/hw4/cache_2way.v
+Opening include file cache_controller.v
+Opening include file cache_sram_2way.v
+
+Inferred memory devices in process
+	in routine cache_sram_2way line 65 in file
+		'cache_sram_2way.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      sram_reg       | Flip-flop | 1248  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine cache_sram_2way line 76 in file
+		'cache_sram_2way.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       lru_reg       | Flip-flop |   4   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+========================================================
+|  block name/line   | Inputs | Outputs | # sel inputs |
+========================================================
+| cache_sram_2way/45 |   4    |   312   |      2       |
+| cache_sram_2way/60 |   4    |    1    |      2       |
+========================================================
+Warning:  cache_controller.v:182: signed to unsigned conversion occurs. (VER-318)
+Warning:  cache_controller.v:236: signed to unsigned conversion occurs. (VER-318)
+
+Statistics for case statements in always block at line 102 in file
+	'cache_controller.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           105            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 146 in file
+	'cache_controller.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           152            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine cache_controller line 136 in file
+		'cache_controller.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+==========================================================
+|   block name/line    | Inputs | Outputs | # sel inputs |
+==========================================================
+| cache_controller/182 |  128   |    1    |      7       |
+==========================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/hw4/cache_sram_2way.db:cache_sram_2way'
+Loaded 3 designs.
+Current design is 'cache_sram_2way'.
+Using operating conditions 'slow' found in library 'slow'.
+Using operating conditions 'fast' found in library 'fast'.
+Current design is 'cache'.
+Warning: Setting attribute 'fix_multiple_port_nets' on design 'cache'. (UIO-59)
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | N-2017.09-DWBB_201709.2 |     *     |
+| Licensed DW Building Blocks        | N-2017.09-DWBB_201709.2 |     *     |
+============================================================================
+
+
+Information: There are 32 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Operating condition typical set on design cache has different process,
+voltage and temperatures parameters than the parameters at which target library 
+slow is characterized. Delays may be inaccurate as a result. (OPT-998)
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'cache_sram_2way'
+  Processing 'cache_controller'
+  Processing 'cache'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: Design 'cache' has no optimization constraints set. (OPT-108)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'cache_sram_2way_DW01_cmp6_0'
+  Processing 'cache_sram_2way_DW01_cmp6_1'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Structuring 'cache_sram_2way'
+  Mapping 'cache_sram_2way'
+  Structuring 'cache_controller'
+  Mapping 'cache_controller'
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:07   99372.6      0.00       0.0       4.5                          
+    0:00:07   99372.6      0.00       0.0       4.5                          
+    0:00:07   99372.6      0.00       0.0       4.5                          
+    0:00:07   99372.6      0.00       0.0       4.5                          
+    0:00:07   99372.6      0.00       0.0       4.5                          
+    0:00:09   63615.2      0.00       0.0       4.4                          
+    0:00:09   63615.2      0.00       0.0       4.4                          
+    0:00:09   63615.2      0.00       0.0       4.4                          
+    0:00:09   63615.2      0.00       0.0       4.4                          
+    0:00:09   63615.2      0.00       0.0       4.4                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:09   63640.6      0.00       0.0       0.0                          
+    0:00:10   63596.5      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+    0:00:10   63589.7      0.00       0.0       0.0                          
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'cache' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'cache_controller_U/cache_sram_2way_U/clk': 1255 load(s), 1 driver(s)
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/raid7_2/userb07/b7902143/hw4/cache_syn.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+Warning: Design 'cache' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Writing verilog file '/home/raid7_2/userb07/b7902143/hw4/cache_syn.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Verilog writer has added 1 nets to module cache_controller using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Writing ddc file 'cache_syn.ddc'.
+ 
+****************************************
+check_design summary:
+Version:     N-2017.09-SP2
+Date:        Mon May 17 02:57:20 2021
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      2
+    Unconnected ports (LINT-28)                                     2
+
+Cells                                                              27
+    Connected to power or ground (LINT-32)                          1
+    Nets connected to multiple pins on same cell (LINT-33)         26
+--------------------------------------------------------------------------------
+
+Warning: In design 'cache_sram_2way', port 'addr_i[1]' is not connected to any nets. (LINT-28)
+Warning: In design 'cache_sram_2way', port 'addr_i[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'cache_controller', a pin on submodule 'cache_sram_2way_U' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'wdata_i[155]' is connected to logic 1. 
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[29]' is connected to pins 'addr_i[29]', 'wdata_i[153]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[28]' is connected to pins 'addr_i[28]', 'wdata_i[152]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[27]' is connected to pins 'addr_i[27]', 'wdata_i[151]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[26]' is connected to pins 'addr_i[26]', 'wdata_i[150]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[25]' is connected to pins 'addr_i[25]', 'wdata_i[149]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[24]' is connected to pins 'addr_i[24]', 'wdata_i[148]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[23]' is connected to pins 'addr_i[23]', 'wdata_i[147]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[22]' is connected to pins 'addr_i[22]', 'wdata_i[146]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[21]' is connected to pins 'addr_i[21]', 'wdata_i[145]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[20]' is connected to pins 'addr_i[20]', 'wdata_i[144]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[19]' is connected to pins 'addr_i[19]', 'wdata_i[143]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[18]' is connected to pins 'addr_i[18]', 'wdata_i[142]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[17]' is connected to pins 'addr_i[17]', 'wdata_i[141]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[16]' is connected to pins 'addr_i[16]', 'wdata_i[140]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[15]' is connected to pins 'addr_i[15]', 'wdata_i[139]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[14]' is connected to pins 'addr_i[14]', 'wdata_i[138]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[13]' is connected to pins 'addr_i[13]', 'wdata_i[137]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[12]' is connected to pins 'addr_i[12]', 'wdata_i[136]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[11]' is connected to pins 'addr_i[11]', 'wdata_i[135]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[10]' is connected to pins 'addr_i[10]', 'wdata_i[134]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[9]' is connected to pins 'addr_i[9]', 'wdata_i[133]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[8]' is connected to pins 'addr_i[8]', 'wdata_i[132]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[7]' is connected to pins 'addr_i[7]', 'wdata_i[131]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[6]' is connected to pins 'addr_i[6]', 'wdata_i[130]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[5]' is connected to pins 'addr_i[5]', 'wdata_i[129]''.
+Warning: In design 'cache_controller', the same net is connected to more than one pin on submodule 'cache_sram_2way_U'. (LINT-33)
+   Net 'proc_addr_i[4]' is connected to pins 'addr_i[4]', 'wdata_i[128]''.
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : cache
+Version: N-2017.09-SP2
+Date   : Mon May 17 02:57:20 2021
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: typical
+Wire Load Model Mode: top
+
+  Startpoint: proc_addr[2]
+              (input port)
+  Endpoint: proc_rdata[31]
+            (output port)
+  Path Group: (none)
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  input external delay                                    0.00       0.00 r
+  proc_addr[2] (in)                                       0.00       0.00 r
+  cache_controller_U/proc_addr_i[2] (cache_controller)
+                                                          0.00       0.00 r
+  cache_controller_U/cache_sram_2way_U/addr_i[2] (cache_sram_2way)
+                                                          0.00       0.00 r
+  cache_controller_U/cache_sram_2way_U/U398/Y (CLKINVX1)
+                                                          0.06       0.06 f
+  cache_controller_U/cache_sram_2way_U/U402/Y (AND2X1)
+                                                          0.15       0.21 f
+  cache_controller_U/cache_sram_2way_U/U372/Y (CLKBUFX3)
+                                                          0.10       0.31 f
+  cache_controller_U/cache_sram_2way_U/U356/Y (CLKBUFX3)
+                                                          0.09       0.40 f
+  cache_controller_U/cache_sram_2way_U/U152/Y (CLKBUFX3)
+                                                          0.10       0.50 f
+  cache_controller_U/cache_sram_2way_U/U133/Y (CLKBUFX3)
+                                                          0.12       0.61 f
+  cache_controller_U/cache_sram_2way_U/U937/Y (AO22X1)
+                                                          0.21       0.82 f
+  cache_controller_U/cache_sram_2way_U/U938/Y (AOI221XL)
+                                                          0.14       0.96 r
+  cache_controller_U/cache_sram_2way_U/U939/Y (CLKINVX1)
+                                                          0.07       1.03 f
+  cache_controller_U/cache_sram_2way_U/U1719/Y (XNOR2X1)
+                                                          0.10       1.13 f
+  cache_controller_U/cache_sram_2way_U/U1718/Y (NAND4X1)
+                                                          0.09       1.23 r
+  cache_controller_U/cache_sram_2way_U/U1714/Y (NOR4X1)
+                                                          0.05       1.28 f
+  cache_controller_U/cache_sram_2way_U/U1713/Y (NAND4X1)
+                                                          0.11       1.38 r
+  cache_controller_U/cache_sram_2way_U/U1676/Y (CLKINVX1)
+                                                          0.08       1.47 f
+  cache_controller_U/cache_sram_2way_U/U7/Y (OAI21X4)     0.34       1.80 r
+  cache_controller_U/cache_sram_2way_U/U1497/Y (CLKINVX1)
+                                                          0.10       1.90 f
+  cache_controller_U/cache_sram_2way_U/U321/Y (CLKBUFX3)
+                                                          0.12       2.02 f
+  cache_controller_U/cache_sram_2way_U/U181/Y (CLKBUFX3)
+                                                          0.09       2.11 f
+  cache_controller_U/cache_sram_2way_U/U11/Y (CLKBUFX3)
+                                                          0.21       2.32 f
+  cache_controller_U/cache_sram_2way_U/U1381/Y (CLKMX2X2)
+                                                          0.16       2.48 r
+  cache_controller_U/cache_sram_2way_U/rdata_o[63] (cache_sram_2way)
+                                                          0.00       2.48 r
+  cache_controller_U/U195/Y (CLKINVX1)                    0.03       2.51 f
+  cache_controller_U/U42/Y (OA22X1)                       0.22       2.73 f
+  cache_controller_U/U41/Y (OAI221XL)                     0.05       2.78 r
+  cache_controller_U/proc_rdata_o[31] (cache_controller)
+                                                          0.00       2.78 r
+  proc_rdata[31] (out)                                    0.00       2.78 r
+  data arrival time                                                  2.78
+  --------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+ 
+****************************************
+Report : area
+Design : cache
+Version: N-2017.09-SP2
+Date   : Mon May 17 02:57:20 2021
+****************************************
+
+Library(s) Used:
+
+    typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
+
+Number of ports:                         1118
+Number of nets:                          4488
+Number of cells:                         3566
+Number of combinational cells:           2308
+Number of sequential cells:              1256
+Number of macros/black boxes:               0
+Number of buf/inv:                       1024
+Number of references:                       1
+
+Combinational area:              18926.009590
+Buf/Inv area:                     4854.563925
+Noncombinational area:           44663.687452
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                 63589.697042
+Total area:                 undefined
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area            Local cell area
+                                  -------------------  ------------------------------ 
+Hierarchical cell                 Absolute    Percent  Combi-      Noncombi-   Black-
+                                  Total       Total    national    national    boxes   Design
+--------------------------------  ----------  -------  ----------  ----------  ------  ----------------
+cache                             63589.6970    100.0      0.0000      0.0000  0.0000  cache
+cache_controller_U                63589.6970    100.0   4139.9585     76.3830  0.0000  cache_controller
+cache_controller_U/cache_sram_2way_U
+                                  59373.3555     93.4  14786.0511  44587.3045  0.0000  cache_sram_2way
+--------------------------------  ----------  -------  ----------  ----------  ------  ----------------
+Total                                                  18926.0096  44663.6875  0.0000
+
+
+Thank you...
