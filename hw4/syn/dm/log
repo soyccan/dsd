@@ -92,9 +92,9 @@ Presto compilation completed successfully.
 Current design is now '/home/raid7_2/userb07/b7902143/hw4/cache_sram_dm.db:cache_sram_dm'
 Loaded 3 designs.
 Current design is 'cache_sram_dm'.
+Current design is 'cache'.
 Using operating conditions 'slow' found in library 'slow'.
 Using operating conditions 'fast' found in library 'fast'.
-Current design is 'cache'.
 Warning: Setting attribute 'fix_multiple_port_nets' on design 'cache'. (UIO-59)
 Information: Checking out the license 'DesignWare'. (SEC-104)
 Information: Evaluating DesignWare library utilization. (UISN-27)
@@ -110,86 +110,127 @@ Information: Evaluating DesignWare library utilization. (UISN-27)
 Information: There are 32 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
 
 
-Warning: Operating condition typical set on design cache has different process,
+Warning: Operating condition slow set on design cache has different process,
 voltage and temperatures parameters than the parameters at which target library 
-slow is characterized. Delays may be inaccurate as a result. (OPT-998)
+typical is characterized. Delays may be inaccurate as a result. (OPT-998)
 
   Beginning Pass 1 Mapping
   ------------------------
   Processing 'cache_sram_dm'
+Information: Added key list 'DesignWare' to design 'cache_sram_dm'. (DDB-72)
   Processing 'cache_controller'
   Processing 'cache'
 
   Updating timing information
 Information: Updating design information... (UID-85)
-Information: Design 'cache' has no optimization constraints set. (OPT-108)
 
   Beginning Implementation Selection
   ----------------------------------
-  Processing 'cache_sram_dm_DW01_cmp6_0'
 
   Beginning Mapping Optimizations  (Medium effort)
   -------------------------------
-  Structuring 'cache_sram_dm'
-  Mapping 'cache_sram_dm'
-  Structuring 'cache_controller'
-  Mapping 'cache_controller'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:00:06   94759.1      0.00       0.0       1.2                          
-    0:00:06   94759.1      0.00       0.0       1.2                          
-    0:00:06   94759.1      0.00       0.0       1.2                          
-    0:00:06   94759.1      0.00       0.0       1.2                          
-    0:00:06   94759.1      0.00       0.0       1.2                          
-    0:00:08   60276.4      0.00       0.0       1.2                          
-    0:00:08   60276.4      0.00       0.0       1.2                          
-    0:00:08   60276.4      0.00       0.0       1.2                          
-    0:00:08   60276.4      0.00       0.0       1.2                          
-    0:00:08   60276.4      0.00       0.0       1.2                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:15  100092.3      0.30     405.9      83.4                                0.00  
+    0:00:15  100075.3      0.30     405.9      83.4                                0.00  
+    0:00:15  100075.3      0.30     405.9      83.4                                0.00  
+    0:00:17  100038.0      0.30     405.7      83.4                                0.00  
+    0:00:17  100038.0      0.30     405.7      83.4                                0.00  
+    0:00:17  100038.0      0.30     405.7      83.4                                0.00  
+    0:00:18   65977.9      2.33    4238.1      81.7                                0.00  
+    0:00:19   66276.7      2.22    4109.8      81.6                                0.00  
+    0:00:19   66269.9      2.16    4122.8      81.6                                0.00  
+    0:00:19   66292.0      2.15    3938.0      81.6                                0.00  
+    0:00:19   66337.8      2.12    4026.1      81.6                                0.00  
+    0:00:19   66364.9      2.10    3972.2      81.6                                0.00  
+    0:00:19   66375.1      1.97    3742.3      81.6                                0.00  
+    0:00:20   66397.2      2.16    4220.6      81.6                                0.00  
+    0:00:20   66427.7      1.89    3480.8      81.6                                0.00  
+    0:00:20   66431.1      1.85    3432.7      81.6                                0.00  
+    0:00:20   66461.7      1.81    3322.6      81.6                                0.00  
+    0:00:20   66436.2      1.78    3309.7      81.6                                0.00  
+    0:00:20   66451.5      1.69    3051.3      81.6                                0.00  
+    0:00:20   66449.8      1.69    3065.6      81.6                                0.00  
+    0:00:21   66468.5      1.66    2998.1      81.6                                0.00  
+    0:00:21   66468.5      1.66    2998.1      81.6                                0.00  
+    0:00:21   66468.5      1.66    2998.1      81.6                                0.00  
+    0:00:21   66468.5      1.66    2998.1      81.6                                0.00  
+    0:00:21   66514.3      1.64    2945.0      68.0                                0.00  
+    0:00:21   66636.5      1.64    2929.6      60.0                                0.00  
+    0:00:21   66775.7      1.64    2916.4      55.3                                0.00  
+    0:00:21   66774.0      1.64    2901.9      51.2                                0.00  
+    0:00:21   66762.1      1.64    2892.1      48.9                                0.00  
+    0:00:21   66877.6      1.64    2881.9      46.5                                0.00  
+    0:00:21   66959.0      1.64    2868.2      43.6                                0.00  
+    0:00:21   66999.8      1.64    2861.6      42.4                                0.00  
+    0:00:22   67079.6      1.64    2859.0      41.9                                0.00  
+    0:00:22   67079.6      1.64    2859.0      41.9                                0.00  
+    0:00:22   67702.5      1.16    2442.0      41.3 cache_controller_U/cache_sram_dm_U/sram_reg[5][130]/E      0.00  
+    0:00:24   68227.0      0.87    1857.6      41.3 cache_controller_U/cache_sram_dm_U/sram_reg[5][130]/E      0.00  
+    0:00:24   68724.3      0.72    1500.7      41.3 cache_controller_U/cache_sram_dm_U/sram_reg[5][130]/E      0.00  
+    0:00:26   68773.6      0.31     448.1      37.5 cache_controller_U/cache_sram_dm_U/sram_reg[5][130]/E      0.00  
+    0:00:26   69004.4      0.27     338.5      33.8                                0.00  
 
 
 
   Beginning Delay Optimization Phase
   ----------------------------------
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:26   69004.4      0.27     338.5      33.8                                0.00  
+    0:00:26   69656.2      0.13     126.6       0.0 cache_controller_U/cache_sram_dm_U/sram_reg[6][51]/E      0.00  
+    0:00:27   69853.1      0.01       1.6       0.6 cache_controller_U/cache_sram_dm_U/sram_reg[0][58]/D      0.00  
+    0:00:27   69758.0      0.00       0.0       0.6                                0.00  
+    0:00:27   69747.9      0.00       0.0       0.6                                0.00  
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:27   69747.9      0.00       0.0       0.6                                0.00  
+    0:00:28   69758.0      0.00       0.0       0.0                                0.00  
 
 
   Beginning Area-Recovery Phase  (cleanup)
   -----------------------------
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:08   60290.0      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
-    0:00:09   60276.4      0.00       0.0       0.0                          
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:28   69758.0      0.00       0.0       0.0                                0.00  
+    0:00:28   69758.0      0.00       0.0       0.0                                0.00  
+    0:00:28   68473.1      0.02       5.6       0.0                                0.00  
+    0:00:28   67897.7      0.02       4.5       0.0                                0.00  
+    0:00:28   67595.6      0.03       7.8       0.0                                0.00  
+    0:00:28   67412.2      0.08      53.9       0.0                                0.00  
+    0:00:28   67354.5      0.03      11.2       0.0                                0.00  
+    0:00:28   67354.5      0.03      11.2       0.0                                0.00  
+    0:00:29   67493.7      0.00       0.0       0.0                                0.00  
+    0:00:29   66332.7      0.45     211.9       0.0                                0.00  
+    0:00:29   65898.2      0.45     213.7       0.0                                0.00  
+    0:00:29   65826.9      0.49     274.7       0.0                                0.00  
+    0:00:29   65826.9      0.49     274.7       0.0                                0.00  
+    0:00:29   65826.9      0.49     274.7       0.0                                0.00  
+    0:00:29   65826.9      0.49     274.7       0.0                                0.00  
+    0:00:29   65826.9      0.49     274.7       0.0                                0.00  
+    0:00:29   65826.9      0.49     274.7       0.0                                0.00  
+    0:00:30   66368.3      0.17      80.1       0.0 cache_controller_U/cache_sram_dm_U/sram_reg[4][111]/E      0.00  
+    0:00:31   66826.6      0.11      25.4       0.0 cache_controller_U/cache_sram_dm_U/sram_reg[2][2]/E      0.00  
+    0:00:32   66998.1      0.00       0.0       0.0                                0.00  
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
-Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
-Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
 
 
 Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
@@ -211,7 +252,7 @@ Writing ddc file 'cache_syn.ddc'.
 ****************************************
 check_design summary:
 Version:     N-2017.09-SP2
-Date:        Mon May 17 03:04:50 2021
+Date:        Wed May 19 18:54:49 2021
 ****************************************
 
                    Name                                            Total
@@ -286,55 +327,80 @@ Report : timing
         -max_paths 1
 Design : cache
 Version: N-2017.09-SP2
-Date   : Mon May 17 03:04:50 2021
+Date   : Wed May 19 18:54:49 2021
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
 
-Operating Conditions: typical   Library: typical
+Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
-  Startpoint: proc_addr[3]
-              (input port)
-  Endpoint: proc_stall (output port)
-  Path Group: (none)
+  Startpoint: proc_addr[4]
+              (input port clocked by CLK)
+  Endpoint: cache_controller_U/cache_sram_dm_U/sram_reg[7][0]
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
   Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  cache              tsmc13_wl10           slow
 
   Point                                                   Incr       Path
   --------------------------------------------------------------------------
-  input external delay                                    0.00       0.00 f
-  proc_addr[3] (in)                                       0.00       0.00 f
-  cache_controller_U/proc_addr_i[3] (cache_controller)
-                                                          0.00       0.00 f
-  cache_controller_U/cache_sram_dm_U/addr_i[3] (cache_sram_dm)
-                                                          0.00       0.00 f
-  cache_controller_U/cache_sram_dm_U/U1344/Y (CLKINVX1)
-                                                          0.06       0.06 r
-  cache_controller_U/cache_sram_dm_U/U395/Y (NOR2X1)      0.04       0.10 f
-  cache_controller_U/cache_sram_dm_U/U404/Y (NOR2BX1)     0.13       0.23 f
-  cache_controller_U/cache_sram_dm_U/U334/Y (CLKBUFX3)
-                                                          0.10       0.33 f
-  cache_controller_U/cache_sram_dm_U/U262/Y (CLKBUFX3)
-                                                          0.09       0.42 f
-  cache_controller_U/cache_sram_dm_U/U169/Y (CLKBUFX3)
-                                                          0.16       0.58 f
-  cache_controller_U/cache_sram_dm_U/U1052/Y (AOI22X1)
-                                                          0.14       0.71 r
-  cache_controller_U/cache_sram_dm_U/U1054/Y (NAND4X1)
-                                                          0.09       0.80 f
-  cache_controller_U/cache_sram_dm_U/U1350/Y (XOR2X1)     0.10       0.90 f
-  cache_controller_U/cache_sram_dm_U/U1349/Y (NOR4X1)     0.12       1.03 r
-  cache_controller_U/cache_sram_dm_U/U1348/Y (AND4X1)     0.13       1.16 r
+  clock CLK (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.50       0.50
+  input external delay                                    0.30       0.80 f
+  proc_addr[4] (in)                                       0.03       0.83 f
+  U37/Y (BUFX20)                                          0.08       0.91 f
+  cache_controller_U/proc_addr_i[4] (cache_controller)
+                                                          0.00       0.91 f
+  cache_controller_U/cache_sram_dm_U/addr_i[4] (cache_sram_dm)
+                                                          0.00       0.91 f
+  cache_controller_U/cache_sram_dm_U/U609/Y (NOR2X2)      0.15       1.06 r
+  cache_controller_U/cache_sram_dm_U/U582/Y (AND2X8)      0.12       1.18 r
+  cache_controller_U/cache_sram_dm_U/U136/Y (INVX16)      0.03       1.21 f
+  cache_controller_U/cache_sram_dm_U/U137/Y (INVX8)       0.06       1.27 r
+  cache_controller_U/cache_sram_dm_U/U635/Y (CLKBUFX20)
+                                                          0.14       1.41 r
+  cache_controller_U/cache_sram_dm_U/U617/Y (AND2X1)      0.17       1.58 r
+  cache_controller_U/cache_sram_dm_U/U724/Y (NOR2X2)      0.07       1.65 f
+  cache_controller_U/cache_sram_dm_U/U725/Y (NAND4X2)     0.15       1.80 r
+  cache_controller_U/cache_sram_dm_U/U356/Y (XNOR2X4)     0.11       1.90 r
+  cache_controller_U/cache_sram_dm_U/U1262/Y (AND3X8)     0.11       2.01 r
+  cache_controller_U/cache_sram_dm_U/U134/Y (NAND4X4)     0.07       2.09 f
+  cache_controller_U/cache_sram_dm_U/U1260/Y (NOR4X8)     0.11       2.20 r
   cache_controller_U/cache_sram_dm_U/hit_o (cache_sram_dm)
-                                                          0.00       1.16 r
-  cache_controller_U/U314/Y (CLKINVX1)                    0.04       1.20 f
-  cache_controller_U/U313/Y (OAI21XL)                     0.11       1.31 r
-  cache_controller_U/U27/Y (CLKINVX1)                     0.03       1.34 f
-  cache_controller_U/proc_stall_o (cache_controller)      0.00       1.34 f
-  proc_stall (out)                                        0.00       1.34 f
-  data arrival time                                                  1.34
+                                                          0.00       2.20 r
+  cache_controller_U/U107/Y (NAND2X6)                     0.05       2.25 f
+  cache_controller_U/U110/Y (NAND2X6)                     0.05       2.30 r
+  cache_controller_U/cache_sram_dm_U/write_i (cache_sram_dm)
+                                                          0.00       2.30 r
+  cache_controller_U/cache_sram_dm_U/U619/Y (AND2X8)      0.10       2.40 r
+  cache_controller_U/cache_sram_dm_U/U621/Y (NAND2X2)     0.06       2.46 f
+  cache_controller_U/cache_sram_dm_U/U620/Y (BUFX12)      0.09       2.56 f
+  cache_controller_U/cache_sram_dm_U/U664/Y (OAI31X2)     0.15       2.71 r
+  cache_controller_U/cache_sram_dm_U/U3/Y (BUFX6)         0.10       2.80 r
+  cache_controller_U/cache_sram_dm_U/U15/Y (BUFX6)        0.08       2.89 r
+  cache_controller_U/cache_sram_dm_U/U237/Y (INVX3)       0.12       3.01 f
+  cache_controller_U/cache_sram_dm_U/U275/Y (CLKINVX12)
+                                                          0.13       3.14 r
+  cache_controller_U/cache_sram_dm_U/sram_reg[7][0]/E (EDFFXL)
+                                                          0.00       3.14 r
+  data arrival time                                                  3.14
+
+  clock CLK (rise edge)                                   3.00       3.00
+  clock network delay (ideal)                             0.50       3.50
+  clock uncertainty                                      -0.10       3.40
+  cache_controller_U/cache_sram_dm_U/sram_reg[7][0]/CK (EDFFXL)
+                                                          0.00       3.40 r
+  library setup time                                     -0.26       3.14
+  data required time                                                 3.14
   --------------------------------------------------------------------------
-  (Path is unconstrained)
+  data required time                                                 3.14
+  data arrival time                                                 -3.14
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
 
 
  
@@ -342,7 +408,7 @@ Wire Load Model Mode: top
 Report : area
 Design : cache
 Version: N-2017.09-SP2
-Date   : Mon May 17 03:04:50 2021
+Date   : Wed May 19 18:54:49 2021
 ****************************************
 
 Library(s) Used:
@@ -350,22 +416,22 @@ Library(s) Used:
     typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
 
 Number of ports:                         1116
-Number of nets:                          4108
-Number of cells:                         3188
-Number of combinational cells:           1942
-Number of sequential cells:              1244
+Number of nets:                          4018
+Number of cells:                         3097
+Number of combinational cells:           1850
+Number of sequential cells:              1245
 Number of macros/black boxes:               0
-Number of buf/inv:                        710
-Number of references:                       1
+Number of buf/inv:                        587
+Number of references:                      11
 
-Combinational area:              15999.692091
-Buf/Inv area:                     3798.781142
-Noncombinational area:           44276.680243
+Combinational area:              22712.909235
+Buf/Inv area:                     7879.330865
+Noncombinational area:           44285.167240
 Macro/Black Box area:                0.000000
-Net Interconnect area:      undefined  (No wire load specified)
+Net Interconnect area:          435308.919434
 
-Total cell area:                 60276.372333
-Total area:                 undefined
+Total cell area:                 66998.076475
+Total area:                     502306.995908
 
 Hierarchical area distribution
 ------------------------------
@@ -375,12 +441,12 @@ Hierarchical area distribution
 Hierarchical cell                 Absolute    Percent  Combi-      Noncombi-   Black-
                                   Total       Total    national    national    boxes   Design
 --------------------------------  ----------  -------  ----------  ----------  ------  ----------------
-cache                             60276.3723    100.0      0.0000      0.0000  0.0000  cache
-cache_controller_U                60276.3723    100.0   4133.1689     76.3830  0.0000  cache_controller
+cache                             66998.0765    100.0    830.0286      0.0000  0.0000  cache
+cache_controller_U                66168.0478     98.8   6254.9189     84.8700  0.0000  cache_controller
 cache_controller_U/cache_sram_dm_U
-                                  56066.8204     93.0  11866.5232  44200.2972  0.0000  cache_sram_dm
+                                  59828.2589     89.3  15627.9617  44200.2972  0.0000  cache_sram_dm
 --------------------------------  ----------  -------  ----------  ----------  ------  ----------------
-Total                                                  15999.6921  44276.6802  0.0000
+Total                                                  22712.9092  44285.1672  0.0000
 
 
 Thank you...
