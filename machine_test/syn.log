@@ -1,0 +1,435 @@
+Platform = amd64
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version N-2017.09-SP2 for linux64 - Nov 27, 2017 
+
+                    Copyright (c) 1988 - 2017 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/raid7_2/userb07/b7902143/.synopsys_dv_prefs.tcl
+read_file -format verilog ALU.v
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/dw_foundation.sldb'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/gtech.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/standard.sldb'
+  Loading link library 'typical'
+  Loading link library 'slow'
+  Loading link library 'fast'
+  Loading link library 'gtech'
+Loading verilog file '/home/raid7_2/userb07/b7902143/machine_test/ALU.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/machine_test/ALU.v
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/machine_test/ALU.db:ALU'
+Loaded 1 design.
+Current design is 'ALU'.
+ALU
+read_file -format verilog DFC.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/machine_test/DFC.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/machine_test/DFC.v
+
+Statistics for case statements in always block at line 54 in file
+	'/home/raid7_2/userb07/b7902143/machine_test/DFC.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            57            |     no/auto      |
+|            60            |     no/auto      |
+===============================================
+
+Statistics for case statements in always block at line 90 in file
+	'/home/raid7_2/userb07/b7902143/machine_test/DFC.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            99            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine DFC line 48 in file
+		'/home/raid7_2/userb07/b7902143/machine_test/DFC.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine DFC line 157 in file
+		'/home/raid7_2/userb07/b7902143/machine_test/DFC.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|        b_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        a_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/machine_test/DFC.db:DFC'
+Loaded 1 design.
+Current design is 'DFC'.
+DFC
+current_design DFC
+Current design is 'DFC'.
+{DFC}
+#### Constraint
+# operating conditions and boundary conditions #
+set cycle  10         ;#clock period defined by designer
+10
+create_clock -period $cycle [get_ports  clk]
+1
+set_dont_touch_network      [get_clocks clk]
+1
+set_fix_hold                [get_clocks clk]
+1
+set_clock_uncertainty  0.1  [get_clocks clk]
+1
+set_clock_latency      0.5  [get_clocks clk]
+1
+set_input_delay  5      -clock clk [remove_from_collection [all_inputs] [get_ports clk]]
+1
+set_output_delay 5      -clock clk [all_outputs]
+1
+set_load         1     [all_outputs]
+1
+set_drive        1     [all_inputs]
+1
+set_operating_conditions -max_library slow -max slow
+Using operating conditions 'slow' found in library 'slow'.
+1
+set_wire_load_model -name tsmc13_wl10 -library slow
+1
+#### End Constraint
+compile
+Warning: Setting attribute 'fix_multiple_port_nets' on design 'DFC'. (UIO-59)
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | N-2017.09-DWBB_201709.2 |     *     |
+| Licensed DW Building Blocks        | N-2017.09-DWBB_201709.2 |     *     |
+============================================================================
+
+
+Information: There are 6 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Operating condition slow set on design DFC has different process,
+voltage and temperatures parameters than the parameters at which target library 
+typical is characterized. Delays may be inaccurate as a result. (OPT-998)
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'ALU_0'
+  Processing 'DFC'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'ALU_1_DW01_add_0'
+  Processing 'ALU_1_DW01_add_1'
+  Processing 'ALU_2_DW01_add_0'
+  Processing 'ALU_2_DW01_add_1'
+  Processing 'ALU_3_DW01_add_0'
+  Processing 'ALU_3_DW01_add_1'
+  Processing 'ALU_0_DW01_add_0'
+  Processing 'ALU_0_DW01_add_1'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:03   13811.7      0.00       0.0      21.0                                0.00  
+    0:00:04   13811.7      0.00       0.0      21.0                                0.00  
+    0:00:04   13811.7      0.00       0.0      21.0                                0.00  
+    0:00:04   13811.7      0.00       0.0      21.0                                0.00  
+    0:00:04   13811.7      0.00       0.0      21.0                                0.00  
+    0:00:04    6560.5      0.00       0.0      20.9                                0.00  
+    0:00:04    6531.6      0.00       0.0      20.9                                0.00  
+    0:00:04    6531.6      0.00       0.0      20.9                                0.00  
+    0:00:04    6531.6      0.00       0.0      20.9                                0.00  
+    0:00:04    6531.6      0.00       0.0      20.9                                0.00  
+    0:00:04    6531.6      0.00       0.0      20.9                                0.00  
+    0:00:04    6531.6      0.00       0.0      15.1                                0.00  
+    0:00:04    6526.5      0.00       0.0      13.2                                0.00  
+    0:00:04    6521.4      0.00       0.0      11.3                                0.00  
+    0:00:04    6516.3      0.00       0.0       9.4                                0.00  
+    0:00:04    6511.2      0.00       0.0       7.6                                0.00  
+    0:00:04    6506.1      0.00       0.0       5.7                                0.00  
+    0:00:04    6501.0      0.00       0.0       3.8                                0.00  
+    0:00:04    6482.4      0.00       0.0       1.9                                0.00  
+    0:00:04    6477.3      0.00       0.0       0.0                                0.00  
+    0:00:04    6477.3      0.00       0.0       0.0                                0.00  
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:04    6477.3      0.00       0.0       0.0                                0.00  
+    0:00:04    6477.3      0.00       0.0       0.0                                0.00  
+    0:00:04    6450.1      0.00       0.0       0.0                                0.00  
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:04    6450.1      0.00       0.0       0.0                                0.00  
+    0:00:04    6455.2      0.00       0.0       0.0                                0.00  
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:04    6455.2      0.00       0.0       0.0                                0.00  
+    0:00:04    6455.2      0.00       0.0       0.0                                0.00  
+    0:00:04    6424.7      0.00       0.0       0.0                                0.00  
+    0:00:04    6417.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6411.1      0.00       0.0       0.0                                0.00  
+    0:00:04    6404.3      0.00       0.0       0.0                                0.00  
+    0:00:04    6397.5      0.00       0.0       0.0                                0.00  
+    0:00:04    6397.5      0.00       0.0       0.0                                0.00  
+    0:00:04    6397.5      0.00       0.0       0.0                                0.00  
+    0:00:04    6258.3      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+    0:00:04    6237.9      0.00       0.0       0.0                                0.00  
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+1
+check_design
+ 
+****************************************
+check_design summary:
+Version:     N-2017.09-SP2
+Date:        Thu May 27 15:33:50 2021
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     24
+    Unconnected ports (LINT-28)                                    24
+
+Cells                                                              32
+    Connected to power or ground (LINT-32)                         20
+    Nets connected to multiple pins on same cell (LINT-33)         12
+--------------------------------------------------------------------------------
+
+Warning: In design 'ALU_1_DW01_add_0', port 'A[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_1_DW01_add_0', port 'B[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_1_DW01_add_0', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_1_DW01_add_0', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_1_DW01_add_1', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_1_DW01_add_1', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_2_DW01_add_0', port 'A[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_2_DW01_add_0', port 'B[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_2_DW01_add_0', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_2_DW01_add_0', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_2_DW01_add_1', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_2_DW01_add_1', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_3_DW01_add_0', port 'A[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_3_DW01_add_0', port 'B[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_3_DW01_add_0', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_3_DW01_add_0', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_3_DW01_add_1', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_3_DW01_add_1', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_0_DW01_add_0', port 'A[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_0_DW01_add_0', port 'B[8]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_0_DW01_add_0', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_0_DW01_add_0', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_0_DW01_add_1', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_0_DW01_add_1', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'DFC', a pin on submodule 'A0' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'mode' is connected to logic 1. 
+Warning: In design 'DFC', a pin on submodule 'A1' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'mode' is connected to logic 1. 
+Warning: In design 'DFC', a pin on submodule 'A2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'mode' is connected to logic 1. 
+Warning: In design 'DFC', a pin on submodule 'A3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'mode' is connected to logic 1. 
+Warning: In design 'ALU_0', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'A[8]' is connected to logic 0. 
+Warning: In design 'ALU_0', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'B[8]' is connected to logic 0. 
+Warning: In design 'ALU_0', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_0', a pin on submodule 'add_7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_1', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'A[8]' is connected to logic 0. 
+Warning: In design 'ALU_1', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'B[8]' is connected to logic 0. 
+Warning: In design 'ALU_1', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_1', a pin on submodule 'add_7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_2', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'A[8]' is connected to logic 0. 
+Warning: In design 'ALU_2', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'B[8]' is connected to logic 0. 
+Warning: In design 'ALU_2', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_2', a pin on submodule 'add_7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_3', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'A[8]' is connected to logic 0. 
+Warning: In design 'ALU_3', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'B[8]' is connected to logic 0. 
+Warning: In design 'ALU_3', a pin on submodule 'add_7_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_3', a pin on submodule 'add_7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'ALU_0', the same net is connected to more than one pin on submodule 'add_7_2'. (LINT-33)
+   Net 'n5' is connected to pins 'A[8]', 'B[8]'', 'CI'.
+Warning: In design 'ALU_0', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_a[7]' is connected to pins 'A[8]', 'A[7]''.
+Warning: In design 'ALU_0', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_b[7]' is connected to pins 'B[8]', 'B[7]''.
+Warning: In design 'ALU_1', the same net is connected to more than one pin on submodule 'add_7_2'. (LINT-33)
+   Net 'n3' is connected to pins 'A[8]', 'B[8]'', 'CI'.
+Warning: In design 'ALU_1', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_a[7]' is connected to pins 'A[8]', 'A[7]''.
+Warning: In design 'ALU_1', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_b[7]' is connected to pins 'B[8]', 'B[7]''.
+Warning: In design 'ALU_2', the same net is connected to more than one pin on submodule 'add_7_2'. (LINT-33)
+   Net 'n3' is connected to pins 'A[8]', 'B[8]'', 'CI'.
+Warning: In design 'ALU_2', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_a[7]' is connected to pins 'A[8]', 'A[7]''.
+Warning: In design 'ALU_2', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_b[7]' is connected to pins 'B[8]', 'B[7]''.
+Warning: In design 'ALU_3', the same net is connected to more than one pin on submodule 'add_7_2'. (LINT-33)
+   Net 'n3' is connected to pins 'A[8]', 'B[8]'', 'CI'.
+Warning: In design 'ALU_3', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_a[7]' is connected to pins 'A[8]', 'A[7]''.
+Warning: In design 'ALU_3', the same net is connected to more than one pin on submodule 'add_7'. (LINT-33)
+   Net 'in_b[7]' is connected to pins 'B[8]', 'B[7]''.
+1
+report_timing
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : DFC
+Version: N-2017.09-SP2
+Date   : Thu May 27 15:33:50 2021
+****************************************
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: a_reg[3][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: dataout[8] (output port clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  DFC                tsmc13_wl10           slow
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.50       0.50
+  a_reg[3][0]/CK (DFFRX1)                  0.00       0.50 r
+  a_reg[3][0]/Q (DFFRX1)                   0.45       0.95 f
+  A3/in_a[0] (ALU_1)                       0.00       0.95 f
+  A3/add_7/A[0] (ALU_1_DW01_add_1)         0.00       0.95 f
+  A3/add_7/U1/Y (AND2X2)                   0.19       1.14 f
+  A3/add_7/U1_1/CO (ADDFXL)                0.29       1.42 f
+  A3/add_7/U1_2/CO (ADDFXL)                0.31       1.74 f
+  A3/add_7/U1_3/CO (ADDFXL)                0.31       2.05 f
+  A3/add_7/U1_4/CO (ADDFXL)                0.31       2.36 f
+  A3/add_7/U1_5/CO (ADDFXL)                0.31       2.68 f
+  A3/add_7/U1_6/CO (ADDFXL)                0.31       2.99 f
+  A3/add_7/U1_7/CO (ADDFXL)                0.32       3.31 f
+  A3/add_7/U1_8/Y (XOR3X1)                 0.23       3.53 r
+  A3/add_7/SUM[8] (ALU_1_DW01_add_1)       0.00       3.53 r
+  A3/U3/Y (AO22X1)                         0.18       3.72 r
+  A3/out[8] (ALU_1)                        0.00       3.72 r
+  U173/Y (AOI22X1)                         0.11       3.82 f
+  U174/Y (AND2X2)                          0.20       4.02 f
+  U175/Y (INVX12)                          0.42       4.44 r
+  dataout[8] (out)                         0.00       4.44 r
+  data arrival time                                   4.44
+
+  clock clk (rise edge)                   10.00      10.00
+  clock network delay (ideal)              0.50      10.50
+  clock uncertainty                       -0.10      10.40
+  output external delay                   -5.00       5.40
+  data required time                                  5.40
+  -----------------------------------------------------------
+  data required time                                  5.40
+  data arrival time                                  -4.44
+  -----------------------------------------------------------
+  slack (MET)                                         0.96
+
+
+1
+write_sdf -version 2.1 DFC_syn.sdf
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/raid7_2/userb07/b7902143/machine_test/DFC_syn.sdf'. (WT-3)
+1
+write -f verilog -hierarchy -output DFC_syn.v
+Writing verilog file '/home/raid7_2/userb07/b7902143/machine_test/DFC_syn.v'.
+1
+write -f ddc -hierarchy -output DFC_syn.ddc
+Writing ddc file 'DFC_syn.ddc'.
+1
+quit
+
+Thank you...
