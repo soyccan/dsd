@@ -40,6 +40,17 @@ scp -r -o "ControlPath=$SOCKET" \
     "$proj_root/syn_req/.synopsys_dc.setup" \
     b7902143@cad30.ee.ntu.edu.tw:~/hw4
 
+if (( mode & 8 )); then
+    scp -r -o "ControlPath=$SOCKET" \
+        "$proj_root/syn/2way/"* \
+        b7902143@cad30.ee.ntu.edu.tw:~/hw4
+else
+    scp -r -o "ControlPath=$SOCKET" \
+        "$proj_root/syn/dm/"* \
+        b7902143@cad30.ee.ntu.edu.tw:~/hw4
+fi
+
+
 # Simulate RTL
 if (( mode & 1 )); then
     if (( mode & 8 )); then
@@ -93,13 +104,14 @@ fi
 # Post-synthesis simulation
 if (( mode & 4 )); then
     ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        'cd ~/hw4
+        "cd ~/hw4
          rm -rf INCA_libs
          source /usr/cad/cadence/cshrc
          source /usr/spring_soft/CIC/verdi.cshrc
+         sed -i 's/^\`define CYCLE.*$/\`define CYCLE 3.0/' tb_cache.v
          ncverilog tb_cache.v cache_syn.v memory.v \
                    /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v \
                    +define+SDF +access+r
-        ' | tee postsyn.log
+        " | tee postsyn.log
 fi
 
