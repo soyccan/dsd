@@ -22,36 +22,50 @@ module MIPS_Pipeline(
     input  [31:0] DCACHE_rdata
 );
 
-wire Stall_hazard;
-wire Stall_dcache;
-
 wire rst;
 
 wire [31:0] IF_PC;
-wire [31:0] IF_PCNext;
+wire [31:0] IF_PCPlus4;
+wire [31:0] IF_PCNxt;
 wire [31:0] IF_Inst;
+wire IF_JumpImm;
+wire IF_JumpReg;
+wire [31:0] IF_BranchTarget;
+wire IF_BranchTaken;
+wire IF_Stall_icache;
 
 
 wire ID_NoOp;
-wire ID_PCWrite;
+wire ID_RegDst;
 wire [31:0] ID_BranchTarget;
 wire ID_Branch;
 wire ID_RegWrite;
 wire ID_MemToReg;
 wire ID_MemRead;
 wire ID_MemWrite;
-wire ID_ALUSrc;
-wire [1:0] ID_ALUOp;
+wire ID_ALUSrc1;
+wire ID_ALUSrc2;
+wire ID_Beq;
+wire ID_Bne;
+wire ID_JumpReg;
+wire ID_JumpImm;
+wire ID_Link;
+wire [3:0] ID_ALUCtl;
+
+wire ID_Stall_ctrl;
+wire ID_Stall_hazard;
+wire ID_NoOp_EX;
 
 reg [31:0] ID_Inst;
 reg [31:0] ID_PC;
-wire [6:0] ID_Opcode;
-wire [9:0] ID_Funct;
+wire [5:0] ID_Opcode;
+wire [5:0] ID_Funct;
 wire [4:0] ID_Rd;
 wire [4:0] ID_Rs1;
 wire [4:0] ID_Rs2;
 wire [31:0] ID_Rs1Data;
 wire [31:0] ID_Rs2Data;
+wire [31:0] ID_RdData;
 wire [31:0] ID_Imm;
 
 
@@ -60,13 +74,13 @@ reg EX_RegWrite;
 reg EX_MemToReg;
 reg EX_MemRead;
 reg EX_MemWrite;
-reg EX_ALUSrc;
-reg [1:0] EX_ALUOp;
+reg EX_ALUSrc1;
+reg EX_ALUSrc2;
 
-wire [1:0] Forward_A;
-wire [1:0] Forward_B;
+wire [1:0] EX_Forward_A;
+wire [1:0] EX_Forward_B;
 
-reg [9:0] EX_Funct;
+reg [5:0] EX_Funct;
 reg [4:0] EX_Rs1;
 reg [4:0] EX_Rs2;
 reg [4:0] EX_Rd;
@@ -76,16 +90,19 @@ reg [31:0] EX_Imm;
 
 wire [31:0] EX_ALUOp1;
 wire [31:0] EX_ALUOp2;
-wire [31:0] EX_Rs2_fwd;
+wire [31:0] EX_Rs1Fwd;
+wire [31:0] EX_Rs2Fwd;
 wire [31:0] EX_ALURes;
-wire EX_ALUZero;
-wire EX_ALUOverflow;
-wire [3:0] EX_ALUCtl;
+wire [31:0] EX_ALUAdderRes;
+wire [31:0] EX_ALUResAsAddr;
+wire [3:0]  EX_ALUCtl;
 
+wire EX_Eq;
+wire EX_BranchTaken;
 wire EX_Flush;
+
 reg EX_Branch;
 reg [31:0] EX_BranchTarget;
-wire EX_BranchCond;  // whether branch condition holds
 
 
 reg MEM_RegWrite;
@@ -98,6 +115,7 @@ reg [4:0] MEM_Rd;
 wire [31:0] MEM_DataFromMem;
 reg [31:0] MEM_ALURes;
 reg [31:0] MEM_DataToMem;
+wire MEM_Stall_dcache;
 
 
 reg WB_RegWrite;
@@ -122,17 +140,20 @@ PC PC(
     .Clk_i(clk),
     .Rst_i(rst),
     .PCWrite_i(ID_PCWrite),
-    .PC_i(IF_PCNext),
+    .PC_i(IF_PCNxt),
     .PC_o(IF_PC)
 );
 
-assign IF_PCPlus4 = {pc[31:2] + 1'b1, pc[1:0]};
+assign IF_PCPlus4 = {IF_PC[31:2] + 1'b1, IF_PC[1:0]};
 
 // assign IF_pc_nxt = EX_Flush ? EX_branch_target : (IF_PC + 4);
 assign IF_PCNxt = IF_JumpImm     ? IF_Imm :
-                  IF_BranchTaken ? IF_BranchTarget : IF_PCPlus4;
+                  IF_JumpReg     ? IF_Rs2Data :
+                  IF_BranchTaken ? IF_BranchTarget :
+                  IF_PCPlus4;
 
 assign IF_JumpImm = ID_JumpImm;
+assign IF_JumpReg = ID_JumpReg;
 assign IF_BranchTaken = EX_BranchTaken;
 assign IF_BranchTarget = EX_ALUResAsAddr;
 
@@ -141,7 +162,7 @@ assign ICACHE_ren = 1'b1;
 assign ICACHE_wen = 1'b0;
 assign ICACHE_addr = IF_PC;
 assign ICACHE_wdata = 32'b0;
-assign Stall_icache = ICACHE_stall;
+assign IF_Stall_icache = ICACHE_stall;
 assign IF_Inst = ICACHE_rdata;
 
 
@@ -151,45 +172,33 @@ assign IF_Inst = ICACHE_rdata;
 ////////////////
 
 Control Control_U(
-    .Opcode_i     (ID_Opcode  ),
-    .Funct_i      (ID_Funct   ),
+    .Opcode_i     (ID_Opcode    ),
+    .Funct_i      (ID_Funct     ),
 
-    .RegDst_o     (ID_RegDst  ),
-    .ALUSrc1_o    (ID_ALUSrc1 ),
-    .ALUSrc2_o    (ID_ALUSrc2 ),
-    .RegWrite_o   (ID_RegWrite),
-    .MemToReg_o   (ID_MemToReg),
-    .MemRead_o    (ID_MemRead ),
-    .MemWrite_o   (ID_MemWrite),
-    .Beq_o        (ID_Beq     ),
-    .Bne_o        (ID_Bne     ),
-    .JumpImm_o    (ID_JumpImm ),
-    .JumpReg_o    (ID_JumpReg ),
-    .Link_o       (ID_Link    ),
-    .ALUCtl_o     (ID_ALUCtl  ),
-    .Stall_o      (ID_Stall   )
+    .RegDst_o     (ID_RegDst    ),
+    .ALUSrc1_o    (ID_ALUSrc1   ),
+    .ALUSrc2_o    (ID_ALUSrc2   ),
+    .RegWrite_o   (ID_RegWrite  ),
+    .MemToReg_o   (ID_MemToReg  ),
+    .MemRead_o    (ID_MemRead   ),
+    .MemWrite_o   (ID_MemWrite  ),
+    .Beq_o        (ID_Beq       ),
+    .Bne_o        (ID_Bne       ),
+    .JumpImm_o    (ID_JumpImm   ),
+    .JumpReg_o    (ID_JumpReg   ),
+    .Link_o       (ID_Link      ),
+    .ALUCtl_o     (ID_ALUCtl    ),
+    .Stall_o      (ID_Stall_ctrl)
 );
 
 Hazard_Detection Hazard_Detection_U(
-    .EX_MemRead_i   (EX_MemRead    ),
-    .EX_Rd_i        (EX_Rd         ),
-    .ID_Rs1_i       (ID_Rs1        ),
-    .ID_Rs2_i       (ID_Rs2        ),
+    .EX_MemRead_i   (EX_MemRead     ),
+    .EX_Rd_i        (EX_Rd          ),
+    .ID_Rs1_i       (ID_Rs1         ),
+    .ID_Rs2_i       (ID_Rs2         ),
 
-    .NoOp_EX_o      (ID_NoOp_EX    ),
-    .Stall_ID_o     (ID_Stall_ID   )
-);
-
-Forward Forward_U(
-    .EX_Rs1_i(EX_Rs1),
-    .EX_Rs2_i(EX_Rs2),
-    .MEM_Rd_i(MEM_Rd),
-    .WB_Rd_i(WB_Rd),
-    .MEM_RegWrite_i(MEM_RegWrite),
-    .WB_RegWrite_i(WB_RegWrite),
-
-    .Forward_A_o(ID_Forward_A),
-    .Forward_B_o(ID_Forward_B)
+    .NoOp_EX_o      (ID_NoOp_EX     ),
+    .Stall_hazard_o (ID_Stall_hazard)
 );
 
 RegFile RegFile_U(
@@ -220,21 +229,6 @@ assign ID_Imm = ID_JumpImm ? $signed(ID_Inst[25:0]) :
 
 assign ID_RdData = ID_Link ? ID_PCPlus4 : WB_WriteBackData;
 
-// IF/ID Register
-always @(posedge Clk_i) begin
-    ID_PC   <= ID_PC;
-    ID_Inst <= ID_Inst;
-
-    if (Rst_i || EX_Flush) begin
-        ID_PC   <= 32'h0;
-        ID_Inst <= 32'h13; // nop
-    end
-    else if (!Stall_hazard && !Stall_dcache) begin
-        ID_PC   <= IF_PC;
-        ID_Inst <= IF_Inst;
-    end
-end
-
 
 
 ////////////////
@@ -249,12 +243,114 @@ ALU ALU(
     .AdderRes_o(EX_ALUAdderRes)
 );
 
+Forward Forward_U(
+    .EX_Rs1_i(EX_Rs1),
+    .EX_Rs2_i(EX_Rs2),
+    .MEM_Rd_i(MEM_Rd),
+    .WB_Rd_i(WB_Rd),
+    .MEM_RegWrite_i(MEM_RegWrite),
+    .WB_RegWrite_i(WB_RegWrite),
+
+    .Forward_A_o(EX_Forward_A),
+    .Forward_B_o(EX_Forward_B)
+);
+
 assign EX_Eq = EX_Rs1Data == EX_Rs2Data;
 assign EX_BranchTaken = (EX_Beq && EX_Eq) || (EX_Bne && !EX_Eq);
+assign EX_BranchTarget = EX_ALUResAsAddr;
 assign EX_Flush = EX_BranchTaken;
 
-// ID/EX Register
-always @(posedge Clk_i) begin
+// address is multiple of 2
+assign EX_ALUResAsAddr = { EX_ALUAdderRes[31:2], 2'b00 };
+
+assign EX_ALUOp1 = EX_ALUSrc1 ? EX_PC : EX_Rs1Fwd;
+
+assign EX_Rs1Fwd = Forward_A == `FW_REG ? EX_Rs1Data :
+                   Forward_A == `FW_WB  ? WB_WriteBackData :
+                   MEM_ALURes; // Forward_A == FW_MEM
+
+assign EX_ALUOp2 = EX_Beq || EQ_Bne ? { EX_Imm, 2'b00 } :
+                   EX_ALUSrc2       ? EX_Imm :
+                   EX_Rs2Fwd;
+
+assign EX_Rs2Fwd = Forward_B == `FW_REG ? EX_Rs2Data :
+                   Forward_B == `FW_WB  ? WB_WriteBackData :
+                   MEM_ALURes; // Forward_B == FW_MEM
+
+
+
+/////////////////
+/// MEM Stage ///
+/////////////////
+
+assign DCACHE_ren = MEM_MemRead;
+assign DCACHE_wen = MEM_MemWrite;
+assign DCACHE_addr = MEM_ALUResAsAddr;
+assign DCACHE_wdata = MEM_DataToMem;
+
+assign MEM_Stall_dcache = DCACHE_stall;
+assign MEM_DataToMem = DCACHE_rdata;
+
+
+
+///////////////
+// WB Stage ///
+///////////////
+
+assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
+
+
+
+//// Sequential Logic ////
+always @(posedge clk) begin
+    if (rst) begin
+        ID_PC           <= 0;
+        ID_Inst         <= 0; // nop
+
+        EX_RegWrite     <= 0;
+        EX_MemToReg     <= 0;
+        EX_MemRead      <= 0;
+        EX_MemWrite     <= 0;
+        EX_ALUOp        <= 0;
+        EX_ALUSrc       <= 0;
+        EX_Rs1Data      <= 0;
+        EX_Rs2Data      <= 0;
+        EX_Imm          <= 0;
+        EX_Funct        <= 0;
+        EX_Rs1          <= 0;
+        EX_Rs2          <= 0;
+        EX_Rd           <= 0;
+        EX_Branch       <= 0;
+        EX_BranchTarget <= 0;
+
+        MEM_RegWrite    <= 0;
+        MEM_MemToReg    <= 0;
+        MEM_MemRead     <= 0;
+        MEM_MemWrite    <= 0;
+        MEM_ALURes      <= 0;
+        MEM_DataToMem   <= 0;
+        MEM_Rd          <= 0;
+
+        WB_RegWrite     <= 0;
+        WB_MemToReg     <= 0;
+        WB_ALURes       <= 0;
+        WB_DataFromMem  <= 0;
+        WB_Rd           <= 0;
+    end
+    else begin
+
+    end
+
+
+    if (Rst_i || EX_Flush) begin
+        ID_PC   <= 32'h0;
+        ID_Inst <= 32'h13; // nop
+    end
+    else if (!Stall_hazard && !Stall_dcache) begin
+        ID_PC   <= IF_PC;
+        ID_Inst <= IF_Inst;
+    end
+
     if (Rst_i || EX_Flush) begin
         EX_RegWrite     <= 0;
         EX_MemToReg     <= 0;
@@ -289,42 +385,8 @@ always @(posedge Clk_i) begin
         EX_Branch       <= ID_Branch;
         EX_BranchTarget <= ID_BranchTarget;
     end
-end
 
-// address is multiple of 2
-assign EX_ALUResAsAddr = { EX_ALUAdderRes[31:2], 2'b00 };
-
-assign EX_ALUOp1 = EX_ALUSrc1 ? EX_PC : EX_Rs1Fwd;
-
-assign EX_Rs1Fwd = Forward_A == `FW_REG ? EX_Rs1Data :
-                   Forward_A == `FW_WB  ? WB_WriteBackData :
-                   MEM_ALURes; // Forward_A == FW_MEM
-
-assign EX_ALUOp2 = EX_Beq || EQ_Bne ? { EX_Imm, 2'b00 } :
-                   EX_ALUSrc2       ? EX_Imm :
-                   EX_Rs2Fwd;
-
-assign EX_Rs2Fwd = Forward_B == `FW_REG ? EX_Rs2Data :
-                   Forward_B == `FW_WB  ? WB_WriteBackData :
-                   MEM_ALURes; // Forward_B == FW_MEM
-
-
-
-/////////////////
-/// MEM Stage ///
-/////////////////
-
-// EX/MEM Register
-always @(posedge Clk_i) begin
     if (Rst_i) begin
-        MEM_RegWrite    <= 0;
-        MEM_MemToReg    <= 0;
-        MEM_MemRead     <= 0;
-        MEM_MemWrite    <= 0;
-        MEM_ALURes      <= 0;
-        MEM_DataToMem   <= 0;
-        MEM_Rd          <= 0;
-    end
     else if (!Stall_dcache) begin
         MEM_RegWrite    <= EX_RegWrite;
         MEM_MemToReg    <= EX_MemToReg;
@@ -334,30 +396,8 @@ always @(posedge Clk_i) begin
         MEM_DataToMem   <= EX_Rs2_fwd;
         MEM_Rd          <= EX_Rd;
     end
-end
 
-assign DCACHE_ren = MEM_MemRead;
-assign DCACHE_wen = MEM_MemWrite;
-assign DCACHE_addr = MEM_ALUResAsAddr;
-assign DCACHE_wdata = MEM_DataToMem;
-
-assign Stall_dcache = DCACHE_stall;
-assign MEM_DataToMemn = DCACHE_rdata;
-
-
-
-///////////////
-// WB Stage ///
-///////////////
-
-// MEM/WB Register
-always @(posedge Clk_i) begin
     if (Rst_i) begin
-        WB_RegWrite    <= 0;
-        WB_MemToReg    <= 0;
-        WB_ALURes      <= 0;
-        WB_DataFromMem <= 0;
-        WB_Rd          <= 0;
     end
     else if (!Stall_dcache) begin
         WB_RegWrite    <= MEM_RegWrite;
@@ -367,7 +407,5 @@ always @(posedge Clk_i) begin
         WB_Rd          <= MEM_Rd;
     end
 end
-
-assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
 
 endmodule
