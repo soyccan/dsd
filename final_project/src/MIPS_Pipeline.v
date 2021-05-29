@@ -117,16 +117,6 @@ assign rst = ~rst_n;
 ////////////////
 /// IF Stage ///
 ////////////////
-assign IF_pc_plus_4 = {pc[31:2] + 1'b1, pc[1:0]};
-// assign IF_pc_nxt = EX_Flush ? EX_branch_target : (IF_PC + 4);
-assign IF_pc_nxt = BranchTaken || Jal ? alu_res_as_addr : pc_nxt_norm;
-
-assign ICACHE_ren = 1'b1;
-assign ICACHE_wen = 1'b0;
-assign ICACHE_addr = IF_PC;
-assign ICACHE_wdata = 32'b0;
-assign Stall_icache = ICACHE_stall;
-assign IF_Inst = ICACHE_rdata;
 
 PC PC(
     .Clk_i(clk),
@@ -136,30 +126,99 @@ PC PC(
     .PC_o(IF_PC)
 );
 
-Instruction_Memory Instruction_Memory(
-    .Addr_i(IF_PC),
-    .Instr_o(IF_Inst)
-);
+assign IF_PCPlus4 = {pc[31:2] + 1'b1, pc[1:0]};
+
+// assign IF_pc_nxt = EX_Flush ? EX_branch_target : (IF_PC + 4);
+assign IF_PCNxt = IF_JumpImm     ? IF_Imm :
+                  IF_BranchTaken ? IF_BranchTarget : IF_PCPlus4;
+
+assign IF_JumpImm = ID_JumpImm;
+assign IF_BranchTaken = EX_BranchTaken;
+assign IF_BranchTarget = EX_ALUResAsAddr;
+
+// I mem
+assign ICACHE_ren = 1'b1;
+assign ICACHE_wen = 1'b0;
+assign ICACHE_addr = IF_PC;
+assign ICACHE_wdata = 32'b0;
+assign Stall_icache = ICACHE_stall;
+assign IF_Inst = ICACHE_rdata;
+
 
 
 ////////////////
 /// ID Stage ///
 ////////////////
-assign ID_BranchTarget = ID_Imm + ID_PC;
 
-assign ID_BranchTaken = ID_Branch && (rs1_data == rs2_data);
+Control Control_U(
+    .Opcode_i     (ID_Opcode  ),
+    .Funct_i      (ID_Funct   ),
+
+    .RegDst_o     (ID_RegDst  ),
+    .ALUSrc1_o    (ID_ALUSrc1 ),
+    .ALUSrc2_o    (ID_ALUSrc2 ),
+    .RegWrite_o   (ID_RegWrite),
+    .MemToReg_o   (ID_MemToReg),
+    .MemRead_o    (ID_MemRead ),
+    .MemWrite_o   (ID_MemWrite),
+    .Beq_o        (ID_Beq     ),
+    .Bne_o        (ID_Bne     ),
+    .JumpImm_o    (ID_JumpImm ),
+    .JumpReg_o    (ID_JumpReg ),
+    .Link_o       (ID_Link    ),
+    .ALUCtl_o     (ID_ALUCtl  ),
+    .Stall_o      (ID_Stall   )
+);
+
+Hazard_Detection Hazard_Detection_U(
+    .EX_MemRead_i   (EX_MemRead    ),
+    .EX_Rd_i        (EX_Rd         ),
+    .ID_Rs1_i       (ID_Rs1        ),
+    .ID_Rs2_i       (ID_Rs2        ),
+
+    .NoOp_EX_o      (ID_NoOp_EX    ),
+    .Stall_ID_o     (ID_Stall_ID   )
+);
+
+Forward Forward_U(
+    .EX_Rs1_i(EX_Rs1),
+    .EX_Rs2_i(EX_Rs2),
+    .MEM_Rd_i(MEM_Rd),
+    .WB_Rd_i(WB_Rd),
+    .MEM_RegWrite_i(MEM_RegWrite),
+    .WB_RegWrite_i(WB_RegWrite),
+
+    .Forward_A_o(ID_Forward_A),
+    .Forward_B_o(ID_Forward_B)
+);
+
+RegFile RegFile_U(
+    .clk_i(clk),
+    .rst_i(rst),
+
+    .RegWrite_i(WB_RegWrite),
+    .RDaddr_i(WB_Rd),
+    .RS1addr_i(ID_Rs1),
+    .RS2addr_i(ID_Rs2),
+    .RDdata_i(ID_RdData),
+
+    .RS1data_o(ID_Rs1Data),
+    .RS2data_o(ID_Rs2Data)
+);
 
 // TODO: Valid instructions start with 11
 // An empty entity in instruction memory is replaced with no-op
 // assign ID_Opcode = ID_Inst[1:0] == 2'b11 ? ID_Inst[6:0] : 7'h13;
-assign ID_Opcode = ID_Inst[6:0];
+assign ID_Opcode = ID_Inst[31:26];
 
-assign ID_Funct = {ID_Inst[31:25], ID_Inst[14:12]};
-assign ID_Rd = ID_Inst[11:7];
-assign ID_Rs1 = ID_Inst[19:15];
-assign ID_Rs2 = ID_Inst[24:20];
+assign ID_Funct = ID_Inst[5:0];
+assign ID_Rd = ID_Link ? 5'd31 : ID_Inst[15:11];
+assign ID_Rs1 = ID_Inst[25:21];
+assign ID_Rs2 = ID_Inst[20:16];
+assign ID_Imm = ID_JumpImm ? $signed(ID_Inst[25:0]) :
+                             $signed(ID_Inst[15:0]); // sign extension
 
-assign ID_RdData = ID_Jal ? ID_PCPlus4 : WB_WriteBackData;
+assign ID_RdData = ID_Link ? ID_PCPlus4 : WB_WriteBackData;
 
 // IF/ID Register
 always @(posedge Clk_i) begin
@@ -176,71 +235,23 @@ always @(posedge Clk_i) begin
     end
 end
 
-Control Control(
-    .Opcode_i(ID_Opcode),
-    .NoOp_i(ID_NoOp),
-    .RegWrite_o(ID_RegWrite),
-    .MemToReg_o(ID_MemToReg),
-    .MemRead_o(ID_MemRead),
-    .MemWrite_o(ID_MemWrite),
-    .ALUOp_o(ID_ALUOp),
-    .ALUSrc_o(ID_ALUSrc),
-    .Branch_o(ID_Branch)
-);
-
-Hazard_Detection_Unit Hazard_Detection_Unit(
-    .EX_MemRead_i(EX_MemRead),
-    .EX_Rd_i(EX_Rd),
-    .ID_Rs1_i(ID_Rs1),
-    .ID_Rs2_i(ID_Rs2),
-    .ID_Opcode_i(ID_Opcode),
-    .NoOp_o(ID_NoOp),
-    .Stall_o(Stall_hazard),
-    .PCWrite_o(ID_PCWrite)
-);
-
-Forward Forward(
-    .EX_Rs1_i(EX_Rs1),
-    .EX_Rs2_i(EX_Rs2),
-    .MEM_Rd_i(MEM_Rd),
-    .WB_Rd_i(WB_Rd),
-    .MEM_RegWrite_i(MEM_RegWrite),
-    .WB_RegWrite_i(WB_RegWrite),
-    .Forward_A(Forward_A),
-    .Forward_B(Forward_B)
-);
-
-
-Imm_Gen Imm_Gen(
-    .Inst_i(ID_Inst),
-    .Imm_o(ID_Imm)
-);
-
-Registers Registers(
-    .clk_i(Clk_i),
-    .RegWrite_i(WB_RegWrite),
-    .RDaddr_i(WB_Rd),
-    .RS1addr_i(ID_Rs1),
-    .RS2addr_i(ID_Rs2),
-    .RDdata_i(ID_RdData),
-    .RS1data_o(ID_Rs1Data),
-    .RS2data_o(ID_Rs2Data)
-);
-
 
 
 ////////////////
 /// EX Stage ///
 ////////////////
-assign EX_Flush = EX_Branch && EX_BranchCond;
 
-assign EX_BranchCond =
-    EX_Funct[2:0] == `FUNCT3_EQ  ? EX_ALUZero      :
-    EX_Funct[2:0] == `FUNCT3_NE  ? ~EX_ALUZero     :
-    EX_Funct[2:0] == `FUNCT3_LT  ? EX_ALUOverflow  :
-    EX_Funct[2:0] == `FUNCT3_GE  ? ~EX_ALUOverflow :
-    EX_Funct[2:0] == `FUNCT3_LTU ? EX_ALUOverflow  :
-    EX_Funct[2:0] == `FUNCT3_GEU ? ~EX_ALUOverflow : 1'b0;
+ALU ALU(
+    .ALUCtl_i(EX_ALUCtl),
+    .Op1_i(EX_ALUOp1),
+    .Op2_i(EX_ALUOp2),
+    .Res_o(EX_ALURes),
+    .AdderRes_o(EX_ALUAdderRes)
+);
+
+assign EX_Eq = EX_Rs1Data == EX_Rs2Data;
+assign EX_BranchTaken = (EX_Beq && EX_Eq) || (EX_Bne && !EX_Eq);
+assign EX_Flush = EX_BranchTaken;
 
 // ID/EX Register
 always @(posedge Clk_i) begin
@@ -280,35 +291,22 @@ always @(posedge Clk_i) begin
     end
 end
 
-ALU_Control ALU_Control(
-    .ALUOp_i(EX_ALUOp),
-    .Funct_i(EX_Funct),
-    .ALUCtl_o(EX_ALUCtl)
-);
-
 // address is multiple of 2
-assign EX_alu_res_as_addr = { EX_alu_adder_res[31:1], 1'b0 };
+assign EX_ALUResAsAddr = { EX_ALUAdderRes[31:2], 2'b00 };
 
-assign EX_ALUOp1 = EX_ALUSrc1 ? EX_pc : EX_Rs1_fwd;
+assign EX_ALUOp1 = EX_ALUSrc1 ? EX_PC : EX_Rs1Fwd;
 
-assign EX_Rs1_fwd = Forward_A == `FW_REG ? EX_Rs1Data :
-                    Forward_A == `FW_WB  ? WB_WriteBackData :
-                    MEM_ALURes; // Forward_A == FW_MEM
+assign EX_Rs1Fwd = Forward_A == `FW_REG ? EX_Rs1Data :
+                   Forward_A == `FW_WB  ? WB_WriteBackData :
+                   MEM_ALURes; // Forward_A == FW_MEM
 
-assign EX_ALUOp2 = EX_ALUSrc2 ? EX_Imm : EX_Rs2_fwd;
+assign EX_ALUOp2 = EX_Beq || EQ_Bne ? { EX_Imm, 2'b00 } :
+                   EX_ALUSrc2       ? EX_Imm :
+                   EX_Rs2Fwd;
 
-assign EX_Rs2_fwd = Forward_B == `FW_REG ? EX_Rs2Data :
-                    Forward_B == `FW_WB  ? WB_WriteBackData :
-                    MEM_ALURes; // Forward_B == FW_MEM
-
-ALU ALU(
-    .ALUCtl_i(EX_ALUCtl),
-    .Op1_i(EX_ALUOp1),
-    .Op2_i(EX_ALUOp2),
-    .Res_o(EX_ALURes),
-    .Zero_o(EX_ALUZero),
-    .Overflow_o(EX_ALUOverflow)
-);
+assign EX_Rs2Fwd = Forward_B == `FW_REG ? EX_Rs2Data :
+                   Forward_B == `FW_WB  ? WB_WriteBackData :
+                   MEM_ALURes; // Forward_B == FW_MEM
 
 
 

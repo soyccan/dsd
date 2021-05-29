@@ -1,5 +1,4 @@
-module PC
-(
+module PC(
     input               Clk_i,
     input               Rst_i,
     input               PCWrite_i,
