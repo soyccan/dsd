@@ -64,9 +64,9 @@ rsync \
 # Simulate RTL
 if (( opt_rtl )); then
     if (( opt_hazard )); then
-        define=noHazard
-    else
         define=hasHazard
+    else
+        define=noHazard
     fi
 
     ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
@@ -87,6 +87,7 @@ if (( opt_rtl )); then
             lib/slow_memory.v \
             +incdir+test/baseline/testbench \
             +incdir+include \
+            +incdir+src \
             +define+$define +access+r
     " | tee rtl.log
 fi

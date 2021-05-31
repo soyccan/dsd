@@ -110,6 +110,7 @@ always @* begin
         6'b000010: begin
             // j
             JumpImm_o  = 1;
+            RegDst_o   = 1'bx;
         end
 
         6'b000011: begin
@@ -117,6 +118,7 @@ always @* begin
             JumpImm_o  = 1;
             Link_o     = 1;
             MemToReg_o = 1'bx;
+            RegDst_o   = 1'bx;
         end
 
         6'b000100: begin
@@ -124,6 +126,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_ADD;
             ALUSrc1_o  = `ALU_SRC_PC;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
             MemToReg_o = 1'bx;
             Beq_o      = 1;
         end
@@ -133,6 +136,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_ADD;
             ALUSrc1_o  = `ALU_SRC_PC;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
             MemToReg_o = 1'bx;
             Bne_o      = 1;
         end
@@ -141,30 +145,35 @@ always @* begin
             // addi
             ALUCtl_o   = `ALU_CTL_ADD;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
         end
 
         6'b001100: begin
             // andi
             ALUCtl_o   = `ALU_CTL_AND;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
         end
 
         6'b001101: begin
             // ori
             ALUCtl_o   = `ALU_CTL_OR;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
         end
 
         6'b001110: begin
             // xori
             ALUCtl_o   = `ALU_CTL_XOR;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
         end
 
         6'b001010: begin
             // slti
             ALUCtl_o   = `ALU_CTL_SLT;
             ALUSrc2_o  = `ALU_SRC_IMM;
+            RegDst_o   = `REG_DST_RT;
         end
 
         6'b100011: begin
@@ -174,6 +183,7 @@ always @* begin
             RegWrite_o = 1'b1;
             MemToReg_o = 1'b1;
             MemRead_o  = 1'b1;
+            RegDst_o   = `REG_DST_RT;
         end
 
         6'b101011: begin
@@ -182,7 +192,7 @@ always @* begin
             ALUSrc2_o  = `ALU_SRC_IMM;
             MemToReg_o = 1'bx;
             MemWrite_o = 1'b1;
-            RegDst_o   = `REG_DST_RS2;
+            RegDst_o   = `REG_DST_RT;
         end
     endcase
 end

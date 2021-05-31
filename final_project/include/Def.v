@@ -32,7 +32,7 @@
 
 // Control signal "RegDst"
 `define REG_DST_RD  1'b0
-`define REG_DST_RS2 1'b1
+`define REG_DST_RT  1'b1
 
 
 // Forwarding unit output, the source of forwarding
