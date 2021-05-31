@@ -1,6 +1,6 @@
 `include "Def.v"
 
-module Hazard_Detection(
+module HazardDetection(
     input       EX_MemRead_i,
     input [4:0] EX_Rd_i,
     // input [6:0] ID_Opcode_i,

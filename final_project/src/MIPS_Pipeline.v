@@ -236,11 +236,11 @@ Control Control_U(
     .Stall_o      (ID_Stall_ctrl)
 );
 
-Hazard_Detection Hazard_Detection_U(
+HazardDetection HazardDetection_U(
     .EX_MemRead_i (EX_MemRead     ),
     .EX_Rd_i      (EX_Rd          ),
-    .ID_Rs_i      (ID_Rs         ),
-    .ID_Rt_i      (ID_Rt         ),
+    .ID_Rs_i      (ID_Rs          ),
+    .ID_Rt_i      (ID_Rt          ),
 
     .NoOp_o       (ID_NoOp_hazard ),
     .Stall_o      (ID_Stall_hazard)
@@ -349,33 +349,33 @@ assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
 // pipeline registers //
 always @* begin
     // default: shift a stage
-    nxt_ID_PCPlus4     = IF_PCPlus4      ;
-    nxt_ID_Inst        = IF_Inst         ;
+    nxt_ID_PCPlus4     = IF_PCPlus4       ;
+    nxt_ID_Inst        = IF_Inst          ;
 
-    nxt_EX_RegWrite    = ID_RegWrite     ;
-    nxt_EX_MemToReg    = ID_MemToReg     ;
-    nxt_EX_MemRead     = ID_MemRead      ;
-    nxt_EX_MemWrite    = ID_MemWrite     ;
-    nxt_EX_ALUSrc1     = ID_ALUSrc1      ;
-    nxt_EX_ALUSrc2     = ID_ALUSrc2      ;
-    nxt_EX_Beq         = ID_Beq          ;
-    nxt_EX_Bne         = ID_Bne          ;
-    nxt_EX_ALUCtl      = ID_ALUCtl       ;
-    nxt_EX_PCPlus4     = ID_PCPlus4      ;
-    nxt_EX_Rs          = ID_Rs          ;
-    nxt_EX_Rt          = ID_Rt          ;
-    nxt_EX_Rd          = ID_Rd           ;
-    nxt_EX_RsData      = ID_RsData      ;
-    nxt_EX_RtData      = ID_RtData      ;
-    nxt_EX_Imm         = ID_Imm          ;
+    nxt_EX_RegWrite    = ID_RegWrite      ;
+    nxt_EX_MemToReg    = ID_MemToReg      ;
+    nxt_EX_MemRead     = ID_MemRead       ;
+    nxt_EX_MemWrite    = ID_MemWrite      ;
+    nxt_EX_ALUSrc1     = ID_ALUSrc1       ;
+    nxt_EX_ALUSrc2     = ID_ALUSrc2       ;
+    nxt_EX_Beq         = ID_Beq           ;
+    nxt_EX_Bne         = ID_Bne           ;
+    nxt_EX_ALUCtl      = ID_ALUCtl        ;
+    nxt_EX_PCPlus4     = ID_PCPlus4       ;
+    nxt_EX_Rs          = ID_Rs            ;
+    nxt_EX_Rt          = ID_Rt            ;
+    nxt_EX_Rd          = ID_Rd            ;
+    nxt_EX_RsData      = ID_RsData        ;
+    nxt_EX_RtData      = ID_RtData        ;
+    nxt_EX_Imm         = ID_Imm           ;
 
-    nxt_MEM_RegWrite   = EX_RegWrite    ;
-    nxt_MEM_MemToReg   = EX_MemToReg    ;
-    nxt_MEM_MemRead    = EX_MemRead     ;
-    nxt_MEM_MemWrite   = EX_MemWrite    ;
-    nxt_MEM_ALURes     = EX_ALURes      ;
-    nxt_MEM_Rd         = EX_Rd          ;
-    nxt_MEM_RtData     = EX_RtData      ;
+    nxt_MEM_RegWrite   = EX_RegWrite      ;
+    nxt_MEM_MemToReg   = EX_MemToReg      ;
+    nxt_MEM_MemRead    = EX_MemRead       ;
+    nxt_MEM_MemWrite   = EX_MemWrite      ;
+    nxt_MEM_ALURes     = EX_ALURes        ;
+    nxt_MEM_Rd         = EX_Rd            ;
+    nxt_MEM_RtData     = EX_RtData        ;
 
     nxt_WB_RegWrite    = MEM_RegWrite     ;
     nxt_WB_MemToReg    = MEM_MemToReg     ;
@@ -410,11 +410,11 @@ always @* begin
         nxt_EX_Bne         = EX_Bne          ;
         nxt_EX_ALUCtl      = EX_ALUCtl       ;
         nxt_EX_PCPlus4     = EX_PCPlus4      ;
-        nxt_EX_Rs          = EX_Rs          ;
-        nxt_EX_Rt          = EX_Rt          ;
+        nxt_EX_Rs          = EX_Rs           ;
+        nxt_EX_Rt          = EX_Rt           ;
         nxt_EX_Rd          = EX_Rd           ;
-        nxt_EX_RsData      = EX_RsData      ;
-        nxt_EX_RtData      = EX_RtData      ;
+        nxt_EX_RsData      = EX_RsData       ;
+        nxt_EX_RtData      = EX_RtData       ;
         nxt_EX_Imm         = EX_Imm          ;
 
         nxt_MEM_RegWrite   = MEM_RegWrite    ;
