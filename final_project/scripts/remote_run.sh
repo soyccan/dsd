@@ -93,14 +93,12 @@ if (( opt_rtl )); then
 fi
 
 # Synthesize
-if (( mode & 2 )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        "cd $REMOTE_DIR
-         source /usr/cad/synopsys/CIC/synthesis.cshrc
-         design_vision -no_gui -x " \
-             read_file -format verilog cache_2way.v \
-             source cache_syn.sdc"
-        " | tee netlist/syn.log
+if (( opt_syn )); then
+    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
+        cd $REMOTE_DIR
+        source /usr/cad/synopsys/CIC/synthesis.cshrc
+        design_vision -no_gui -f syn/CHIP_syn.sdc
+    " | tee netlist/syn.log
 
     # Download gate-level verilog
     scp -o "ControlPath=$SOCKET" \

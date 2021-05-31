@@ -4,16 +4,16 @@
 
 // ALU Control unit output "ALUctl"
 // Resembles funct as best as possible
-`define ALU_CTL_SLL  4'b0000
-`define ALU_CTL_SRL  4'b0010
-`define ALU_CTL_SRA  4'b0011
-`define ALU_CTL_ADD  4'b1000
-`define ALU_CTL_SUB  4'b1010
-`define ALU_CTL_AND  4'b1100
-`define ALU_CTL_OR   4'b1101
-`define ALU_CTL_XOR  4'b1110
-`define ALU_CTL_NOR  4'b1111
-`define ALU_CTL_SLT  4'b1010
+`define ALU_CTL_SLL  6'b000000
+`define ALU_CTL_SRL  6'b000010
+`define ALU_CTL_SRA  6'b000011
+`define ALU_CTL_ADD  6'b100000
+`define ALU_CTL_SUB  6'b100010
+`define ALU_CTL_AND  6'b100100
+`define ALU_CTL_OR   6'b100101
+`define ALU_CTL_XOR  6'b100110
+`define ALU_CTL_NOR  6'b100111
+`define ALU_CTL_SLT  6'b101010
 
 // Control unit output "ALUOp"
 `define ALU_OP_REG        2'd0  // Integer register-register computation

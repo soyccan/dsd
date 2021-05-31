@@ -47,24 +47,24 @@ ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,127|37): $readmem defaul
 ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,128|37): $readmem default memory order incompatible with IEEE1364.
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.ALU:v <0x75a9e851>
-			streams:   6, words:  2006
+		worklib.ALU:v <0x2f706974>
+			streams:   5, words:  2036
 		worklib.CHIP:v <0x0709bcf5>
 			streams:   1, words:   101
 		worklib.Control:v <0x108d4d5c>
-			streams:   1, words:  7225
+			streams:   1, words:  7588
 		worklib.Final_tb:v <0x08943bc9>
 			streams:   3, words:  5309
 		worklib.Forward:v <0x5ff18e2f>
 			streams:   1, words:  1062
 		worklib.Hazard_Detection:v <0x7e034db8>
 			streams:   1, words:   526
-		worklib.MIPS_Pipeline:v <0x00b6599d>
-			streams:  33, words: 18495
+		worklib.MIPS_Pipeline:v <0x5a852b8c>
+			streams:  35, words: 19958
 		worklib.PC:v <0x771c3141>
 			streams:   2, words:   460
-		worklib.RegFile:v <0x6ca967ab>
-			streams:   4, words:  6781
+		worklib.RegFile:v <0x4e6f64bf>
+			streams:   4, words:  6711
 		worklib.TestBed:v <0x34d14852>
 			streams:   9, words:  8654
 		worklib.cache:v <0x61dd5c6f>
@@ -76,13 +76,13 @@ ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,128|37): $readmem defaul
 	Design hierarchy summary:
 		                  Instances  Unique
 		Modules:                 14      12
-		Registers:              157     125
-		Scalar wires:            54       -
+		Registers:              161     129
+		Scalar wires:            53       -
 		Vectored wires:          53       -
 		Always blocks:           27      21
 		Initial blocks:           1       1
-		Cont. assignments:       26      44
-		Pseudo assignments:       9       9
+		Cont. assignments:       26      45
+		Pseudo assignments:      10      10
 		Simulation timescale:  10ps
 	Writing initial simulation snapshot: worklib.Final_tb:v
 Loading snapshot worklib.Final_tb:v .................... Done
@@ -104,15 +104,12 @@ FSDB Dumper for IUS, Release Verdi_R-2020.12, Linux, 11/19/2020
 *Verdi* : End of traversing.
 *Verdi* : Begin traversing the scopes, layer (0).
 *Verdi* : End of traversing.
+--------------------------- Simulation FINISH !!---------------------------
 ============================================================================
 
-           Error!!! There is something wrong with your code ...!          
-
-                       The test result is .....FAIL                     
+ \(^o^)/ CONGRATULATIONS!!  The simulation result is PASS!!!
 
 ============================================================================
-Possible solution: The first answer may not be correct.
-
-Simulation complete via $finish(1) at time 100087 NS + 0
-./test/baseline/testbench/Final_tb.v:151 	 	$finish;
+Simulation complete via $finish(1) at time 2005 NS + 0
+./test/baseline/testbench/Final_tb.v:158 	       #(`CYCLE) $finish;		   
 ncsim> exit
