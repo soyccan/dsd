@@ -1,0 +1,115 @@
+ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
+file: test/baseline/testbench/Final_tb.v
+	module worklib.TestBed:v
+		errors: 0, warnings: 0
+	module worklib.Final_tb:v
+		errors: 0, warnings: 0
+file: src/CHIP.v
+	module worklib.CHIP:v
+		errors: 0, warnings: 0
+file: src/cacheD.v
+	module worklib.cache:v
+		errors: 0, warnings: 0
+file: src/MIPS_Pipeline.v
+	module worklib.MIPS_Pipeline:v
+		errors: 0, warnings: 0
+file: src/PC.v
+	module worklib.PC:v
+		errors: 0, warnings: 0
+file: src/Control.v
+	module worklib.Control:v
+		errors: 0, warnings: 0
+file: src/RegFile.v
+	module worklib.RegFile:v
+		errors: 0, warnings: 0
+file: src/Forward.v
+	module worklib.Forward:v
+		errors: 0, warnings: 0
+file: src/Hazard_Detection.v
+	module worklib.Hazard_Detection:v
+		errors: 0, warnings: 0
+file: src/ALU.v
+	module worklib.ALU:v
+		errors: 0, warnings: 0
+file: lib/slow_memory.v
+	module worklib.slow_memory:v
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+		$readmemb (`DMEM_INIT, slow_memD.mem ); // initialize data in DMEM
+		                                   |
+ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,127|37): $readmem default memory order incompatible with IEEE1364.
+		$readmemb (`IMEM_INIT, slow_memI.mem ); // initialize data in IMEM
+		                                   |
+ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,128|37): $readmem default memory order incompatible with IEEE1364.
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.ALU:v <0x75a9e851>
+			streams:   6, words:  2006
+		worklib.CHIP:v <0x0709bcf5>
+			streams:   1, words:   101
+		worklib.Control:v <0x108d4d5c>
+			streams:   1, words:  6409
+		worklib.Final_tb:v <0x17e409da>
+			streams:   3, words:  5309
+		worklib.Forward:v <0x0e620edb>
+			streams:   1, words:  1062
+		worklib.Hazard_Detection:v <0x5458646b>
+			streams:   1, words:   526
+		worklib.MIPS_Pipeline:v <0x194de3f1>
+			streams:  22, words:  4463
+		worklib.PC:v <0x771c3141>
+			streams:   2, words:   460
+		worklib.RegFile:v <0x6ca967ab>
+			streams:   4, words:  6781
+		worklib.TestBed:v <0x78ce7227>
+			streams:  10, words:  6788
+		worklib.cache:v <0x61dd5c6f>
+			streams:   8, words: 27417
+		worklib.slow_memory:v <0x2e24ff75>
+			streams:   7, words:  5124
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                  Instances  Unique
+		Modules:                 14      12
+		Registers:              132     100
+		Scalar wires:            55       -
+		Vectored wires:          55       -
+		Always blocks:           26      20
+		Initial blocks:           1       1
+		Cont. assignments:       27      45
+		Pseudo assignments:       1       1
+		Simulation timescale:  10ps
+	Writing initial simulation snapshot: worklib.Final_tb:v
+Loading snapshot worklib.Final_tb:v .................... Done
+*Verdi* Loading libsscore_ius152.so
+ncsim> source /usr/cad/cadence/INCISIV/cur/tools/inca/files/ncsimrc
+ncsim> run
+-----------------------------------------------------
+
+START!!! Simulation Start .....
+
+-----------------------------------------------------
+
+FSDB Dumper for IUS, Release Verdi_R-2020.12, Linux, 11/19/2020
+(C) 1996 - 2020 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'Final.fsdb'
+*Verdi* : Begin traversing the scope (Final_tb), layer (0).
+*Verdi* : Enable +mda dumping.
+*Verdi* : End of traversing.
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : End of traversing.
+============================================================================
+
+           Error!!! There is something wrong with your code ...!          
+
+                       The test result is .....FAIL                     
+
+============================================================================
+Possible solution: The first answer may not be correct.
+
+Simulation complete via $finish(1) at time 100087 NS + 0
+./test/baseline/testbench/Final_tb.v:151 	 	$finish;
+ncsim> exit
