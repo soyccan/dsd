@@ -82,7 +82,7 @@ if (( opt_rtl )); then
             src/Control.v \
             src/RegFile.v \
             src/Forward.v \
-            src/Hazard_Detection.v \
+            src/HazardDetection.v \
             src/ALU.v \
             lib/slow_memory.v \
             +incdir+test/baseline/testbench \

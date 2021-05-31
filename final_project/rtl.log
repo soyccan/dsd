@@ -25,8 +25,8 @@ file: src/RegFile.v
 file: src/Forward.v
 	module worklib.Forward:v
 		errors: 0, warnings: 0
-file: src/Hazard_Detection.v
-	module worklib.Hazard_Detection:v
+file: src/HazardDetection.v
+	module worklib.HazardDetection:v
 		errors: 0, warnings: 0
 file: src/ALU.v
 	module worklib.ALU:v
@@ -57,7 +57,7 @@ ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,128|37): $readmem defaul
 			streams:   3, words:  5309
 		worklib.Forward:v <0x5ff18e2f>
 			streams:   1, words:  1062
-		worklib.Hazard_Detection:v <0x7e034db8>
+		worklib.HazardDetection:v <0x43e8f3c9>
 			streams:   1, words:   526
 		worklib.MIPS_Pipeline:v <0x5a852b8c>
 			streams:  35, words: 19958
