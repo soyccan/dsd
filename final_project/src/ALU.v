@@ -1,9 +1,10 @@
 `include "Def.v"
 
 module ALU(
-    input [3:0] ALUCtl_i,
+    input [5:0] ALUCtl_i,
     input [31:0] Op1_i,
     input [31:0] Op2_i,
+    input [4:0] shamt_i,
     output reg [31:0] Res_o,
     output [31:0] AdderRes_o
 );
@@ -12,14 +13,11 @@ wire [32:0] adder_op1;
 wire [32:0] adder_op2;
 wire sign;
 wire neg;
-wire [4:0] shamt;
 
-assign shamt = Op2_i[10:6];
-
-// add(1000): 0
-// sub(1010), slt(0000): 1
+// add(100000): 0
+// sub(100010), slt(101010): 1
 // otherwise: don't-care
-assign neg = !ALUCtl_i[3] || ALUCtl_i[1];
+assign neg = ALUCtl_i[1];
 
 // signed extension & negation
 assign adder_op1 = {Op1_i[31], Op1_i};
@@ -32,9 +30,9 @@ always @* begin
     Res_o = AdderRes_o;
 
     case (ALUCtl_i)
-        `ALU_CTL_SLL: Res_o = Op1_i << shamt;
-        `ALU_CTL_SRL: Res_o = Op1_i >> shamt;
-        `ALU_CTL_SRA: Res_o = $signed(Op1_i) >>> shamt;
+        `ALU_CTL_SLL: Res_o = Op2_i << shamt_i;
+        `ALU_CTL_SRL: Res_o = Op2_i >> shamt_i;
+        `ALU_CTL_SRA: Res_o = $signed(Op2_i) >>> shamt_i;
         `ALU_CTL_ADD, `ALU_CTL_SUB: Res_o = AdderRes_o;
         `ALU_CTL_AND: Res_o = Op1_i & Op2_i;
         `ALU_CTL_OR:  Res_o = Op1_i | Op2_i;

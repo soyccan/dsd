@@ -15,7 +15,7 @@ module Control(
     output reg JumpImm_o,
     output reg JumpReg_o,
     output reg Link_o,
-    output reg [3:0] ALUCtl_o,
+    output reg [5:0] ALUCtl_o,
     output reg Stall_o
 );
 
@@ -43,19 +43,16 @@ always @* begin
                 6'b000000: begin
                     // sll
                     ALUCtl_o   = `ALU_CTL_SLL;
-                    ALUSrc2_o  = `ALU_SRC_IMM;
                 end
 
                 6'b000010: begin
                     // srl
                     ALUCtl_o   = `ALU_CTL_SRL;
-                    ALUSrc2_o  = `ALU_SRC_IMM;
                 end
 
                 6'b000011: begin
                     // sra
                     ALUCtl_o   = `ALU_CTL_SRA;
-                    ALUSrc2_o  = `ALU_SRC_IMM;
                 end
 
                 6'b001000: begin
@@ -119,6 +116,7 @@ always @* begin
             Link_o     = 1;
             MemToReg_o = 1'bx;
             RegDst_o   = 1'bx;
+            RegWrite_o = 1;
         end
 
         6'b000100: begin
@@ -146,6 +144,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_ADD;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
+            RegWrite_o = 1;
         end
 
         6'b001100: begin
@@ -153,6 +152,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_AND;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
+            RegWrite_o = 1;
         end
 
         6'b001101: begin
@@ -160,6 +160,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_OR;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
+            RegWrite_o = 1;
         end
 
         6'b001110: begin
@@ -167,6 +168,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_XOR;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
+            RegWrite_o = 1;
         end
 
         6'b001010: begin
@@ -174,6 +176,7 @@ always @* begin
             ALUCtl_o   = `ALU_CTL_SLT;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
+            RegWrite_o = 1;
         end
 
         6'b100011: begin
