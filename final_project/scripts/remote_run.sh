@@ -11,42 +11,84 @@ SOCKET='/tmp/ssh.sock'
 # negative pid specifies process group
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
-# argument mode
-# 1: RTL simulation
-# 2: Synthesis
-# 4: Post-synthesis simulation
-mode="$1"
+# arguments
+while [[ "$1" ]]; do
+    case $1 in
+        -rtl)
+            # RTL simulation
+            opt_rtl=1
+            ;;
+        -syn)
+            # Synthesis
+            opt_syn=1
+            ;;
+        -gate)
+            # Gate-level simulation
+            opt_gate=1
+            ;;
+        -hazard)
+            # With hazard
+            opt_hazard=1
+            ;;
+        -nohazard)
+            # Without hazard
+            opt_hazard=0
+            ;;
+    esac
 
-if [[ ! "$mode" ]]; then
-    echo Please specify mode!
-    exit 1
-fi
+    shift
+done
 
 
 # Create connection
-args=(-N # do not execute remote command
-      -M # ControlMaster=auto: master mode for connection sharing
-      -S "$SOCKET") # ControlPath: location of control socket
+ssh -N \
+    -o 'ControlMaster=yes' \
+    -o "ControlPath=$SOCKET" \
+    b7902143@cad30.ee.ntu.edu.tw &
 
-ssh "${args[@]}" b7902143@cad30.ee.ntu.edu.tw &
-
-# Upload files
-scp -r -o "ControlPath=$SOCKET" \
-    "$proj_root/lib/" \
-    "$proj_root/src/" \
-    "$proj_root/syn/" \
-    "$proj_root/include/" \
-    "$proj_root/test/" \
-    b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR"
+# Upload only updated files
+rsync \
+    -e "ssh -S '$SOCKET'" \
+    --archive --verbose --compress --update --progress --human-readable \
+    "$proj_root/lib" \
+    "$proj_root/src" \
+    "$proj_root/syn" \
+    "$proj_root/include" \
+    b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR/"
+rsync \
+    -e "ssh -S '$SOCKET'" \
+    --archive --verbose --compress --update --progress --human-readable \
+    "$proj_root/test/baseline/pattern/" \
+    b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR/"
 
 # Simulate RTL
-if (( mode & 1 )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        "cd $REMOTE_DIR
-         rm -rf INCA_libs
-         source /usr/cad/cadence/cshrc
-         ncverilog Final_tb.v CHIP.v slow_memory.v +define+noHazard +access+r
-        " | tee rtl.log
+if (( opt_rtl )); then
+    if (( opt_hazard )); then
+        define=noHazard
+    else
+        define=hasHazard
+    fi
+
+    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
+        cd $REMOTE_DIR
+        rm -rf INCA_libs
+        source /usr/cad/cadence/cshrc
+        ncverilog \
+            test/baseline/testbench/Final_tb.v \
+            src/CHIP.v \
+            src/cacheD.v \
+            src/MIPS_Pipeline.v \
+            src/PC.v \
+            src/Control.v \
+            src/RegFile.v \
+            src/Forward.v \
+            src/Hazard_Detection.v \
+            src/ALU.v \
+            lib/slow_memory.v \
+            +incdir+test/baseline/testbench \
+            +incdir+include \
+            +define+$define +access+r
+    " | tee rtl.log
 fi
 
 # Synthesize
