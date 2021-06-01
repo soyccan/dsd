@@ -44,7 +44,7 @@ end
 // Write Data
 always @(posedge clk_i) begin
     if (rst_i) begin
-        for (i = 0; i <= 30; i = i + 1) begin
+        for (i = 0; i <= 31; i = i + 1) begin
             register[i] <= 32'b0;
         end
     end

@@ -76,14 +76,15 @@ if (( opt_rtl )); then
         ncverilog \
             test/baseline/testbench/Final_tb.v \
             src/CHIP.v \
-            src/cacheD.v \
+            src/cache_controller.v \
             src/MIPS_Pipeline.v \
             src/PC.v \
             src/Control.v \
             src/RegFile.v \
             src/Forward.v \
-            src/HazardDetection.v \
+            src/HazardDetect.v \
             src/ALU.v \
+            src/StallControl.v \
             lib/slow_memory.v \
             +incdir+test/baseline/testbench \
             +incdir+include \

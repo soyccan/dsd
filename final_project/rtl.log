@@ -7,7 +7,9 @@ file: test/baseline/testbench/Final_tb.v
 file: src/CHIP.v
 	module worklib.CHIP:v
 		errors: 0, warnings: 0
-file: src/cacheD.v
+file: src/cache_controller.v
+	module worklib.cache_sram_dm:v
+		errors: 0, warnings: 0
 	module worklib.cache:v
 		errors: 0, warnings: 0
 file: src/MIPS_Pipeline.v
@@ -25,18 +27,18 @@ file: src/RegFile.v
 file: src/Forward.v
 	module worklib.Forward:v
 		errors: 0, warnings: 0
-file: src/HazardDetection.v
-	module worklib.HazardDetection:v
+file: src/HazardDetect.v
+	module worklib.HazardDetect:v
 		errors: 0, warnings: 0
 file: src/ALU.v
 	module worklib.ALU:v
 		errors: 0, warnings: 0
+file: src/StallControl.v
+	module worklib.StallControl:v
+		errors: 0, warnings: 0
 file: lib/slow_memory.v
 	module worklib.slow_memory:v
 		errors: 0, warnings: 0
-ncvlog: *W,SPDUSD: Include directory src given but not used.
-	Total errors/warnings found outside modules and primitives:
-		errors: 0, warnings: 1
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
 		$readmemb (`DMEM_INIT, slow_memD.mem ); // initialize data in DMEM
@@ -52,36 +54,40 @@ ncelab: *W,MEMODR (./test/baseline/testbench/Final_tb.v,128|37): $readmem defaul
 		worklib.CHIP:v <0x0709bcf5>
 			streams:   1, words:   101
 		worklib.Control:v <0x108d4d5c>
-			streams:   1, words:  7588
+			streams:   1, words:  8214
 		worklib.Final_tb:v <0x08943bc9>
 			streams:   3, words:  5309
 		worklib.Forward:v <0x5ff18e2f>
 			streams:   1, words:  1062
-		worklib.HazardDetection:v <0x43e8f3c9>
-			streams:   1, words:   526
-		worklib.MIPS_Pipeline:v <0x5a852b8c>
-			streams:  35, words: 19958
+		worklib.HazardDetect:v <0x58a2d081>
+			streams:   1, words:   371
+		worklib.MIPS_Pipeline:v <0x7738e7eb>
+			streams:  34, words: 21999
 		worklib.PC:v <0x771c3141>
 			streams:   2, words:   460
 		worklib.RegFile:v <0x4e6f64bf>
-			streams:   4, words:  6711
+			streams:   4, words:  6867
+		worklib.StallControl:v <0x365c7696>
+			streams:   1, words:  1808
 		worklib.TestBed:v <0x34d14852>
 			streams:   9, words:  8654
-		worklib.cache:v <0x61dd5c6f>
-			streams:   8, words: 27417
+		worklib.cache:v <0x3c035600>
+			streams:   9, words:  5009
+		worklib.cache_sram_dm:v <0x1bf03597>
+			streams:   7, words:  7523
 		worklib.slow_memory:v <0x2e24ff75>
 			streams:   7, words:  5124
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                  Instances  Unique
-		Modules:                 14      12
-		Registers:              161     129
-		Scalar wires:            53       -
-		Vectored wires:          53       -
-		Always blocks:           27      21
+		Modules:                 17      14
+		Registers:              155     131
+		Scalar wires:            71       -
+		Vectored wires:          73       -
+		Always blocks:           36      26
 		Initial blocks:           1       1
-		Cont. assignments:       26      45
+		Cont. assignments:       39      58
 		Pseudo assignments:      10      10
 		Simulation timescale:  10ps
 	Writing initial simulation snapshot: worklib.Final_tb:v
@@ -104,12 +110,15 @@ FSDB Dumper for IUS, Release Verdi_R-2020.12, Linux, 11/19/2020
 *Verdi* : End of traversing.
 *Verdi* : Begin traversing the scopes, layer (0).
 *Verdi* : End of traversing.
---------------------------- Simulation FINISH !!---------------------------
 ============================================================================
 
- \(^o^)/ CONGRATULATIONS!!  The simulation result is PASS!!!
+           Error!!! There is something wrong with your code ...!          
+
+                       The test result is .....FAIL                     
 
 ============================================================================
-Simulation complete via $finish(1) at time 2005 NS + 0
-./test/baseline/testbench/Final_tb.v:158 	       #(`CYCLE) $finish;		   
+Possible solution: The first answer may not be correct.
+
+Simulation complete via $finish(1) at time 100087 NS + 0
+./test/baseline/testbench/Final_tb.v:151 	 	$finish;
 ncsim> exit
