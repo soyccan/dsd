@@ -1,0 +1,810 @@
+Platform = amd64
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version N-2017.09-SP2 for linux64 - Nov 27, 2017 
+
+                    Copyright (c) 1988 - 2017 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/raid7_2/userb07/b7902143/.synopsys_dv_prefs.tcl
+read_file -format verilog src/CHIP.v
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/dw_foundation.sldb'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/gtech.db'
+Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/standard.sldb'
+  Loading link library 'typical'
+  Loading link library 'slow'
+  Loading link library 'fast'
+  Loading link library 'gtech'
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/CHIP.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/CHIP.v
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/CHIP.db:CHIP'
+Loaded 1 design.
+Current design is 'CHIP'.
+CHIP
+read_file -format verilog src/cacheD.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/cacheD.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/cacheD.v
+Warning:  /home/raid7_2/userb07/b7902143/final_project/src/cacheD.v:81: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 62 in file
+	'/home/raid7_2/userb07/b7902143/final_project/src/cacheD.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            81            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine cache line 175 in file
+		'/home/raid7_2/userb07/b7902143/final_project/src/cacheD.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   2   |  Y  | N  | N  | N  | N  | N  | N  |
+|    mem_read_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|    mem_write_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   cache_dirty_reg   | Flip-flop |   8   |  Y  | N  | N  | N  | N  | N  | N  |
+|   cache_valid_reg   | Flip-flop |   8   |  Y  | N  | N  | N  | N  | N  | N  |
+|    cache_tag_reg    | Flip-flop |  40   |  Y  | N  | N  | N  | N  | N  | N  |
+|    cache_mem_reg    | Flip-flop | 1024  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|     cache/96     |   8    |    5    |      3       |
+|    cache/108     |   8    |    2    |      3       |
+|     cache/98     |   32   |   32    |      5       |
+|    cache/162     |   32   |   32    |      5       |
+======================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/cache.db:cache'
+Loaded 1 design.
+Current design is 'cache'.
+cache
+read_file -format verilog src/MIPS_Pipeline.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/MIPS_Pipeline.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/MIPS_Pipeline.v
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+
+Inferred memory devices in process
+	in routine MIPS_Pipeline line 512 in file
+		'/home/raid7_2/userb07/b7902143/final_project/src/MIPS_Pipeline.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+| WB_DataFromMem_reg  | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|    WB_ALURes_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|   ID_PCPlus4_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|     ID_Inst_reg     | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|   EX_RegWrite_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_MemToReg_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_MemRead_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_MemWrite_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_ALUSrc1_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_ALUSrc2_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     EX_Beq_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     EX_Bne_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     EX_Link_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_JumpImm_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   EX_JumpReg_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|    EX_ALUCtl_reg    | Flip-flop |   6   |  Y  | N  | N  | N  | N  | N  | N  |
+|   EX_PCPlus4_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|      EX_Rs_reg      | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+|      EX_Rt_reg      | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+|      EX_Rd_reg      | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+|    EX_RsData_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|    EX_RtData_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|     EX_Imm_reg      | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|  MEM_RegWrite_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  MEM_MemToReg_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   MEM_MemRead_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  MEM_MemWrite_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   MEM_ALURes_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|     MEM_Rd_reg      | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+|   MEM_RtData_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|   WB_RegWrite_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   WB_MemToReg_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      WB_Rd_reg      | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/MIPS_Pipeline.db:MIPS_Pipeline'
+Loaded 1 design.
+Current design is 'MIPS_Pipeline'.
+MIPS_Pipeline
+read_file -format verilog src/PC.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/PC.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/PC.v
+
+Inferred memory devices in process
+	in routine PC line 10 in file
+		'/home/raid7_2/userb07/b7902143/final_project/src/PC.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      PC_o_reg       | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/PC.db:PC'
+Loaded 1 design.
+Current design is 'PC'.
+PC
+read_file -format verilog src/Control.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/Control.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/Control.v
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+
+Statistics for case statements in always block at line 22 in file
+	'/home/raid7_2/userb07/b7902143/final_project/src/Control.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            38            |     no/auto      |
+|            42            |     no/auto      |
+===============================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/Control.db:Control'
+Loaded 1 design.
+Current design is 'Control'.
+Control
+read_file -format verilog src/RegFile.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/RegFile.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/RegFile.v
+
+Inferred memory devices in process
+	in routine RegFile line 45 in file
+		'/home/raid7_2/userb07/b7902143/final_project/src/RegFile.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    register_reg     | Flip-flop | 1024  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|    RegFile/24    |   32   |   32    |      5       |
+|    RegFile/36    |   32   |   32    |      5       |
+======================================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/RegFile.db:RegFile'
+Loaded 1 design.
+Current design is 'RegFile'.
+RegFile
+read_file -format verilog src/Forward.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/Forward.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/Forward.v
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/Forward.db:Forward'
+Loaded 1 design.
+Current design is 'Forward'.
+Forward
+read_file -format verilog src/HazardDetect.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/HazardDetect.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/HazardDetect.v
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/HazardDetect.db:HazardDetect'
+Loaded 1 design.
+Current design is 'HazardDetect'.
+HazardDetect
+read_file -format verilog src/ALU.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/ALU.v'
+Detecting input file type automatically (-rtl or -netlist).
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/ALU.v
+Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
+Warning:  /home/raid7_2/userb07/b7902143/final_project/src/ALU.v:35: signed to unsigned assignment occurs. (VER-318)
+
+Statistics for case statements in always block at line 29 in file
+	'/home/raid7_2/userb07/b7902143/final_project/src/ALU.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            32            |     no/auto      |
+===============================================
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/ALU.db:ALU'
+Loaded 1 design.
+Current design is 'ALU'.
+ALU
+read_file -format verilog src/StallControl.v
+Loading verilog file '/home/raid7_2/userb07/b7902143/final_project/src/StallControl.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/StallControl.v
+Presto compilation completed successfully.
+Current design is now '/home/raid7_2/userb07/b7902143/final_project/src/StallControl.db:StallControl'
+Loaded 1 design.
+Current design is 'StallControl'.
+StallControl
+current_design [get_designs CHIP]
+Current design is 'CHIP'.
+{CHIP}
+#You may modified the clock constraints
+#or add more constraints for your design
+####################################################
+set cycle  10
+10
+####################################################
+#The following are design spec. for synthesis
+#You can NOT modify this seciton
+#####################################################
+create_clock -name CLK -period $cycle [get_ports clk]
+1
+set_fix_hold                          [get_clocks CLK]
+1
+set_dont_touch_network                [get_clocks CLK]
+1
+set_ideal_network                     [get_ports clk]
+1
+set_clock_uncertainty            0.1  [get_clocks CLK]
+1
+set_clock_latency                0.5  [get_clocks CLK]
+1
+set_max_fanout 6 [all_inputs]
+1
+set_operating_conditions -min_library fast -min fast -max_library slow -max slow
+Using operating conditions 'slow' found in library 'slow'.
+Using operating conditions 'fast' found in library 'fast'.
+1
+set_wire_load_model -name tsmc13_wl10 -library slow
+1
+set_drive        1     [all_inputs]
+1
+set_load         1     [all_outputs]
+1
+set t_in   0.1
+0.1
+set t_out  0.1
+0.1
+set_input_delay  $t_in  -clock CLK [remove_from_collection [all_inputs] [get_ports clk]]
+1
+set_output_delay $t_out -clock CLK [all_outputs]
+1
+#####################################################
+#Compile and save files
+#You may modified setting of compile
+#####################################################
+compile
+Warning: Setting attribute 'fix_multiple_port_nets' on design 'CHIP'. (UIO-59)
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | N-2017.09-DWBB_201709.2 |     *     |
+| Licensed DW Building Blocks        | N-2017.09-DWBB_201709.2 |     *     |
+============================================================================
+
+
+Information: There are 114 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Operating condition slow set on design CHIP has different process,
+voltage and temperatures parameters than the parameters at which target library 
+typical is characterized. Delays may be inaccurate as a result. (OPT-998)
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'cache_0'
+Information: Added key list 'DesignWare' to design 'cache_0'. (DDB-72)
+  Processing 'StallControl'
+  Processing 'Forward'
+Information: Added key list 'DesignWare' to design 'Forward'. (DDB-72)
+  Processing 'ALU'
+  Processing 'RegFile'
+Information: Added key list 'DesignWare' to design 'RegFile'. (DDB-72)
+  Processing 'HazardDetect'
+Information: Added key list 'DesignWare' to design 'HazardDetect'. (DDB-72)
+  Processing 'Control'
+  Processing 'PC'
+Information: The register 'PC_o_reg[0]' is a constant and will be removed. (OPT-1206)
+  Processing 'MIPS_Pipeline'
+Information: Added key list 'DesignWare' to design 'MIPS_Pipeline'. (DDB-72)
+  Processing 'CHIP'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'cache_1_DW01_add_0'
+  Processing 'cache_0_DW01_add_0'
+  Processing 'MIPS_Pipeline_DW01_inc_0'
+  Mapping 'DW_rightsh'
+Information: Added key list 'DesignWare' to design 'ALU'. (DDB-72)
+  Mapping 'DW_rightsh'
+  Mapping 'DW_leftsh'
+  Processing 'ALU_DW01_add_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:24  414786.9      0.00       0.0    2301.3                                0.00  
+    0:00:24  414786.9      0.00       0.0    2301.3                                0.00  
+    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
+    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
+    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
+    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
+    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
+    0:00:37  224907.2      5.68     112.0     784.9                                0.00  
+    0:00:38  223921.0      3.32      45.7     784.8                                0.00  
+    0:00:40  224140.0      2.94      38.4     784.8                                0.00  
+    0:00:41  224053.4      3.42      47.8     784.8                                0.00  
+    0:00:41  224173.9      3.20      43.8     784.8                                0.00  
+    0:00:41  224072.1      3.07      40.7     784.8                                0.00  
+    0:00:42  224272.4      2.75      33.9     784.8                                0.00  
+    0:00:42  224345.4      2.75      33.7     784.3                                0.00  
+    0:00:42  224384.4      2.65      33.1     784.3                                0.00  
+    0:00:43  224431.9      2.56      29.5     784.3                                0.00  
+    0:00:43  224525.3      2.45      26.8     784.3                                0.00  
+    0:00:43  224647.5      2.43      26.2     782.0                                0.00  
+    0:00:43  224732.4      2.30      23.7     782.0                                0.00  
+    0:00:43  224858.0      2.02      19.8     778.6                                0.00  
+    0:00:44  225003.9      1.71      14.9     777.2                                0.00  
+    0:00:44  225183.9      1.25       7.7     777.2                                0.00  
+    0:00:44  225346.8      0.98       4.9     777.2                                0.00  
+    0:00:44  225448.7      0.94       4.5     777.2                                0.00  
+    0:00:44  225633.7      0.53       1.6     777.2                                0.00  
+    0:00:44  225633.7      0.53       1.6     777.2                                0.00  
+    0:00:44  225633.7      0.53       1.6     777.2                                0.00  
+    0:00:45  225952.8      0.50       1.5     613.8                                0.00  
+    0:00:45  226141.2      0.45       1.3     544.5                                0.00  
+    0:00:45  226322.8      0.45       1.3     484.1                                0.00  
+    0:00:46  226492.6      0.45       1.3     432.8                                0.00  
+    0:00:46  226672.5      0.45       1.3     377.9                                0.00  
+    0:00:46  226825.3      0.45       1.3     330.2                                0.00  
+    0:00:46  226978.0      0.45       1.3     282.6                                0.00  
+    0:00:46  227130.8      0.45       1.3     235.0                                0.00  
+    0:00:46  227283.6      0.45       1.3     187.4                                0.00  
+    0:00:46  227283.6      0.45       1.3     187.4                                0.00  
+    0:00:47  227453.3      0.00       0.0     187.4                                0.00  
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:47  227453.3      0.00       0.0     187.4                                0.00  
+    0:00:47  227453.3      0.00       0.0     187.4                                0.00  
+    0:00:47  227390.5      0.00       0.0     187.6                                0.00  
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:48  227390.5      0.00       0.0     187.6                                0.00  
+    0:00:48  227982.9      0.00       0.0      28.7 I_cache/mem_wdata[60]          0.00  
+    0:00:48  228113.6      0.00       0.0       0.0                                0.00  
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:48  228113.6      0.00       0.0       0.0                                0.00  
+    0:00:48  228113.6      0.00       0.0       0.0                                0.00  
+    0:00:50  224644.1      0.01       0.0       0.0                                0.00  
+    0:00:51  222454.5      0.04       0.0       0.0                                0.00  
+    0:00:52  220998.1      0.04       0.0       0.0                                0.00  
+    0:00:52  219935.5      0.04       0.0       0.0                                0.00  
+    0:00:53  218896.7      0.04       0.0       0.0                                0.00  
+    0:00:54  218109.1      0.04       0.0       0.0                                0.00  
+    0:00:54  217610.1      0.04       0.0       0.0                                0.00  
+    0:00:55  217304.5      0.04       0.0       0.0                                0.00  
+    0:00:55  217024.5      0.04       0.0       0.0                                0.00  
+    0:00:55  216759.7      0.04       0.0       0.0                                0.00  
+    0:00:56  216671.4      0.04       0.0       0.0                                0.00  
+    0:00:56  216600.1      0.04       0.0       0.0                                0.00  
+    0:00:56  216542.4      0.04       0.1       0.0                                0.00  
+    0:00:56  216542.4      0.04       0.1       0.0                                0.00  
+    0:00:57  216562.8      0.00       0.0       0.0                                0.00  
+    0:00:57  215812.5      0.67       3.6       0.0                                0.00  
+    0:00:57  215748.0      0.67       3.6       0.0                                0.00  
+    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
+    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
+    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
+    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
+    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
+    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
+    0:00:58  215868.5      0.00       0.0       0.0                                0.00  
+Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'I_cache/clk': 3591 load(s), 1 driver(s)
+1
+write_sdf -version 2.1 CHIP_syn.sdf
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/raid7_2/userb07/b7902143/final_project/CHIP_syn.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+1
+write -format verilog -hier -output CHIP_syn.v
+Writing verilog file '/home/raid7_2/userb07/b7902143/final_project/CHIP_syn.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Verilog writer has added 3 nets to module MIPS_Pipeline using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+1
+write -format ddc     -hier -output CHIP_syn.ddc
+Writing ddc file 'CHIP_syn.ddc'.
+1
+#####################################################
+check_design
+ 
+****************************************
+check_design summary:
+Version:     N-2017.09-SP2
+Date:        Tue Jun  1 22:43:47 2021
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     41
+    Unconnected ports (LINT-28)                                     3
+    Constant outputs (LINT-52)                                     38
+
+Cells                                                              36
+    Connected to power or ground (LINT-32)                         34
+    Nets connected to multiple pins on same cell (LINT-33)          2
+--------------------------------------------------------------------------------
+
+Warning: In design 'PC', port 'PC_i[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'MIPS_Pipeline_DW01_inc_0', port 'SUM[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_DW01_add_0', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_read' is connected to logic 1. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_write' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[31]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[30]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[29]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[28]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[27]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[26]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[25]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[24]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[23]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[22]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[21]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[20]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[19]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[18]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[17]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[16]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[15]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[14]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[13]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[12]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[11]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[10]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[9]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[8]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[7]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[6]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[5]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[4]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[3]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[2]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[1]' is connected to logic 0. 
+Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'proc_wdata[0]' is connected to logic 0. 
+Warning: In design 'ALU', the same net is connected to more than one pin on submodule 'add_1_root_add_27_2'. (LINT-33)
+   Net 'Op1_i[31]' is connected to pins 'A[32]', 'A[31]''.
+Warning: In design 'ALU', the same net is connected to more than one pin on submodule 'add_1_root_add_27_2'. (LINT-33)
+   Net 'adder_op2[32]' is connected to pins 'B[32]', 'B[31]''.
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_ren' is connected directly to 'logic 1'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wen' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[31]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[30]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[29]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[28]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[27]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[26]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[25]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[24]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[23]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[22]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[21]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[20]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[19]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[18]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[17]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[16]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[15]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[14]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[13]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[12]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[11]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[10]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[9]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[8]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[7]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[6]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[5]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[4]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[3]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[2]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[1]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[0]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'PC', output port 'PC_o[0]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'Control', output port 'ALUCtl_o[4]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'StallControl', output port 'FlushMEM_o' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'StallControl', output port 'FlushWB_o' is connected directly to 'logic 0'. (LINT-52)
+1
+report_timing
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : CHIP
+Version: N-2017.09-SP2
+Date   : Tue Jun  1 22:43:47 2021
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: i_MIPS/WB_Rd_reg[3]
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: i_MIPS/PC/PC_o_reg[31]
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock CLK (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.50       0.50
+  i_MIPS/WB_Rd_reg[3]/CK (DFFQX4)                         0.00 #     0.50 r
+  i_MIPS/WB_Rd_reg[3]/Q (DFFQX4)                          0.21       0.71 f
+  i_MIPS/Forward_U/WB_Rd_i[3] (Forward)                   0.00       0.71 f
+  i_MIPS/Forward_U/U15/Y (OR2X2)                          0.17       0.89 f
+  i_MIPS/Forward_U/U13/Y (OR4X2)                          0.23       1.11 f
+  i_MIPS/Forward_U/U11/Y (CLKINVX1)                       0.17       1.28 r
+  i_MIPS/Forward_U/U8/Y (NOR3X2)                          0.12       1.40 f
+  i_MIPS/Forward_U/U40/Y (INVX4)                          0.06       1.46 r
+  i_MIPS/Forward_U/U7/Y (NOR2X4)                          0.05       1.51 f
+  i_MIPS/Forward_U/Forward_A_o[0] (Forward)               0.00       1.51 f
+  i_MIPS/U100/Y (NAND2X2)                                 0.12       1.64 r
+  i_MIPS/U216/Y (BUFX20)                                  0.11       1.75 r
+  i_MIPS/U116/Y (NOR2X1)                                  0.07       1.81 f
+  i_MIPS/U71/Y (OR3X2)                                    0.22       2.03 f
+  i_MIPS/U212/Y (CLKINVX4)                                0.06       2.09 r
+  i_MIPS/U54/Y (OR2X2)                                    0.10       2.20 r
+  i_MIPS/U52/Y (NAND2X2)                                  0.12       2.32 f
+  i_MIPS/ALU/Op1_i[0] (ALU)                               0.00       2.32 f
+  i_MIPS/ALU/add_1_root_add_27_2/A[0] (ALU_DW01_add_0)
+                                                          0.00       2.32 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_0/CO (ADDFHX4)        0.22       2.54 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_1/CO (ADDFHX1)        0.19       2.73 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_2/CO (ADDFX1)         0.22       2.95 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_3/CO (ADDFHX2)        0.16       3.11 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_4/CO (ADDFX1)         0.21       3.32 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_5/CO (ADDFXL)         0.30       3.62 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_6/CO (ADDFX1)         0.24       3.86 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_7/CO (ADDFXL)         0.30       4.16 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_8/CO (ADDFX1)         0.24       4.40 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_9/CO (ADDFXL)         0.30       4.70 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_10/CO (ADDFX1)        0.24       4.94 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_11/CO (ADDFXL)        0.30       5.24 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_12/CO (ADDFX1)        0.24       5.48 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_13/CO (ADDFXL)        0.30       5.78 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_14/CO (ADDFX1)        0.24       6.02 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_15/CO (ADDFX2)        0.23       6.25 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_16/CO (ADDFX2)        0.24       6.49 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_17/CO (ADDFHX4)       0.14       6.62 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_18/CO (ADDFHX2)       0.15       6.77 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_19/CO (ADDFHX4)       0.13       6.90 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_20/CO (ADDFHX2)       0.14       7.04 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_21/CO (ADDFXL)        0.28       7.32 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_22/CO (ADDFHX1)       0.23       7.55 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_23/CO (ADDFHX4)       0.15       7.70 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_24/CO (ADDFHX4)       0.12       7.82 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_25/CO (ADDFHX2)       0.15       7.97 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_26/CO (ADDFHX4)       0.13       8.11 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_27/CO (ADDFHX4)       0.13       8.24 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_28/CO (ADDFHX4)       0.12       8.36 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_29/CO (ADDFHX2)       0.14       8.49 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_30/CO (ADDFHX1)       0.19       8.68 f
+  i_MIPS/ALU/add_1_root_add_27_2/U1_31/S (ADDFXL)         0.33       9.01 r
+  i_MIPS/ALU/add_1_root_add_27_2/SUM[31] (ALU_DW01_add_0)
+                                                          0.00       9.01 r
+  i_MIPS/ALU/U70/Y (CLKINVX1)                             0.15       9.16 f
+  i_MIPS/ALU/U50/Y (OR2X1)                                0.21       9.37 f
+  i_MIPS/ALU/U52/Y (NAND3X1)                              0.14       9.52 r
+  i_MIPS/ALU/U3/Y (AOI211X2)                              0.08       9.59 f
+  i_MIPS/ALU/U674/Y (OAI22XL)                             0.39       9.98 r
+  i_MIPS/ALU/Res_o[31] (ALU)                              0.00       9.98 r
+  i_MIPS/U208/Y (INVX3)                                   0.12      10.10 f
+  i_MIPS/U206/Y (OR2X8)                                   0.13      10.22 f
+  i_MIPS/U207/Y (NAND3X6)                                 0.05      10.27 r
+  i_MIPS/PC/PC_i[31] (PC)                                 0.00      10.27 r
+  i_MIPS/PC/PC_o_reg[31]/D (EDFFTRXL)                     0.00      10.27 r
+  data arrival time                                                 10.27
+
+  clock CLK (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.50      10.50
+  clock uncertainty                                      -0.10      10.40
+  i_MIPS/PC/PC_o_reg[31]/CK (EDFFTRXL)                    0.00      10.40 r
+  library setup time                                     -0.12      10.28
+  data required time                                                10.28
+  --------------------------------------------------------------------------
+  data required time                                                10.28
+  data arrival time                                                -10.27
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.01
+
+
+1
+report_area -hierarchy
+ 
+****************************************
+Report : area
+Design : CHIP
+Version: N-2017.09-SP2
+Date   : Tue Jun  1 22:43:47 2021
+****************************************
+
+Library(s) Used:
+
+    typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
+
+Number of ports:                         2177
+Number of nets:                         19800
+Number of cells:                        16476
+Number of combinational cells:          12801
+Number of sequential cells:              3663
+Number of macros/black boxes:               0
+Number of buf/inv:                       2466
+Number of references:                       6
+
+Combinational area:             121031.409387
+Buf/Inv area:                    17675.025987
+Noncombinational area:           94837.132904
+Macro/Black Box area:                0.000000
+Net Interconnect area:         2425045.643463
+
+Total cell area:                215868.542291
+Total area:                    2640914.185754
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area              Local cell area
+                                  --------------------  ------------------------------- 
+Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-   Black-
+                                  Total        Total    national     national    boxes   Design
+--------------------------------  -----------  -------  -----------  ----------  ------  ------------------------
+CHIP                              215868.5423    100.0      33.9480      0.0000  0.0000  CHIP
+D_cache                            64879.7200     30.1   35976.3930  28903.3270  0.0000  cache_0
+I_cache                            64918.7602     30.1   36015.4332  28903.3270  0.0000  cache_1
+i_MIPS                             86036.1140     39.9   10235.3218   9787.2084  0.0000  MIPS_Pipeline
+i_MIPS/ALU                         10960.1117      5.1    9277.9883      0.0000  0.0000  ALU
+i_MIPS/ALU/add_1_root_add_27_2      1682.1234      0.8    1682.1234      0.0000  0.0000  ALU_DW01_add_0
+i_MIPS/Control_U                     458.2980      0.2     458.2980      0.0000  0.0000  Control
+i_MIPS/Forward_U                     638.2224      0.3     638.2224      0.0000  0.0000  Forward
+i_MIPS/HazardDetect_U                171.4374      0.1     171.4374      0.0000  0.0000  HazardDetect
+i_MIPS/PC                           1194.9696      0.6      23.7636   1171.2060  0.0000  PC
+i_MIPS/RegFile_U                   51979.4807     24.1   25907.4162  26072.0645  0.0000  RegFile
+i_MIPS/StallControl_U                 76.3830      0.0      76.3830      0.0000  0.0000  StallControl
+i_MIPS/add_204                       534.6810      0.2     534.6810      0.0000  0.0000  MIPS_Pipeline_DW01_inc_0
+--------------------------------  -----------  -------  -----------  ----------  ------  ------------------------
+Total                                                   121031.4094  94837.1329  0.0000
+
+1
+quit
+
+Thank you...

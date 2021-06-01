@@ -54,6 +54,7 @@ rsync \
     "$proj_root/src" \
     "$proj_root/syn" \
     "$proj_root/include" \
+    "$proj_root/test" \
     b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR/"
 rsync \
     -e "ssh -S '$SOCKET'" \
@@ -76,7 +77,7 @@ if (( opt_rtl )); then
         ncverilog \
             test/baseline/testbench/Final_tb.v \
             src/CHIP.v \
-            src/cache_controller.v \
+            src/cacheD.v \
             src/MIPS_Pipeline.v \
             src/PC.v \
             src/Control.v \
@@ -103,7 +104,7 @@ if (( opt_syn )); then
 
     # Download gate-level verilog
     scp -o "ControlPath=$SOCKET" \
-        b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR"/CHIP.{v,sdf,ddc} \
+        b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR"/CHIP_syn.{v,sdf,ddc} \
         ./netlist
 fi
 

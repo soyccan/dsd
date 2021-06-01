@@ -16,7 +16,7 @@
 `ifdef hasHazard
 	`define IMEM_INIT "I_mem_hasHazard"
 	`include "./TestBed_hasHazard.v"
-`endif	
+`endif
 `ifdef BrPred
 	`define IMEM_INIT "I_mem_BrPred"
 	`include "./TestBed_BrPred.v"
@@ -28,13 +28,13 @@
 `ifdef MultDiv
 	`define IMEM_INIT "I_mem_MultDiv"
 	`include "./TestBed_MultDiv.v"
-`endif			
+`endif
 
 module Final_tb;
 
 	reg clk;
 	reg rst_n;
-	
+
 	wire mem_read_D;
 	wire mem_write_D;
 	wire [31:4] mem_addr_D;
@@ -48,23 +48,25 @@ module Final_tb;
 	wire [127:0] mem_wdata_I;
 	wire [127:0] mem_rdata_I;
 	wire mem_ready_I;
-	
+
 	wire [29:0]	DCACHE_addr;
 	wire [31:0]	DCACHE_wdata;
 	wire 		DCACHE_wen;
-	
+
 	wire [7:0] error_num;
 	wire [15:0] duration;
-	wire finish;	
+	wire finish;
+
+    integer counter;
 
 	// Note the design is connected at testbench, include:
 	// 1. CHIP (MIPS + D_cache + I_chache)
 	// 2. slow memory for data
 	// 3. slow memory for instruction
-	
+
 	CHIP chip0 (clk,
 				rst_n,
-//----------for slow_memD------------	
+//----------for slow_memD------------
 				mem_read_D,
 				mem_write_D,
 				mem_addr_D,
@@ -78,12 +80,12 @@ module Final_tb;
 				mem_wdata_I,
 				mem_rdata_I,
 				mem_ready_I,
-//----------for TestBed--------------				
+//----------for TestBed--------------
 				DCACHE_addr,
 				DCACHE_wdata,
 				DCACHE_wen
 				);
-	
+
 	slow_memory slow_memD(
 		.clk        (clk)           ,
 		.mem_read   (mem_read_D)    ,
@@ -114,11 +116,11 @@ module Final_tb;
 		.duration   (duration)      ,
 		.finish     (finish)
 	);
-	
+
 `ifdef SDF
     initial $sdf_annotate(`SDFFILE, chip0);
 `endif
-	
+
 // Initialize the data memory
 	initial begin
 		$display("-----------------------------------------------------\n");
@@ -130,15 +132,16 @@ module Final_tb;
 		// waveform dump
 	    // $dumpfile("Final.vcd");
 	    // $dumpvars;
-	    $fsdbDumpfile("Final.fsdb");			
+	    $fsdbDumpfile("Final.fsdb");
 		$fsdbDumpvars(0,Final_tb,"+mda");
 		$fsdbDumpvars;
-	
+
+        counter = 0;
 		clk = 0;
 		rst_n = 1'b1;
 		#(`CYCLE*0.2) rst_n = 1'b0;
 		#(`CYCLE*8.5) rst_n = 1'b1;
-     
+
 		#(`CYCLE*10000) // calculate clock cycles for all operation (you can modify it)
 		$display("============================================================================");
 		$display("\n           Error!!! There is something wrong with your code ...!          ");
@@ -150,11 +153,17 @@ module Final_tb;
 			$display("Possible solution: The clock cycles may be too small. Please modify it.\n");
 	 	$finish;
 	end
-		
+
 	always #(`CYCLE*0.5) clk = ~clk;
-	
+
+    always @(posedge clk) begin
+        if (chip0.i_MIPS.SC_WritePC) begin
+            counter = counter + 1;
+        end
+    end
+
 	always@(finish)
 	    if(finish)
-	       #(`CYCLE) $finish;		   
-	
+	       #(`CYCLE) $finish;
+
 endmodule
