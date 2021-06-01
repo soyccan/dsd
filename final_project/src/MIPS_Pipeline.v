@@ -30,7 +30,7 @@ wire [31:0]    IF_PC;
 wire [31:0]    IF_PCPlus4;
 wire [31:0]    IF_PCNxt;
 wire [31:0]    IF_Inst;
-wire [31:0]    IF_Imm;
+wire [31:0]    IF_JumpImmTarget;
 wire [31:0]    IF_RsData;
 wire           IF_PCWrite;
 wire           IF_JumpImm;
@@ -89,7 +89,6 @@ wire [4:0]     EX_Shamt;
 
 wire           EX_Eq;
 wire           EX_BranchTaken;
-wire [31:0]    EX_BranchTarget;
 
 // ID/EX pipeline register
 reg            EX_RegWrite;
@@ -101,6 +100,8 @@ reg            EX_ALUSrc2;
 reg            EX_Beq;
 reg            EX_Bne;
 reg            EX_Link;
+reg            EX_JumpImm;
+reg            EX_JumpReg;
 reg  [5:0]     EX_ALUCtl;
 reg  [31:0]    EX_PCPlus4;
 reg  [4:0]     EX_Rs;
@@ -118,6 +119,8 @@ reg            nxt_EX_ALUSrc2;
 reg            nxt_EX_Beq;
 reg            nxt_EX_Bne;
 reg            nxt_EX_Link;
+reg            nxt_EX_JumpImm;
+reg            nxt_EX_JumpReg;
 reg  [5:0]     nxt_EX_ALUCtl;
 reg  [31:0]    nxt_EX_PCPlus4;
 reg  [4:0]     nxt_EX_Rs;
@@ -148,8 +151,6 @@ reg            nxt_MEM_MemWrite;
 reg  [31:0]    nxt_MEM_ALURes;
 reg  [4:0]     nxt_MEM_Rd;
 reg  [31:0]    nxt_MEM_RtData;
-// TODO: merge ALURes and ALUResAsAddr to save FF
-// reg [31:0] MEM_ALUResAsAddr;
 
 
 // WB stage
@@ -190,7 +191,7 @@ assign Stall = IF_Stall_icache || ID_Stall_ctrl
 
 // IF Stage //
 
-PC PC(
+PC PC_U(
     .Clk_i(clk),
     .Rst_i(rst),
     .PCWrite_i(IF_PCWrite),
@@ -200,27 +201,26 @@ PC PC(
 
 assign IF_PCPlus4 = {IF_PC[31:2] + 1'b1, IF_PC[1:0]};
 
-// assign IF_pc_nxt = EX_Flush ? EX_branch_target : (IF_PC + 4);
-assign IF_PCNxt = IF_JumpImm     ? IF_Imm :
+assign IF_PCNxt = IF_JumpImm     ? IF_JumpImmTarget :
                   IF_JumpReg     ? IF_RsData :
                   IF_BranchTaken ? IF_BranchTarget :
                   IF_PCPlus4;
 
-assign IF_JumpImm      = ID_JumpImm;
-assign IF_JumpReg      = ID_JumpReg;
-assign IF_BranchTaken  = EX_BranchTaken;
-assign IF_BranchTarget = EX_ALURes;
-assign IF_PCWrite      = !Stall;
-assign IF_Imm          = ID_Imm;
-assign IF_RsData       = ID_RsData;
+assign IF_JumpImm       = EX_JumpImm;
+assign IF_JumpReg       = EX_JumpReg;
+assign IF_BranchTaken   = EX_BranchTaken;
+assign IF_BranchTarget  = EX_ALURes;
+assign IF_PCWrite       = SC_WritePC;
+assign IF_JumpImmTarget = EX_Imm;
+assign IF_RsData        = EX_RsFwd;
 
 // I mem
-assign ICACHE_ren      = 1'b1;
-assign ICACHE_wen      = 1'b0;
-assign ICACHE_addr     = IF_PC[31:2];
-assign ICACHE_wdata    = 32'b0;
-assign IF_Stall_icache = ICACHE_stall;
-assign IF_Inst         = ICACHE_rdata;
+assign ICACHE_ren       = 1'b1;
+assign ICACHE_wen       = 1'b0;
+assign ICACHE_addr      = IF_PC[31:2];
+assign ICACHE_wdata     = 32'b0;
+assign IF_Stall_icache  = ICACHE_stall;
+assign IF_Inst          = ICACHE_rdata;
 
 
 
@@ -273,14 +273,14 @@ assign ID_Opcode  = ID_Inst[31:26];
 assign ID_Rs      = ID_Inst[25:21];
 assign ID_Rt      = ID_Inst[20:16];
 assign ID_Rd      = ID_JumpImm && ID_Link ? 5'd31 :
-                   ID_RegDst ? ID_Inst[20:16] :
-                   ID_Inst[15:11];
+                    ID_RegDst ? ID_Inst[20:16] :
+                    ID_Inst[15:11];
 assign ID_Funct   = ID_Inst[5:0];
-assign ID_Imm     = ID_JumpImm ? { $signed(ID_Inst[25:0]), 2'b00 } :
-                                $signed(ID_Inst[15:0]); // sign extension
 
-// TODO: pc+4 or pc?
-// assign ID_RdData = ID_Link ? IF_PCPlus4 : WB_WriteBackData;
+// sign extension
+assign ID_Imm     = ID_JumpImm ?
+    { ID_Inst[25:0], 2'b00 } :
+    { {16{ID_Inst[15]}}, ID_Inst[15:0]};
 
 
 
@@ -307,13 +307,9 @@ Forward Forward_U(
     .Forward_B_o(EX_Forward_B)
 );
 
-assign EX_Eq = EX_RsData == EX_RtData;
+assign EX_Eq = EX_RsFwd == EX_RtFwd;
 assign EX_BranchTaken = (EX_Beq && EX_Eq) || (EX_Bne && !EX_Eq);
-assign EX_BranchTarget = EX_ALURes;
 assign EX_Shamt = EX_Imm[10:6];
-
-// address is multiple of 2
-// assign EX_ALUResAsAddr = { EX_ALUAdderRes[31:2], 2'b00 };
 
 assign EX_ALUOp1 = EX_ALUSrc1 ? EX_PCPlus4 : EX_RsFwd;
 
@@ -322,7 +318,7 @@ assign EX_RsFwd = EX_Forward_A == `FW_REG ? EX_RsData :
                   MEM_ALURes; // Forward_A == FW_MEM
 
 assign EX_ALUOp2 = EX_Beq || EX_Bne ? { EX_Imm, 2'b00 } :
-                   EX_Link          ? 3'd4 :
+                   EX_Link          ? 3'd0 :
                    EX_ALUSrc2       ? EX_Imm :
                    EX_RtFwd;
 
@@ -354,22 +350,23 @@ assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
 
 // stall controller
 StallControl StallControl_U(
-    .IF_Stall_icache_i     (IF_Stall_icache    ),
-    .MEM_Stall_dcache_i    (MEM_Stall_dcache   ),
-    .EX_BranchTaken_i      (EX_BranchTaken     ),
-    .ID_Stall_hazard_i     (ID_Stall_hazard    ),
-    .ID_Stall_ctrl_i       (ID_Stall_ctrl      ),
+    .IF_Stall_icache_i     (IF_Stall_icache          ),
+    .MEM_Stall_dcache_i    (MEM_Stall_dcache         ),
+    .EX_BranchTaken_i      (EX_BranchTaken           ),
+    .ID_Stall_hazard_i     (ID_Stall_hazard          ),
+    .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
+    .EX_Jump_i             (EX_JumpImm || EX_JumpReg ),
 
-    .FlushID_o             (SC_FlushID         ),
-    .FlushEX_o             (SC_FlushEX         ),
-    .FlushMEM_o            (SC_FlushMEM        ),
-    .FlushWB_o             (SC_FlushWB         ),
+    .FlushID_o             (SC_FlushID               ),
+    .FlushEX_o             (SC_FlushEX               ),
+    .FlushMEM_o            (SC_FlushMEM              ),
+    .FlushWB_o             (SC_FlushWB               ),
 
-    .WritePC_o             (SC_WritePC         ),
-    .WriteID_o             (SC_WriteID         ),
-    .WriteEX_o             (SC_WriteEX         ),
-    .WriteMEM_o            (SC_WriteMEM        ),
-    .WriteWB_o             (SC_WriteWB         )
+    .WritePC_o             (SC_WritePC               ),
+    .WriteID_o             (SC_WriteID               ),
+    .WriteEX_o             (SC_WriteEX               ),
+    .WriteMEM_o            (SC_WriteMEM              ),
+    .WriteWB_o             (SC_WriteWB               )
 );
 
 // pipeline registers //
@@ -388,6 +385,8 @@ always @* begin
     nxt_EX_Beq         = EX_Beq          ;
     nxt_EX_Bne         = EX_Bne          ;
     nxt_EX_Link        = EX_Link         ;
+    nxt_EX_JumpImm     = EX_JumpImm      ;
+    nxt_EX_JumpReg     = EX_JumpReg      ;
     nxt_EX_ALUCtl      = EX_ALUCtl       ;
     nxt_EX_PCPlus4     = EX_PCPlus4      ;
     nxt_EX_Rs          = EX_Rs           ;
@@ -430,6 +429,8 @@ always @* begin
         nxt_EX_Beq         = 0;
         nxt_EX_Bne         = 0;
         nxt_EX_Link        = 0;
+        nxt_EX_JumpImm     = 0;
+        nxt_EX_JumpReg     = 0;
         nxt_EX_ALUCtl      = 0;
         nxt_EX_PCPlus4     = 0;
         nxt_EX_Rs          = 0;
@@ -449,6 +450,8 @@ always @* begin
         nxt_EX_Beq         = ID_Beq           ;
         nxt_EX_Bne         = ID_Bne           ;
         nxt_EX_Link        = ID_Link          ;
+        nxt_EX_JumpImm     = ID_JumpImm       ;
+        nxt_EX_JumpReg     = ID_JumpReg       ;
         nxt_EX_ALUCtl      = ID_ALUCtl        ;
         nxt_EX_PCPlus4     = ID_PCPlus4       ;
         nxt_EX_Rs          = ID_Rs            ;
@@ -509,6 +512,9 @@ always @(posedge clk) begin
         EX_ALUSrc2     <= 0;
         EX_Beq         <= 0;
         EX_Bne         <= 0;
+        EX_Link        <= 0;
+        EX_JumpImm     <= 0;
+        EX_JumpReg     <= 0;
         EX_ALUCtl      <= 0;
         EX_PCPlus4     <= 0;
         EX_Rs          <= 0;
@@ -541,6 +547,9 @@ always @(posedge clk) begin
         EX_ALUSrc2     <= nxt_EX_ALUSrc2      ;
         EX_Beq         <= nxt_EX_Beq          ;
         EX_Bne         <= nxt_EX_Bne          ;
+        EX_Link        <= nxt_EX_Link         ;
+        EX_JumpImm     <= nxt_EX_JumpImm      ;
+        EX_JumpReg     <= nxt_EX_JumpReg      ;
         EX_ALUCtl      <= nxt_EX_ALUCtl       ;
         EX_PCPlus4     <= nxt_EX_PCPlus4      ;
         EX_Rs          <= nxt_EX_Rs           ;

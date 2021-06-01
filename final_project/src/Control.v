@@ -59,6 +59,9 @@ always @* begin
                     // jr
                     RegWrite_o = 0;
                     JumpReg_o  = 1;
+
+                    // TODO: should jal not stall due to branch delay slot?
+                    Stall_o    = 1;
                 end
 
                 6'b001001: begin
@@ -69,7 +72,8 @@ always @* begin
                     Link_o     = 1;
                     RegWrite_o = 1;
 
-                    // Note that jalr won't stall due to branch delay slot
+                    // TODO: should jal not stall due to branch delay slot?
+                    Stall_o    = 1;
                 end
 
                 6'b100000: begin
@@ -112,7 +116,10 @@ always @* begin
         6'b000010: begin
             // j
             JumpImm_o  = 1;
-            RegDst_o   = 1'bx;
+            // RegDst_o   = 1'bx;
+
+            // TODO: should jal not stall due to branch delay slot?
+            Stall_o    = 1;
         end
 
         6'b000011: begin
@@ -121,11 +128,12 @@ always @* begin
             ALUSrc1_o  = `ALU_SRC_PC;
             JumpImm_o  = 1;
             Link_o     = 1;
-            MemToReg_o = 1'bx;
-            RegDst_o   = 1'bx;
+            // MemToReg_o = 1'bx;
+            // RegDst_o   = 1'bx;
             RegWrite_o = 1;
 
-            // Note that jal won't stall due to branch delay slot
+            // TODO: should jal not stall due to branch delay slot?
+            Stall_o    = 1;
         end
 
         6'b000100: begin
@@ -134,7 +142,7 @@ always @* begin
             ALUSrc1_o  = `ALU_SRC_PC;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
-            MemToReg_o = 1'bx;
+            // MemToReg_o = 1'bx;
             Beq_o      = 1;
 
             // branch seen: insert bubble into ID stage
@@ -147,7 +155,7 @@ always @* begin
             ALUSrc1_o  = `ALU_SRC_PC;
             ALUSrc2_o  = `ALU_SRC_IMM;
             RegDst_o   = `REG_DST_RT;
-            MemToReg_o = 1'bx;
+            // MemToReg_o = 1'bx;
             Bne_o      = 1;
 
             // branch seen: insert bubble into ID stage
@@ -208,7 +216,7 @@ always @* begin
             // sw
             ALUCtl_o   = `ALU_CTL_ADD;
             ALUSrc2_o  = `ALU_SRC_IMM;
-            MemToReg_o = 1'bx;
+            // MemToReg_o = 1'bx;
             MemWrite_o = 1'b1;
             RegDst_o   = `REG_DST_RT;
         end

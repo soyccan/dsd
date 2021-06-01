@@ -7,6 +7,7 @@ read_file -format verilog src/RegFile.v
 read_file -format verilog src/Forward.v
 read_file -format verilog src/HazardDetect.v
 read_file -format verilog src/ALU.v
+read_file -format verilog src/StallControl.v
 
 current_design [get_designs CHIP]
 

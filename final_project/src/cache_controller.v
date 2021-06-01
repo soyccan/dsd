@@ -178,7 +178,9 @@ assign proc_stall     = proc_access && !sram_hit;
 assign mem_wdata      = sram_data;
 
 always @* begin
-    proc_rdata = sram_data[proc_addr_offset<<5];
+    for (i = 0; i < 32; i=i+1) begin
+        proc_rdata[i] = sram_data[(proc_addr_offset<<5) + i];
+    end
 end
 
 `ifndef TWO_WAY
@@ -203,7 +205,9 @@ end
         else begin
             // write hit
             sram_wdata[153] = 1; // dirty
-            sram_wdata[proc_addr_offset<<5] = proc_wdata;
+            for (i = 0; i < 32; i=i+1) begin
+                sram_wdata[(proc_addr_offset<<5) + i] = proc_wdata[i];
+            end
         end
     end
 `else
@@ -228,7 +232,9 @@ end
         else begin
             // write hit
             sram_wdata[154] = 1; // dirty
-            sram_wdata[proc_addr_offset<<5] = proc_wdata;
+            for (i = 0; i < 32; i=i+1) begin
+                sram_wdata[(proc_addr_offset<<5) + i] = proc_wdata[i];
+            end
         end
     end
 `endif
