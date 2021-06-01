@@ -26,148 +26,158 @@ wire rst;
 wire Stall;
 
 // Instruction-Fetch stage
-wire [31:0] IF_PC;
-wire [31:0] IF_PCPlus4;
-wire [31:0] IF_PCNxt;
-wire [31:0] IF_Inst;
-wire [31:0] IF_Imm;
-wire [31:0] IF_RsData;
-wire IF_PCWrite;
-wire IF_JumpImm;
-wire IF_JumpReg;
-wire [31:0] IF_BranchTarget;
-wire IF_BranchTaken;
-wire IF_Stall_icache;
+wire [31:0]    IF_PC;
+wire [31:0]    IF_PCPlus4;
+wire [31:0]    IF_PCNxt;
+wire [31:0]    IF_Inst;
+wire [31:0]    IF_Imm;
+wire [31:0]    IF_RsData;
+wire           IF_PCWrite;
+wire           IF_JumpImm;
+wire           IF_JumpReg;
+wire [31:0]    IF_BranchTarget;
+wire           IF_BranchTaken;
+wire           IF_Stall_icache;
 
 
 // Instruction-Decode stage
-wire ID_RegDst;
-wire ID_RegWrite;
-wire ID_MemToReg;
-wire ID_MemRead;
-wire ID_MemWrite;
-wire ID_ALUSrc1;
-wire ID_ALUSrc2;
-wire ID_Beq;
-wire ID_Bne;
-wire ID_JumpReg;
-wire ID_JumpImm;
-wire ID_Link;
-wire [5:0] ID_ALUCtl;
+wire           ID_RegDst;
+wire           ID_RegWrite;
+wire           ID_MemToReg;
+wire           ID_MemRead;
+wire           ID_MemWrite;
+wire           ID_ALUSrc1;
+wire           ID_ALUSrc2;
+wire           ID_Beq;
+wire           ID_Bne;
+wire           ID_JumpReg;
+wire           ID_JumpImm;
+wire           ID_Link;
+wire [5:0]     ID_ALUCtl;
 
-wire ID_Stall_ctrl;
-wire ID_Stall_hazard;
-wire ID_NoOp_hazard;
+wire           ID_Stall_ctrl;
+wire           ID_Stall_hazard;
+wire           ID_NoOp_hazard;
 
-wire [5:0] ID_Opcode;
-wire [5:0] ID_Funct;
-wire [4:0] ID_Rd;
-wire [4:0] ID_Rs;
-wire [4:0] ID_Rt;
-wire [31:0] ID_RsData;
-wire [31:0] ID_RtData;
-wire [31:0] ID_RdData;
-wire [31:0] ID_Imm;
+wire [5:0]     ID_Opcode;
+wire [5:0]     ID_Funct;
+wire [4:0]     ID_Rd;
+wire [4:0]     ID_Rs;
+wire [4:0]     ID_Rt;
+wire [31:0]    ID_RsData;
+wire [31:0]    ID_RtData;
+wire [31:0]    ID_RdData;
+wire [31:0]    ID_Imm;
 
 // IF/ID pipeline register
-reg [31:0] ID_Inst;
-reg [31:0] ID_PCPlus4;
-reg [31:0] nxt_ID_Inst;
-reg [31:0] nxt_ID_PCPlus4;
+reg [31:0]     ID_Inst;
+reg [31:0]     ID_PCPlus4;
+reg [31:0]     nxt_ID_Inst;
+reg [31:0]     nxt_ID_PCPlus4;
 
 
 // Execution stage
-wire [1:0] EX_Forward_A;
-wire [1:0] EX_Forward_B;
-wire [31:0] EX_ALUOp1;
-wire [31:0] EX_ALUOp2;
-wire [31:0] EX_RsFwd;
-wire [31:0] EX_RtFwd;
-wire [31:0] EX_ALURes;
-wire [31:0] EX_ALUAdderRes;
-wire [4:0] EX_Shamt;
-// wire [31:0] EX_ALUResAsAddr;
+wire [1:0]     EX_Forward_A;
+wire [1:0]     EX_Forward_B;
+wire [31:0]    EX_ALUOp1;
+wire [31:0]    EX_ALUOp2;
+wire [31:0]    EX_RsFwd;
+wire [31:0]    EX_RtFwd;
+wire [31:0]    EX_ALURes;
+wire [31:0]    EX_ALUAdderRes;
+wire [4:0]     EX_Shamt;
 
-wire EX_Eq;
-wire EX_BranchTaken;
-wire EX_Flush_branch;
-wire [31:0] EX_BranchTarget;
+wire           EX_Eq;
+wire           EX_BranchTaken;
+wire [31:0]    EX_BranchTarget;
 
 // ID/EX pipeline register
-reg EX_RegWrite;
-reg EX_MemToReg;
-reg EX_MemRead;
-reg EX_MemWrite;
-reg EX_ALUSrc1;
-reg EX_ALUSrc2;
-reg EX_Beq;
-reg EX_Bne;
-reg [5:0]  EX_ALUCtl;
-reg [31:0] EX_PCPlus4;
-// reg [5:0] EX_Funct;
-reg [4:0] EX_Rs;
-reg [4:0] EX_Rt;
-reg [4:0] EX_Rd;
-reg [31:0] EX_RsData;
-reg [31:0] EX_RtData;
-reg [31:0] EX_Imm;
-reg nxt_EX_RegWrite;
-reg nxt_EX_MemToReg;
-reg nxt_EX_MemRead;
-reg nxt_EX_MemWrite;
-reg nxt_EX_ALUSrc1;
-reg nxt_EX_ALUSrc2;
-reg nxt_EX_Beq;
-reg nxt_EX_Bne;
-reg [5:0]  nxt_EX_ALUCtl;
-reg [31:0] nxt_EX_PCPlus4;
-// reg [5:0] nxt_EX_Funct;
-reg [4:0] nxt_EX_Rs;
-reg [4:0] nxt_EX_Rt;
-reg [4:0] nxt_EX_Rd;
-reg [31:0] nxt_EX_RsData;
-reg [31:0] nxt_EX_RtData;
-reg [31:0] nxt_EX_Imm;
+reg            EX_RegWrite;
+reg            EX_MemToReg;
+reg            EX_MemRead;
+reg            EX_MemWrite;
+reg            EX_ALUSrc1;
+reg            EX_ALUSrc2;
+reg            EX_Beq;
+reg            EX_Bne;
+reg            EX_Link;
+reg  [5:0]     EX_ALUCtl;
+reg  [31:0]    EX_PCPlus4;
+reg  [4:0]     EX_Rs;
+reg  [4:0]     EX_Rt;
+reg  [4:0]     EX_Rd;
+reg  [31:0]    EX_RsData;
+reg  [31:0]    EX_RtData;
+reg  [31:0]    EX_Imm;
+reg            nxt_EX_RegWrite;
+reg            nxt_EX_MemToReg;
+reg            nxt_EX_MemRead;
+reg            nxt_EX_MemWrite;
+reg            nxt_EX_ALUSrc1;
+reg            nxt_EX_ALUSrc2;
+reg            nxt_EX_Beq;
+reg            nxt_EX_Bne;
+reg            nxt_EX_Link;
+reg  [5:0]     nxt_EX_ALUCtl;
+reg  [31:0]    nxt_EX_PCPlus4;
+reg  [4:0]     nxt_EX_Rs;
+reg  [4:0]     nxt_EX_Rt;
+reg  [4:0]     nxt_EX_Rd;
+reg  [31:0]    nxt_EX_RsData;
+reg  [31:0]    nxt_EX_RtData;
+reg  [31:0]    nxt_EX_Imm;
 
 
 // Memory stage
-wire [31:0] MEM_DataFromMem;
-wire [31:0] MEM_DataToMem;
-wire MEM_Stall_dcache;
+wire [31:0]    MEM_DataFromMem;
+wire [31:0]    MEM_DataToMem;
+wire           MEM_Stall_dcache;
 
 // EX/MEM pipeline register
-reg MEM_RegWrite;
-reg MEM_MemToReg;
-reg MEM_MemRead;
-reg MEM_MemWrite;
-reg [31:0] MEM_ALURes;
-reg [4:0]  MEM_Rd;
-reg [31:0] MEM_RtData;
-reg nxt_MEM_RegWrite;
-reg nxt_MEM_MemToReg;
-reg nxt_MEM_MemRead;
-reg nxt_MEM_MemWrite;
-reg [31:0] nxt_MEM_ALURes;
-reg [4:0]  nxt_MEM_Rd;
-reg [31:0] nxt_MEM_RtData;
+reg            MEM_RegWrite;
+reg            MEM_MemToReg;
+reg            MEM_MemRead;
+reg            MEM_MemWrite;
+reg  [31:0]    MEM_ALURes;
+reg  [4:0]     MEM_Rd;
+reg  [31:0]    MEM_RtData;
+reg            nxt_MEM_RegWrite;
+reg            nxt_MEM_MemToReg;
+reg            nxt_MEM_MemRead;
+reg            nxt_MEM_MemWrite;
+reg  [31:0]    nxt_MEM_ALURes;
+reg  [4:0]     nxt_MEM_Rd;
+reg  [31:0]    nxt_MEM_RtData;
 // TODO: merge ALURes and ALUResAsAddr to save FF
 // reg [31:0] MEM_ALUResAsAddr;
 
 
 // WB stage
-wire [31:0] WB_WriteBackData;
+wire [31:0]    WB_WriteBackData;
 
 // MEM/WB pipeline register
-reg WB_RegWrite;
-reg WB_MemToReg;
-reg [4:0] WB_Rd;
-reg [31:0] WB_DataFromMem;
-reg [31:0] WB_ALURes;
-reg nxt_WB_RegWrite;
-reg nxt_WB_MemToReg;
-reg [4:0] nxt_WB_Rd;
-reg [31:0] nxt_WB_DataFromMem;
-reg [31:0] nxt_WB_ALURes;
+reg             WB_RegWrite;
+reg             WB_MemToReg;
+reg  [4:0]      WB_Rd;
+reg  [31:0]     WB_DataFromMem;
+reg  [31:0]     WB_ALURes;
+reg             nxt_WB_RegWrite;
+reg             nxt_WB_MemToReg;
+reg  [4:0]      nxt_WB_Rd;
+reg  [31:0]     nxt_WB_DataFromMem;
+reg  [31:0]     nxt_WB_ALURes;
+
+
+// stall control
+wire SC_FlushID;
+wire SC_FlushEX;
+wire SC_FlushMEM;
+wire SC_FlushWB;
+wire SC_WritePC;
+wire SC_WriteID;
+wire SC_WriteEX;
+wire SC_WriteMEM;
+wire SC_WriteWB;
 
 
 
@@ -196,21 +206,21 @@ assign IF_PCNxt = IF_JumpImm     ? IF_Imm :
                   IF_BranchTaken ? IF_BranchTarget :
                   IF_PCPlus4;
 
-assign IF_JumpImm = ID_JumpImm;
-assign IF_JumpReg = ID_JumpReg;
-assign IF_BranchTaken = EX_BranchTaken;
+assign IF_JumpImm      = ID_JumpImm;
+assign IF_JumpReg      = ID_JumpReg;
+assign IF_BranchTaken  = EX_BranchTaken;
 assign IF_BranchTarget = EX_ALURes;
-assign IF_PCWrite = !Stall;
-assign IF_Imm = ID_Imm;
-assign IF_RsData = ID_RsData;
+assign IF_PCWrite      = !Stall;
+assign IF_Imm          = ID_Imm;
+assign IF_RsData       = ID_RsData;
 
 // I mem
-assign ICACHE_ren = 1'b1;
-assign ICACHE_wen = 1'b0;
-assign ICACHE_addr = IF_PC[31:2];
-assign ICACHE_wdata = 32'b0;
+assign ICACHE_ren      = 1'b1;
+assign ICACHE_wen      = 1'b0;
+assign ICACHE_addr     = IF_PC[31:2];
+assign ICACHE_wdata    = 32'b0;
 assign IF_Stall_icache = ICACHE_stall;
-assign IF_Inst = ICACHE_rdata;
+assign IF_Inst         = ICACHE_rdata;
 
 
 
@@ -236,13 +246,12 @@ Control Control_U(
     .Stall_o      (ID_Stall_ctrl)
 );
 
-HazardDetection HazardDetection_U(
+HazardDetect HazardDetect_U(
     .EX_MemRead_i (EX_MemRead     ),
     .EX_Rd_i      (EX_Rd          ),
     .ID_Rs_i      (ID_Rs          ),
     .ID_Rt_i      (ID_Rt          ),
 
-    .NoOp_o       (ID_NoOp_hazard ),
     .Stall_o      (ID_Stall_hazard)
 );
 
@@ -254,28 +263,24 @@ RegFile RegFile_U(
     .RDaddr_i(WB_Rd),
     .RS1addr_i(ID_Rs),
     .RS2addr_i(ID_Rt),
-    .RDdata_i(ID_RdData),
+    .RDdata_i(WB_WriteBackData),
 
     .RS1data_o(ID_RsData),
     .RS2data_o(ID_RtData)
 );
 
-// TODO: Valid instructions start with 11
-// An empty entity in instruction memory is replaced with no-op
-// assign ID_Opcode = ID_Inst[1:0] == 2'b11 ? ID_Inst[6:0] : 7'h13;
-assign ID_Opcode = ID_Inst[31:26];
-
-assign ID_Rs = ID_Inst[25:21];
-assign ID_Rt = ID_Inst[20:16];
-assign ID_Rd = ID_JumpImm && ID_Link ? 5'd31 :
-               ID_RegDst             ? ID_Inst[20:16] :
-               ID_Inst[15:11];
-assign ID_Funct = ID_Inst[5:0];
-assign ID_Imm = ID_JumpImm ? $signed(ID_Inst[25:0]) :
-                             $signed(ID_Inst[15:0]); // sign extension
+assign ID_Opcode  = ID_Inst[31:26];
+assign ID_Rs      = ID_Inst[25:21];
+assign ID_Rt      = ID_Inst[20:16];
+assign ID_Rd      = ID_JumpImm && ID_Link ? 5'd31 :
+                   ID_RegDst ? ID_Inst[20:16] :
+                   ID_Inst[15:11];
+assign ID_Funct   = ID_Inst[5:0];
+assign ID_Imm     = ID_JumpImm ? { $signed(ID_Inst[25:0]), 2'b00 } :
+                                $signed(ID_Inst[15:0]); // sign extension
 
 // TODO: pc+4 or pc?
-assign ID_RdData = ID_Link ? IF_PCPlus4 : WB_WriteBackData;
+// assign ID_RdData = ID_Link ? IF_PCPlus4 : WB_WriteBackData;
 
 
 
@@ -305,7 +310,6 @@ Forward Forward_U(
 assign EX_Eq = EX_RsData == EX_RtData;
 assign EX_BranchTaken = (EX_Beq && EX_Eq) || (EX_Bne && !EX_Eq);
 assign EX_BranchTarget = EX_ALURes;
-assign EX_Flush_branch = EX_BranchTaken;
 assign EX_Shamt = EX_Imm[10:6];
 
 // address is multiple of 2
@@ -318,6 +322,7 @@ assign EX_RsFwd = EX_Forward_A == `FW_REG ? EX_RsData :
                   MEM_ALURes; // Forward_A == FW_MEM
 
 assign EX_ALUOp2 = EX_Beq || EX_Bne ? { EX_Imm, 2'b00 } :
+                   EX_Link          ? 3'd4 :
                    EX_ALUSrc2       ? EX_Imm :
                    EX_RtFwd;
 
@@ -346,90 +351,146 @@ assign MEM_DataFromMem  = DCACHE_rdata;
 assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
 
 
+
+// stall controller
+StallControl StallControl_U(
+    .IF_Stall_icache_i     (IF_Stall_icache    ),
+    .MEM_Stall_dcache_i    (MEM_Stall_dcache   ),
+    .EX_BranchTaken_i      (EX_BranchTaken     ),
+    .ID_Stall_hazard_i     (ID_Stall_hazard    ),
+    .ID_Stall_ctrl_i       (ID_Stall_ctrl      ),
+
+    .FlushID_o             (SC_FlushID         ),
+    .FlushEX_o             (SC_FlushEX         ),
+    .FlushMEM_o            (SC_FlushMEM        ),
+    .FlushWB_o             (SC_FlushWB         ),
+
+    .WritePC_o             (SC_WritePC         ),
+    .WriteID_o             (SC_WriteID         ),
+    .WriteEX_o             (SC_WriteEX         ),
+    .WriteMEM_o            (SC_WriteMEM        ),
+    .WriteWB_o             (SC_WriteWB         )
+);
+
 // pipeline registers //
+// TODO: stall controller
 always @* begin
-    // default: shift a stage
-    nxt_ID_PCPlus4     = IF_PCPlus4       ;
-    nxt_ID_Inst        = IF_Inst          ;
+    // default: stall
+    nxt_ID_PCPlus4     = ID_PCPlus4      ;
+    nxt_ID_Inst        = ID_Inst         ;
 
-    nxt_EX_RegWrite    = ID_RegWrite      ;
-    nxt_EX_MemToReg    = ID_MemToReg      ;
-    nxt_EX_MemRead     = ID_MemRead       ;
-    nxt_EX_MemWrite    = ID_MemWrite      ;
-    nxt_EX_ALUSrc1     = ID_ALUSrc1       ;
-    nxt_EX_ALUSrc2     = ID_ALUSrc2       ;
-    nxt_EX_Beq         = ID_Beq           ;
-    nxt_EX_Bne         = ID_Bne           ;
-    nxt_EX_ALUCtl      = ID_ALUCtl        ;
-    nxt_EX_PCPlus4     = ID_PCPlus4       ;
-    nxt_EX_Rs          = ID_Rs            ;
-    nxt_EX_Rt          = ID_Rt            ;
-    nxt_EX_Rd          = ID_Rd            ;
-    nxt_EX_RsData      = ID_RsData        ;
-    nxt_EX_RtData      = ID_RtData        ;
-    nxt_EX_Imm         = ID_Imm           ;
+    nxt_EX_RegWrite    = EX_RegWrite     ;
+    nxt_EX_MemToReg    = EX_MemToReg     ;
+    nxt_EX_MemRead     = EX_MemRead      ;
+    nxt_EX_MemWrite    = EX_MemWrite     ;
+    nxt_EX_ALUSrc1     = EX_ALUSrc1      ;
+    nxt_EX_ALUSrc2     = EX_ALUSrc2      ;
+    nxt_EX_Beq         = EX_Beq          ;
+    nxt_EX_Bne         = EX_Bne          ;
+    nxt_EX_Link        = EX_Link         ;
+    nxt_EX_ALUCtl      = EX_ALUCtl       ;
+    nxt_EX_PCPlus4     = EX_PCPlus4      ;
+    nxt_EX_Rs          = EX_Rs           ;
+    nxt_EX_Rt          = EX_Rt           ;
+    nxt_EX_Rd          = EX_Rd           ;
+    nxt_EX_RsData      = EX_RsData       ;
+    nxt_EX_RtData      = EX_RtData       ;
+    nxt_EX_Imm         = EX_Imm          ;
 
-    nxt_MEM_RegWrite   = EX_RegWrite      ;
-    nxt_MEM_MemToReg   = EX_MemToReg      ;
-    nxt_MEM_MemRead    = EX_MemRead       ;
-    nxt_MEM_MemWrite   = EX_MemWrite      ;
-    nxt_MEM_ALURes     = EX_ALURes        ;
-    nxt_MEM_Rd         = EX_Rd            ;
-    nxt_MEM_RtData     = EX_RtData        ;
+    nxt_MEM_RegWrite   = MEM_RegWrite    ;
+    nxt_MEM_MemToReg   = MEM_MemToReg    ;
+    nxt_MEM_MemRead    = MEM_MemRead     ;
+    nxt_MEM_MemWrite   = MEM_MemWrite    ;
+    nxt_MEM_ALURes     = MEM_ALURes      ;
+    nxt_MEM_Rd         = MEM_Rd          ;
+    nxt_MEM_RtData     = MEM_RtData      ;
 
-    nxt_WB_RegWrite    = MEM_RegWrite     ;
-    nxt_WB_MemToReg    = MEM_MemToReg     ;
-    nxt_WB_Rd          = MEM_Rd           ;
-    nxt_WB_DataFromMem = MEM_DataFromMem  ;
-    nxt_WB_ALURes      = MEM_ALURes       ;
+    nxt_WB_RegWrite    = WB_RegWrite     ;
+    nxt_WB_MemToReg    = WB_MemToReg     ;
+    nxt_WB_Rd          = WB_Rd           ;
+    nxt_WB_DataFromMem = WB_DataFromMem  ;
+    nxt_WB_ALURes      = WB_ALURes       ;
 
-    if (EX_Flush_branch) begin
-        // branch taken: flush ID stage
-        // nxt_ID_PCPlus4 = don't care
-        nxt_ID_Inst = 0; // nop
+    if (SC_FlushID) begin
+        nxt_ID_PCPlus4     = 0;
+        nxt_ID_Inst        = 0;
+    end
+    else if (SC_WriteID) begin
+        nxt_ID_PCPlus4     = IF_PCPlus4       ;
+        nxt_ID_Inst        = IF_Inst          ;
     end
 
-    if (ID_Stall_ctrl) begin
-        // branch seen: insert bubble into ID stage
-        // nxt_ID_PCPlus4 = don't care
-        nxt_ID_Inst = 0; // nop
+    if (SC_FlushEX) begin
+        nxt_EX_RegWrite    = 0;
+        nxt_EX_MemToReg    = 0;
+        nxt_EX_MemRead     = 0;
+        nxt_EX_MemWrite    = 0;
+        nxt_EX_ALUSrc1     = 0;
+        nxt_EX_ALUSrc2     = 0;
+        nxt_EX_Beq         = 0;
+        nxt_EX_Bne         = 0;
+        nxt_EX_Link        = 0;
+        nxt_EX_ALUCtl      = 0;
+        nxt_EX_PCPlus4     = 0;
+        nxt_EX_Rs          = 0;
+        nxt_EX_Rt          = 0;
+        nxt_EX_Rd          = 0;
+        nxt_EX_RsData      = 0;
+        nxt_EX_RtData      = 0;
+        nxt_EX_Imm         = 0;
+    end
+    else if (SC_WriteEX) begin
+        nxt_EX_RegWrite    = ID_RegWrite      ;
+        nxt_EX_MemToReg    = ID_MemToReg      ;
+        nxt_EX_MemRead     = ID_MemRead       ;
+        nxt_EX_MemWrite    = ID_MemWrite      ;
+        nxt_EX_ALUSrc1     = ID_ALUSrc1       ;
+        nxt_EX_ALUSrc2     = ID_ALUSrc2       ;
+        nxt_EX_Beq         = ID_Beq           ;
+        nxt_EX_Bne         = ID_Bne           ;
+        nxt_EX_Link        = ID_Link          ;
+        nxt_EX_ALUCtl      = ID_ALUCtl        ;
+        nxt_EX_PCPlus4     = ID_PCPlus4       ;
+        nxt_EX_Rs          = ID_Rs            ;
+        nxt_EX_Rt          = ID_Rt            ;
+        nxt_EX_Rd          = ID_Rd            ;
+        nxt_EX_RsData      = ID_RsData        ;
+        nxt_EX_RtData      = ID_RtData        ;
+        nxt_EX_Imm         = ID_Imm           ;
     end
 
-    if (IF_Stall_icache || MEM_Stall_dcache) begin
-        // memory stall: stall all stages
-        nxt_ID_PCPlus4     = ID_PCPlus4      ;
-        nxt_ID_Inst        = ID_Inst         ;
+    if (SC_FlushMEM) begin
+        nxt_MEM_RegWrite   = 0;
+        nxt_MEM_MemToReg   = 0;
+        nxt_MEM_MemRead    = 0;
+        nxt_MEM_MemWrite   = 0;
+        nxt_MEM_ALURes     = 0;
+        nxt_MEM_Rd         = 0;
+        nxt_MEM_RtData     = 0;
+    end
+    else if (SC_WriteMEM) begin
+        nxt_MEM_RegWrite   = EX_RegWrite      ;
+        nxt_MEM_MemToReg   = EX_MemToReg      ;
+        nxt_MEM_MemRead    = EX_MemRead       ;
+        nxt_MEM_MemWrite   = EX_MemWrite      ;
+        nxt_MEM_ALURes     = EX_ALURes        ;
+        nxt_MEM_Rd         = EX_Rd            ;
+        nxt_MEM_RtData     = EX_RtData        ;
+    end
 
-        nxt_EX_RegWrite    = EX_RegWrite     ;
-        nxt_EX_MemToReg    = EX_MemToReg     ;
-        nxt_EX_MemRead     = EX_MemRead      ;
-        nxt_EX_MemWrite    = EX_MemWrite     ;
-        nxt_EX_ALUSrc1     = EX_ALUSrc1      ;
-        nxt_EX_ALUSrc2     = EX_ALUSrc2      ;
-        nxt_EX_Beq         = EX_Beq          ;
-        nxt_EX_Bne         = EX_Bne          ;
-        nxt_EX_ALUCtl      = EX_ALUCtl       ;
-        nxt_EX_PCPlus4     = EX_PCPlus4      ;
-        nxt_EX_Rs          = EX_Rs           ;
-        nxt_EX_Rt          = EX_Rt           ;
-        nxt_EX_Rd          = EX_Rd           ;
-        nxt_EX_RsData      = EX_RsData       ;
-        nxt_EX_RtData      = EX_RtData       ;
-        nxt_EX_Imm         = EX_Imm          ;
-
-        nxt_MEM_RegWrite   = MEM_RegWrite    ;
-        nxt_MEM_MemToReg   = MEM_MemToReg    ;
-        nxt_MEM_MemRead    = MEM_MemRead     ;
-        nxt_MEM_MemWrite   = MEM_MemWrite    ;
-        nxt_MEM_ALURes     = MEM_ALURes      ;
-        nxt_MEM_Rd         = MEM_Rd          ;
-        nxt_MEM_RtData     = MEM_RtData      ;
-
-        nxt_WB_RegWrite    = WB_RegWrite     ;
-        nxt_WB_MemToReg    = WB_MemToReg     ;
-        nxt_WB_Rd          = WB_Rd           ;
-        nxt_WB_DataFromMem = WB_DataFromMem  ;
-        nxt_WB_ALURes      = WB_ALURes       ;
+    if (SC_FlushWB) begin
+        nxt_WB_RegWrite    = 0;
+        nxt_WB_MemToReg    = 0;
+        nxt_WB_Rd          = 0;
+        nxt_WB_DataFromMem = 0;
+        nxt_WB_ALURes      = 0;
+    end
+    else if (SC_WriteWB) begin
+        nxt_WB_RegWrite    = MEM_RegWrite     ;
+        nxt_WB_MemToReg    = MEM_MemToReg     ;
+        nxt_WB_Rd          = MEM_Rd           ;
+        nxt_WB_DataFromMem = MEM_DataFromMem  ;
+        nxt_WB_ALURes      = MEM_ALURes       ;
     end
 end
 
@@ -482,11 +543,11 @@ always @(posedge clk) begin
         EX_Bne         <= nxt_EX_Bne          ;
         EX_ALUCtl      <= nxt_EX_ALUCtl       ;
         EX_PCPlus4     <= nxt_EX_PCPlus4      ;
-        EX_Rs          <= nxt_EX_Rs          ;
-        EX_Rt          <= nxt_EX_Rt          ;
+        EX_Rs          <= nxt_EX_Rs           ;
+        EX_Rt          <= nxt_EX_Rt           ;
         EX_Rd          <= nxt_EX_Rd           ;
-        EX_RsData      <= nxt_EX_RsData      ;
-        EX_RtData      <= nxt_EX_RtData      ;
+        EX_RsData      <= nxt_EX_RsData       ;
+        EX_RtData      <= nxt_EX_RtData       ;
         EX_Imm         <= nxt_EX_Imm          ;
         MEM_RegWrite   <= nxt_MEM_RegWrite    ;
         MEM_MemToReg   <= nxt_MEM_MemToReg    ;

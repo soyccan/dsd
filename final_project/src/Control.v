@@ -63,8 +63,13 @@ always @* begin
 
                 6'b001001: begin
                     // jalr
+                    ALUCtl_o   = `ALU_CTL_ADD;
+                    ALUSrc1_o  = `ALU_SRC_PC;
                     JumpReg_o  = 1;
                     Link_o     = 1;
+                    RegWrite_o = 1;
+
+                    // Note that jalr won't stall due to branch delay slot
                 end
 
                 6'b100000: begin
@@ -112,11 +117,15 @@ always @* begin
 
         6'b000011: begin
             // jal
+            ALUCtl_o   = `ALU_CTL_ADD;
+            ALUSrc1_o  = `ALU_SRC_PC;
             JumpImm_o  = 1;
             Link_o     = 1;
             MemToReg_o = 1'bx;
             RegDst_o   = 1'bx;
             RegWrite_o = 1;
+
+            // Note that jal won't stall due to branch delay slot
         end
 
         6'b000100: begin
@@ -127,6 +136,9 @@ always @* begin
             RegDst_o   = `REG_DST_RT;
             MemToReg_o = 1'bx;
             Beq_o      = 1;
+
+            // branch seen: insert bubble into ID stage
+            Stall_o    = 1;
         end
 
         6'b000101: begin
@@ -137,6 +149,9 @@ always @* begin
             RegDst_o   = `REG_DST_RT;
             MemToReg_o = 1'bx;
             Bne_o      = 1;
+
+            // branch seen: insert bubble into ID stage
+            Stall_o    = 1;
         end
 
         6'b001000: begin
