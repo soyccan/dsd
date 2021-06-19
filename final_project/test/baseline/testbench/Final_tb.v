@@ -157,7 +157,7 @@ module Final_tb;
 	always #(`CYCLE*0.5) clk = ~clk;
 
     always @(posedge clk) begin
-        if (chip0.i_MIPS.SC_WritePC) begin
+        if (chip0.i_MIPS.PC_U.PCWrite_i) begin
             counter = counter + 1;
         end
     end

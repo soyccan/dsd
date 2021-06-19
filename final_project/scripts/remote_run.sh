@@ -12,6 +12,7 @@ SOCKET='/tmp/ssh.sock'
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
 # arguments
+cycle=10
 while [[ "$1" ]]; do
     case $1 in
         -rtl)
@@ -46,6 +47,10 @@ while [[ "$1" ]]; do
             # with multiplier and divider
             opt_muldiv=1
             ;;
+        *)
+            # clock cycle
+            cycle="$1"
+            ;;
     esac
 
     shift
@@ -72,6 +77,7 @@ rsync \
 rsync \
     -e "ssh -S '$SOCKET'" \
     --archive --verbose --compress --update --progress --human-readable \
+    "$proj_root/syn/.synopsys_dc.setup" \
     "$proj_root/test/baseline/pattern/" \
     "$proj_root/test/brPred/pattern/" \
     "$proj_root/test/l2cache/pattern/" \
@@ -98,10 +104,6 @@ elif (( opt_muldiv )); then
     defines="$defines +define+MultDiv"
 
 fi
-
-# cycle for post-synthesis simulation
-# should be same as in .sdc
-cycle=10
 
 
 # Simulate RTL
@@ -137,6 +139,8 @@ fi
 if (( opt_syn )); then
     ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
         cd $REMOTE_DIR
+        sed -i 's/^set cycle.*$/set cycle $cycle/' \
+            syn/CHIP_syn.sdc
         source /usr/cad/synopsys/CIC/synthesis.cshrc
         design_vision -no_gui -f syn/CHIP_syn.sdc
     " | tee netlist/syn.log

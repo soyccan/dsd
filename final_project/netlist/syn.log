@@ -12,15 +12,24 @@ Platform = amd64
                                   DFT Compiler
                                Design Compiler(R)
 
-               Version N-2017.09-SP2 for linux64 - Nov 27, 2017 
+               Version R-2020.09-SP5 for linux64 - Apr 23, 2021 
 
-                    Copyright (c) 1988 - 2017 Synopsys, Inc.
+                    Copyright (c) 1988 - 2021 Synopsys, Inc.
    This software and the associated documentation are proprietary to Synopsys,
  Inc. This software may only be used in accordance with the terms and conditions
  of a written license agreement with Synopsys, Inc. All other use, reproduction,
-            or distribution of this software is strictly prohibited.
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
 Initializing...
-Initializing gui preferences from file  /home/raid7_2/userb07/b7902143/.synopsys_dv_prefs.tcl
 read_file -format verilog src/CHIP.v
 Loading db file '/usr/cad/synopsys/synthesis/cur/libraries/syn/dw_foundation.sldb'
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
@@ -96,7 +105,7 @@ Compiling source file /home/raid7_2/userb07/b7902143/final_project/src/MIPS_Pipe
 Opening include file /home/raid7_2/userb07/b7902143/final_project/src/Def.v
 
 Inferred memory devices in process
-	in routine MIPS_Pipeline line 512 in file
+	in routine MIPS_Pipeline line 503 in file
 		'/home/raid7_2/userb07/b7902143/final_project/src/MIPS_Pipeline.v'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -274,8 +283,8 @@ Current design is 'CHIP'.
 #You may modified the clock constraints
 #or add more constraints for your design
 ####################################################
-set cycle  10
-10
+set cycle 4
+4
 ####################################################
 #The following are design spec. for synthesis
 #You can NOT modify this seciton
@@ -324,8 +333,8 @@ Information: Evaluating DesignWare library utilization. (UISN-27)
 ============================================================================
 | DesignWare Building Block Library  |         Version         | Available |
 ============================================================================
-| Basic DW Building Blocks           | N-2017.09-DWBB_201709.2 |     *     |
-| Licensed DW Building Blocks        | N-2017.09-DWBB_201709.2 |     *     |
+| Basic DW Building Blocks           | R-2020.09-DWBB_202009.5 |     *     |
+| Licensed DW Building Blocks        | R-2020.09-DWBB_202009.5 |     *     |
 ============================================================================
 
 
@@ -361,62 +370,70 @@ Information: Updating design information... (UID-85)
   Beginning Implementation Selection
   ----------------------------------
   Processing 'cache_1_DW01_add_0'
-  Processing 'cache_0_DW01_add_0'
+  Processing 'cache_0_DW01_add_0_DW01_add_1'
   Processing 'MIPS_Pipeline_DW01_inc_0'
   Mapping 'DW_rightsh'
 Information: Added key list 'DesignWare' to design 'ALU'. (DDB-72)
   Mapping 'DW_rightsh'
   Mapping 'DW_leftsh'
-  Processing 'ALU_DW01_add_0'
+  Processing 'ALU_DW01_add_0_DW01_add_2'
 
   Beginning Mapping Optimizations  (Medium effort)
   -------------------------------
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/slow.db'
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fast.db'
+  Mapping Optimization (Phase 1)
 
                                   TOTAL                                                  
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:24  414786.9      0.00       0.0    2301.3                                0.00  
-    0:00:24  414786.9      0.00       0.0    2301.3                                0.00  
-    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
-    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
-    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
-    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
-    0:00:28  475730.3      0.00       0.0     788.9                                0.00  
-    0:00:37  224907.2      5.68     112.0     784.9                                0.00  
-    0:00:38  223921.0      3.32      45.7     784.8                                0.00  
-    0:00:40  224140.0      2.94      38.4     784.8                                0.00  
-    0:00:41  224053.4      3.42      47.8     784.8                                0.00  
-    0:00:41  224173.9      3.20      43.8     784.8                                0.00  
-    0:00:41  224072.1      3.07      40.7     784.8                                0.00  
-    0:00:42  224272.4      2.75      33.9     784.8                                0.00  
-    0:00:42  224345.4      2.75      33.7     784.3                                0.00  
-    0:00:42  224384.4      2.65      33.1     784.3                                0.00  
-    0:00:43  224431.9      2.56      29.5     784.3                                0.00  
-    0:00:43  224525.3      2.45      26.8     784.3                                0.00  
-    0:00:43  224647.5      2.43      26.2     782.0                                0.00  
-    0:00:43  224732.4      2.30      23.7     782.0                                0.00  
-    0:00:43  224858.0      2.02      19.8     778.6                                0.00  
-    0:00:44  225003.9      1.71      14.9     777.2                                0.00  
-    0:00:44  225183.9      1.25       7.7     777.2                                0.00  
-    0:00:44  225346.8      0.98       4.9     777.2                                0.00  
-    0:00:44  225448.7      0.94       4.5     777.2                                0.00  
-    0:00:44  225633.7      0.53       1.6     777.2                                0.00  
-    0:00:44  225633.7      0.53       1.6     777.2                                0.00  
-    0:00:44  225633.7      0.53       1.6     777.2                                0.00  
-    0:00:45  225952.8      0.50       1.5     613.8                                0.00  
-    0:00:45  226141.2      0.45       1.3     544.5                                0.00  
-    0:00:45  226322.8      0.45       1.3     484.1                                0.00  
-    0:00:46  226492.6      0.45       1.3     432.8                                0.00  
-    0:00:46  226672.5      0.45       1.3     377.9                                0.00  
-    0:00:46  226825.3      0.45       1.3     330.2                                0.00  
-    0:00:46  226978.0      0.45       1.3     282.6                                0.00  
-    0:00:46  227130.8      0.45       1.3     235.0                                0.00  
-    0:00:46  227283.6      0.45       1.3     187.4                                0.00  
-    0:00:46  227283.6      0.45       1.3     187.4                                0.00  
-    0:00:47  227453.3      0.00       0.0     187.4                                0.00  
+    0:00:24  411716.3      7.88   11099.5  343272.1                                0.00  
+    0:00:24  411716.3      7.88   11099.5  343272.1                                0.00  
+    0:00:29  472461.1      0.00      -0.0  215283.5                                0.00  
+    0:00:29  472461.1      0.00      -0.0  215283.5                                0.00  
+    0:00:29  472461.1      0.00      -0.0  215283.5                                0.00  
+    0:00:29  472461.1      0.00      -0.0  215283.5                                0.00  
+    0:00:30  472461.1      0.00      -0.0  215283.5                                0.00  
+    0:00:38  226484.1      3.76    3972.9  214181.0                                0.00  
+    0:00:41  227465.2      2.71    3088.1  214155.5                                0.00  
+    0:00:44  227582.3      2.35    2726.4  214145.8                                0.00  
+    0:00:45  227551.7      2.26    2612.9  214145.8                                0.00  
+    0:00:46  227663.8      2.36    2656.7  214145.8                                0.00  
+    0:00:46  227926.9      2.20    2565.6  214145.8                                0.00  
+    0:00:47  227877.6      2.20    2638.8  214145.8                                0.00  
+    0:00:48  227920.1      2.20    2469.8  214145.8                                0.00  
+    0:00:48  227989.7      2.07    2637.2  214145.8                                0.00  
+    0:00:49  228025.3      2.00    2456.1  214145.8                                0.00  
+    0:00:49  228325.8      1.93    2451.8  214145.8                                0.00  
+    0:00:49  228731.4      1.90    1878.6  214145.8                                0.00  
+    0:00:49  228923.2      1.85    1877.1  214145.8                                0.00  
+    0:00:50  229345.9      1.78    1875.1  214145.8                                0.00  
+    0:00:50  229558.1      1.73    1872.0  214145.8                                0.00  
+    0:00:50  229783.8      1.71    1867.7  214145.8                                0.00  
+    0:00:50  230009.6      1.70    1796.5  214145.8                                0.00  
+    0:00:50  230248.9      1.55    1788.9  214145.8                                0.00  
+    0:00:51  230642.7      1.33    1782.6  214118.2                                0.00  
+    0:00:51  230642.7      1.33    1782.6  214118.2                                0.00  
+    0:00:51  230642.7      1.33    1782.6  214118.2                                0.00  
+    0:00:51  231759.6      1.34    1616.1  161061.6                                0.00  
+    0:00:52  232090.6      1.34    1605.2  142090.7                                0.00  
+    0:00:52  232343.5      1.32    1596.7  126532.7                                0.00  
+    0:00:52  232533.6      1.32    1594.8  112846.1                                0.00  
+    0:00:52  232723.7      1.32    1592.7   99163.7                                0.00  
+    0:00:52  232871.4      1.32    1590.9   87155.2                                0.00  
+    0:00:53  233022.5      1.32    1589.2   74643.4                                0.00  
+    0:00:53  233165.0      1.32    1586.9   62814.8                                0.00  
+    0:00:53  233307.6      1.32    1585.1   50986.1                                0.00  
+    0:00:53  233307.6      1.32    1585.1   50986.1                                0.00  
+    0:00:53  233692.9      1.06    1312.5   51097.9 i_MIPS/ID_PCPlus4_reg[31]/D      0.00  
+    0:00:54  234117.3      0.92    1237.7   51353.7 i_MIPS/ID_Inst_reg[11]/D       0.00  
+    0:00:54  234377.0      0.75     979.3   51361.8 i_MIPS/EX_Imm_reg[28]/D        0.00  
+    0:00:55  234725.0      0.67     776.7   51365.3 i_MIPS/PC_U/PC_o_reg[19]/D      0.00  
+    0:00:55  235179.9      0.52     628.2   51360.6 i_MIPS/PC_U/PC_o_reg[15]/D      0.00  
+    0:00:56  237386.5      0.38     450.8   51401.9 D_cache/cache_mem_reg[31][16]/D      0.00  
+    0:00:57  239285.9      0.12      38.4   51455.0 i_MIPS/PC_U/PC_o_reg[29]/D      0.00  
+    0:00:57  239501.4      0.00      -0.0   49421.7                                0.00  
 
 
 
@@ -427,9 +444,9 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:47  227453.3      0.00       0.0     187.4                                0.00  
-    0:00:47  227453.3      0.00       0.0     187.4                                0.00  
-    0:00:47  227390.5      0.00       0.0     187.6                                0.00  
+    0:00:57  239501.4      0.00      -0.0   49421.7                                0.00  
+    0:00:57  239501.4      0.00      -0.0   49421.7                                0.00  
+    0:00:58  238858.1      0.00      -0.0   49642.6                                0.00  
 
 
   Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
@@ -439,9 +456,14 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:48  227390.5      0.00       0.0     187.6                                0.00  
-    0:00:48  227982.9      0.00       0.0      28.7 I_cache/mem_wdata[60]          0.00  
-    0:00:48  228113.6      0.00       0.0       0.0                                0.00  
+    0:00:59  238858.1      0.00       0.0   49642.6                                0.00  
+    0:00:59  239420.0      0.00       0.0   10212.6 I_cache/mem_wdata[72]          0.00  
+    0:01:00  239526.9      0.00       0.0     268.0 D_cache/n1418                  0.00  
+    0:01:00  239489.6      0.00       0.0     190.5 I_cache/net44175               0.00  
+    0:01:00  239472.6      0.00       0.0     114.3 i_MIPS/n360                    0.00  
+    0:01:00  239482.8      0.00       0.0      54.1 i_MIPS/RegFile_U/n91           0.00  
+    0:01:01  239452.2      0.00       0.0      21.9 i_MIPS/ALU/net54723            0.00  
+    0:01:01  239455.6      0.00       0.0       0.0                                0.00  
 
 
   Beginning Area-Recovery Phase  (cleanup)
@@ -451,32 +473,33 @@ Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/fas
    ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
   --------- --------- --------- --------- --------- ------------------------- -----------
-    0:00:48  228113.6      0.00       0.0       0.0                                0.00  
-    0:00:48  228113.6      0.00       0.0       0.0                                0.00  
-    0:00:50  224644.1      0.01       0.0       0.0                                0.00  
-    0:00:51  222454.5      0.04       0.0       0.0                                0.00  
-    0:00:52  220998.1      0.04       0.0       0.0                                0.00  
-    0:00:52  219935.5      0.04       0.0       0.0                                0.00  
-    0:00:53  218896.7      0.04       0.0       0.0                                0.00  
-    0:00:54  218109.1      0.04       0.0       0.0                                0.00  
-    0:00:54  217610.1      0.04       0.0       0.0                                0.00  
-    0:00:55  217304.5      0.04       0.0       0.0                                0.00  
-    0:00:55  217024.5      0.04       0.0       0.0                                0.00  
-    0:00:55  216759.7      0.04       0.0       0.0                                0.00  
-    0:00:56  216671.4      0.04       0.0       0.0                                0.00  
-    0:00:56  216600.1      0.04       0.0       0.0                                0.00  
-    0:00:56  216542.4      0.04       0.1       0.0                                0.00  
-    0:00:56  216542.4      0.04       0.1       0.0                                0.00  
-    0:00:57  216562.8      0.00       0.0       0.0                                0.00  
-    0:00:57  215812.5      0.67       3.6       0.0                                0.00  
-    0:00:57  215748.0      0.67       3.6       0.0                                0.00  
-    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
-    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
-    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
-    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
-    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
-    0:00:57  215717.5      0.67       3.6       0.0                                0.00  
-    0:00:58  215868.5      0.00       0.0       0.0                                0.00  
+    0:01:01  239455.6      0.00       0.0       0.0                                0.00  
+    0:01:01  239455.6      0.00       0.0       0.0                                0.00  
+    0:01:02  234870.9      0.21      31.6       0.0                                0.00  
+    0:01:04  232637.2      0.15      16.4       0.0                                0.00  
+    0:01:05  231082.3      0.11      11.6       0.0                                0.00  
+    0:01:06  230014.7      0.11      10.5       0.0                                0.00  
+    0:01:06  229379.8      0.11       9.4       0.0                                0.00  
+    0:01:07  228986.0      0.11       4.3       0.0                                0.00  
+    0:01:07  228675.4      0.15       8.7       0.0                                0.00  
+    0:01:08  228436.1      0.11       2.4       0.0                                0.00  
+    0:01:08  228244.3      0.11      10.5       0.0                                0.00  
+    0:01:08  228122.1      0.11      10.6       0.0                                0.00  
+    0:01:08  228122.1      0.11      10.6       0.0                                0.00  
+    0:01:09  228074.5      0.00       0.0       0.0                                0.00  
+    0:01:10  224267.3      0.61     160.7       0.0                                0.00  
+    0:01:10  223573.0      0.60     159.8       0.0                                0.00  
+    0:01:10  223420.3      0.60     159.8       0.0                                0.00  
+    0:01:10  223420.3      0.60     159.8       0.0                                0.00  
+    0:01:10  223420.3      0.60     159.8       0.0                                0.00  
+    0:01:10  223420.3      0.60     159.8       0.0                                0.00  
+    0:01:10  223420.3      0.60     159.8       0.0                                0.00  
+    0:01:10  223420.3      0.60     159.8       0.0                                0.00  
+    0:01:11  223846.3      0.21      46.2       0.0 i_MIPS/PC_U/PC_o_reg[8]/D      0.00  
+    0:01:11  224177.3      0.11      12.0       0.0 i_MIPS/PC_U/PC_o_reg[30]/D      0.00  
+    0:01:12  224521.9      0.04       3.2       0.0 i_MIPS/ID_PCPlus4_reg[22]/D      0.00  
+    0:01:12  224613.5      0.01       0.0       0.0 i_MIPS/PC_U/PC_o_reg[18]/D      0.00  
+    0:01:13  224615.2      0.00       0.0       0.0                                0.00  
 Loading db file '/home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db'
 
 
@@ -507,24 +530,32 @@ check_design
  
 ****************************************
 check_design summary:
-Version:     N-2017.09-SP2
-Date:        Tue Jun  1 22:43:47 2021
+Version:     R-2020.09-SP5
+Date:        Sat Jun 19 18:55:16 2021
 ****************************************
 
                    Name                                            Total
 --------------------------------------------------------------------------------
-Inputs/Outputs                                                     41
+Inputs/Outputs                                                     43
+    Unloaded inputs (LINT-8)                                        2
     Unconnected ports (LINT-28)                                     3
     Constant outputs (LINT-52)                                     38
 
 Cells                                                              36
     Connected to power or ground (LINT-32)                         34
     Nets connected to multiple pins on same cell (LINT-33)          2
+
+Nets                                                                2
+    Unloaded nets (LINT-2)                                          2
 --------------------------------------------------------------------------------
 
+Warning: In design 'CHIP', net 'i_MIPS/ALU/add_1_root_add_27_2/A[31]' driven by pin 'i_MIPS/ALU/add_1_root_add_27_2/A[31]' has no loads. (LINT-2)
+Warning: In design 'CHIP', net 'i_MIPS/ALU/add_1_root_add_27_2/B[31]' driven by pin 'i_MIPS/ALU/add_1_root_add_27_2/B[31]' has no loads. (LINT-2)
+Warning: In design 'ALU_DW01_add_1', input port 'A[31]' is unloaded. (LINT-8)
+Warning: In design 'ALU_DW01_add_1', input port 'B[31]' is unloaded. (LINT-8)
 Warning: In design 'PC', port 'PC_i[0]' is not connected to any nets. (LINT-28)
 Warning: In design 'MIPS_Pipeline_DW01_inc_0', port 'SUM[0]' is not connected to any nets. (LINT-28)
-Warning: In design 'ALU_DW01_add_0', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'ALU_DW01_add_1', port 'CO' is not connected to any nets. (LINT-28)
 Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
    Pin 'proc_read' is connected to logic 1. 
 Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 or logic 0. (LINT-32)
@@ -596,7 +627,7 @@ Warning: In design 'CHIP', a pin on submodule 'I_cache' is connected to logic 1 
 Warning: In design 'ALU', the same net is connected to more than one pin on submodule 'add_1_root_add_27_2'. (LINT-33)
    Net 'Op1_i[31]' is connected to pins 'A[32]', 'A[31]''.
 Warning: In design 'ALU', the same net is connected to more than one pin on submodule 'add_1_root_add_27_2'. (LINT-33)
-   Net 'adder_op2[32]' is connected to pins 'B[32]', 'B[31]''.
+   Net 'n77' is connected to pins 'B[32]', 'B[31]''.
 Warning: In design 'MIPS_Pipeline', output port 'ICACHE_ren' is connected directly to 'logic 1'. (LINT-52)
 Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wen' is connected directly to 'logic 0'. (LINT-52)
 Warning: In design 'MIPS_Pipeline', output port 'ICACHE_wdata[31]' is connected directly to 'logic 0'. (LINT-52)
@@ -644,8 +675,8 @@ Report : timing
         -delay max
         -max_paths 1
 Design : CHIP
-Version: N-2017.09-SP2
-Date   : Tue Jun  1 22:43:47 2021
+Version: R-2020.09-SP5
+Date   : Sat Jun 19 18:55:16 2021
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -653,9 +684,9 @@ Date   : Tue Jun  1 22:43:47 2021
 Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
-  Startpoint: i_MIPS/WB_Rd_reg[3]
+  Startpoint: i_MIPS/PC_U/PC_o_reg[3]
               (rising edge-triggered flip-flop clocked by CLK)
-  Endpoint: i_MIPS/PC/PC_o_reg[31]
+  Endpoint: i_MIPS/PC_U/PC_o_reg[30]
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -668,84 +699,67 @@ Wire Load Model Mode: top
   --------------------------------------------------------------------------
   clock CLK (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
-  i_MIPS/WB_Rd_reg[3]/CK (DFFQX4)                         0.00 #     0.50 r
-  i_MIPS/WB_Rd_reg[3]/Q (DFFQX4)                          0.21       0.71 f
-  i_MIPS/Forward_U/WB_Rd_i[3] (Forward)                   0.00       0.71 f
-  i_MIPS/Forward_U/U15/Y (OR2X2)                          0.17       0.89 f
-  i_MIPS/Forward_U/U13/Y (OR4X2)                          0.23       1.11 f
-  i_MIPS/Forward_U/U11/Y (CLKINVX1)                       0.17       1.28 r
-  i_MIPS/Forward_U/U8/Y (NOR3X2)                          0.12       1.40 f
-  i_MIPS/Forward_U/U40/Y (INVX4)                          0.06       1.46 r
-  i_MIPS/Forward_U/U7/Y (NOR2X4)                          0.05       1.51 f
-  i_MIPS/Forward_U/Forward_A_o[0] (Forward)               0.00       1.51 f
-  i_MIPS/U100/Y (NAND2X2)                                 0.12       1.64 r
-  i_MIPS/U216/Y (BUFX20)                                  0.11       1.75 r
-  i_MIPS/U116/Y (NOR2X1)                                  0.07       1.81 f
-  i_MIPS/U71/Y (OR3X2)                                    0.22       2.03 f
-  i_MIPS/U212/Y (CLKINVX4)                                0.06       2.09 r
-  i_MIPS/U54/Y (OR2X2)                                    0.10       2.20 r
-  i_MIPS/U52/Y (NAND2X2)                                  0.12       2.32 f
-  i_MIPS/ALU/Op1_i[0] (ALU)                               0.00       2.32 f
-  i_MIPS/ALU/add_1_root_add_27_2/A[0] (ALU_DW01_add_0)
-                                                          0.00       2.32 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_0/CO (ADDFHX4)        0.22       2.54 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_1/CO (ADDFHX1)        0.19       2.73 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_2/CO (ADDFX1)         0.22       2.95 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_3/CO (ADDFHX2)        0.16       3.11 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_4/CO (ADDFX1)         0.21       3.32 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_5/CO (ADDFXL)         0.30       3.62 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_6/CO (ADDFX1)         0.24       3.86 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_7/CO (ADDFXL)         0.30       4.16 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_8/CO (ADDFX1)         0.24       4.40 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_9/CO (ADDFXL)         0.30       4.70 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_10/CO (ADDFX1)        0.24       4.94 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_11/CO (ADDFXL)        0.30       5.24 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_12/CO (ADDFX1)        0.24       5.48 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_13/CO (ADDFXL)        0.30       5.78 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_14/CO (ADDFX1)        0.24       6.02 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_15/CO (ADDFX2)        0.23       6.25 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_16/CO (ADDFX2)        0.24       6.49 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_17/CO (ADDFHX4)       0.14       6.62 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_18/CO (ADDFHX2)       0.15       6.77 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_19/CO (ADDFHX4)       0.13       6.90 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_20/CO (ADDFHX2)       0.14       7.04 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_21/CO (ADDFXL)        0.28       7.32 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_22/CO (ADDFHX1)       0.23       7.55 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_23/CO (ADDFHX4)       0.15       7.70 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_24/CO (ADDFHX4)       0.12       7.82 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_25/CO (ADDFHX2)       0.15       7.97 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_26/CO (ADDFHX4)       0.13       8.11 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_27/CO (ADDFHX4)       0.13       8.24 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_28/CO (ADDFHX4)       0.12       8.36 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_29/CO (ADDFHX2)       0.14       8.49 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_30/CO (ADDFHX1)       0.19       8.68 f
-  i_MIPS/ALU/add_1_root_add_27_2/U1_31/S (ADDFXL)         0.33       9.01 r
-  i_MIPS/ALU/add_1_root_add_27_2/SUM[31] (ALU_DW01_add_0)
-                                                          0.00       9.01 r
-  i_MIPS/ALU/U70/Y (CLKINVX1)                             0.15       9.16 f
-  i_MIPS/ALU/U50/Y (OR2X1)                                0.21       9.37 f
-  i_MIPS/ALU/U52/Y (NAND3X1)                              0.14       9.52 r
-  i_MIPS/ALU/U3/Y (AOI211X2)                              0.08       9.59 f
-  i_MIPS/ALU/U674/Y (OAI22XL)                             0.39       9.98 r
-  i_MIPS/ALU/Res_o[31] (ALU)                              0.00       9.98 r
-  i_MIPS/U208/Y (INVX3)                                   0.12      10.10 f
-  i_MIPS/U206/Y (OR2X8)                                   0.13      10.22 f
-  i_MIPS/U207/Y (NAND3X6)                                 0.05      10.27 r
-  i_MIPS/PC/PC_i[31] (PC)                                 0.00      10.27 r
-  i_MIPS/PC/PC_o_reg[31]/D (EDFFTRXL)                     0.00      10.27 r
-  data arrival time                                                 10.27
+  i_MIPS/PC_U/PC_o_reg[3]/CK (EDFFTRX4)                   0.00 #     0.50 r
+  i_MIPS/PC_U/PC_o_reg[3]/Q (EDFFTRX4)                    0.16       0.66 r
+  i_MIPS/PC_U/PC_o[3] (PC)                                0.00       0.66 r
+  i_MIPS/U259/Y (BUFX8)                                   0.14       0.80 r
+  i_MIPS/add_202/A[1] (MIPS_Pipeline_DW01_inc_0)          0.00       0.80 r
+  i_MIPS/add_202/U1_1_1/CO (ADDHX4)                       0.11       0.91 r
+  i_MIPS/add_202/U1_1_2/CO (ADDHX4)                       0.11       1.02 r
+  i_MIPS/add_202/U29/Y (NAND2X4)                          0.05       1.07 f
+  i_MIPS/add_202/U28/Y (INVX4)                            0.06       1.12 r
+  i_MIPS/add_202/U1_1_4/CO (ADDHX2)                       0.13       1.25 r
+  i_MIPS/add_202/U1_1_5/CO (ADDHX4)                       0.11       1.36 r
+  i_MIPS/add_202/U1_1_6/CO (ADDHX4)                       0.10       1.46 r
+  i_MIPS/add_202/U13/Y (AND2X4)                           0.10       1.57 r
+  i_MIPS/add_202/U14/Y (CLKAND2X8)                        0.11       1.68 r
+  i_MIPS/add_202/U12/Y (CLKAND2X12)                       0.10       1.79 r
+  i_MIPS/add_202/U25/Y (NAND2X8)                          0.05       1.83 f
+  i_MIPS/add_202/U20/Y (CLKINVX12)                        0.04       1.88 r
+  i_MIPS/add_202/U19/Y (NAND2X8)                          0.04       1.91 f
+  i_MIPS/add_202/U6/Y (INVX8)                             0.06       1.97 r
+  i_MIPS/add_202/U18/Y (NAND2X8)                          0.05       2.02 f
+  i_MIPS/add_202/U21/Y (CLKINVX12)                        0.04       2.06 r
+  i_MIPS/add_202/U9/Y (NAND2X6)                           0.03       2.10 f
+  i_MIPS/add_202/U31/Y (INVX4)                            0.06       2.15 r
+  i_MIPS/add_202/U16/Y (AND2X4)                           0.10       2.26 r
+  i_MIPS/add_202/U5/Y (AND2X6)                            0.10       2.36 r
+  i_MIPS/add_202/U8/Y (NAND2X6)                           0.04       2.40 f
+  i_MIPS/add_202/U7/Y (INVX6)                             0.05       2.45 r
+  i_MIPS/add_202/U1_1_17/CO (ADDHX2)                      0.11       2.56 r
+  i_MIPS/add_202/U1_1_18/CO (ADDHX2)                      0.14       2.69 r
+  i_MIPS/add_202/U1_1_19/CO (ADDHX4)                      0.11       2.80 r
+  i_MIPS/add_202/U1_1_20/CO (ADDHX4)                      0.12       2.92 r
+  i_MIPS/add_202/U2/Y (NAND2X6)                           0.05       2.97 f
+  i_MIPS/add_202/U1/Y (CLKINVX8)                          0.04       3.00 r
+  i_MIPS/add_202/U1_1_22/CO (ADDHX4)                      0.08       3.09 r
+  i_MIPS/add_202/U1_1_23/CO (ADDHX2)                      0.13       3.21 r
+  i_MIPS/add_202/U1_1_24/CO (ADDHX4)                      0.12       3.33 r
+  i_MIPS/add_202/U11/Y (NAND2X4)                          0.05       3.38 f
+  i_MIPS/add_202/U10/Y (INVX4)                            0.07       3.45 r
+  i_MIPS/add_202/U4/Y (NAND2X6)                           0.05       3.50 f
+  i_MIPS/add_202/U3/Y (INVX12)                            0.05       3.55 r
+  i_MIPS/add_202/U15/Y (CLKAND2X8)                        0.12       3.67 r
+  i_MIPS/add_202/U24/Y (XOR2X4)                           0.11       3.78 f
+  i_MIPS/add_202/SUM[28] (MIPS_Pipeline_DW01_inc_0)       0.00       3.78 f
+  i_MIPS/U386/Y (CLKINVX4)                                0.07       3.85 r
+  i_MIPS/U518/Y (OA22X4)                                  0.11       3.95 r
+  i_MIPS/U185/Y (NAND3X2)                                 0.06       4.01 f
+  i_MIPS/PC_U/PC_i[30] (PC)                               0.00       4.01 f
+  i_MIPS/PC_U/PC_o_reg[30]/D (EDFFTRX1)                   0.00       4.01 f
+  data arrival time                                                  4.01
 
-  clock CLK (rise edge)                                  10.00      10.00
-  clock network delay (ideal)                             0.50      10.50
-  clock uncertainty                                      -0.10      10.40
-  i_MIPS/PC/PC_o_reg[31]/CK (EDFFTRXL)                    0.00      10.40 r
-  library setup time                                     -0.12      10.28
-  data required time                                                10.28
+  clock CLK (rise edge)                                   4.00       4.00
+  clock network delay (ideal)                             0.50       4.50
+  clock uncertainty                                      -0.10       4.40
+  i_MIPS/PC_U/PC_o_reg[30]/CK (EDFFTRX1)                  0.00       4.40 r
+  library setup time                                     -0.39       4.01
+  data required time                                                 4.01
   --------------------------------------------------------------------------
-  data required time                                                10.28
-  data arrival time                                                -10.27
+  data required time                                                 4.01
+  data arrival time                                                 -4.01
   --------------------------------------------------------------------------
-  slack (MET)                                                        0.01
+  slack (MET)                                                        0.00
 
 
 1
@@ -754,8 +768,8 @@ report_area -hierarchy
 ****************************************
 Report : area
 Design : CHIP
-Version: N-2017.09-SP2
-Date   : Tue Jun  1 22:43:47 2021
+Version: R-2020.09-SP5
+Date   : Sat Jun 19 18:55:16 2021
 ****************************************
 
 Library(s) Used:
@@ -763,22 +777,22 @@ Library(s) Used:
     typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
 
 Number of ports:                         2177
-Number of nets:                         19800
-Number of cells:                        16476
-Number of combinational cells:          12801
-Number of sequential cells:              3663
+Number of nets:                         20616
+Number of cells:                        17266
+Number of combinational cells:          13591
+Number of sequential cells:              3591
 Number of macros/black boxes:               0
-Number of buf/inv:                       2466
-Number of references:                       6
+Number of buf/inv:                       2815
+Number of references:                       8
 
-Combinational area:             121031.409387
-Buf/Inv area:                    17675.025987
-Noncombinational area:           94837.132904
+Combinational area:             129547.265160
+Buf/Inv area:                    20923.849582
+Noncombinational area:           95067.979303
 Macro/Black Box area:                0.000000
-Net Interconnect area:         2425045.643463
+Net Interconnect area:         2467885.897369
 
-Total cell area:                215868.542291
-Total area:                    2640914.185754
+Total cell area:                224615.244463
+Total area:                    2692501.141832
 
 Hierarchical area distribution
 ------------------------------
@@ -788,23 +802,28 @@ Hierarchical area distribution
 Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-   Black-
                                   Total        Total    national     national    boxes   Design
 --------------------------------  -----------  -------  -----------  ----------  ------  ------------------------
-CHIP                              215868.5423    100.0      33.9480      0.0000  0.0000  CHIP
-D_cache                            64879.7200     30.1   35976.3930  28903.3270  0.0000  cache_0
-I_cache                            64918.7602     30.1   36015.4332  28903.3270  0.0000  cache_1
-i_MIPS                             86036.1140     39.9   10235.3218   9787.2084  0.0000  MIPS_Pipeline
-i_MIPS/ALU                         10960.1117      5.1    9277.9883      0.0000  0.0000  ALU
-i_MIPS/ALU/add_1_root_add_27_2      1682.1234      0.8    1682.1234      0.0000  0.0000  ALU_DW01_add_0
-i_MIPS/Control_U                     458.2980      0.2     458.2980      0.0000  0.0000  Control
-i_MIPS/Forward_U                     638.2224      0.3     638.2224      0.0000  0.0000  Forward
+CHIP                              224615.2445    100.0     161.2530      0.0000  0.0000  CHIP
+D_cache                            66397.1956     29.6   37493.8686  28903.3270  0.0000  cache_0
+I_cache                            65582.4436     29.2   36679.1166  28903.3270  0.0000  cache_1
+i_MIPS                             92474.3522     41.2   12531.9040   9923.0004  0.0000  MIPS_Pipeline
+i_MIPS/ALU                         13653.8855      6.1   10277.7569      0.0000  0.0000  ALU
+i_MIPS/ALU/add_1_root_add_27_2      3376.1286      1.5    3376.1286      0.0000  0.0000  ALU_DW01_add_1
+i_MIPS/Control_U                     490.5486      0.2     490.5486      0.0000  0.0000  Control
+i_MIPS/Forward_U                     729.8820      0.3     729.8820      0.0000  0.0000  Forward
 i_MIPS/HazardDetect_U                171.4374      0.1     171.4374      0.0000  0.0000  HazardDetect
-i_MIPS/PC                           1194.9696      0.6      23.7636   1171.2060  0.0000  PC
-i_MIPS/RegFile_U                   51979.4807     24.1   25907.4162  26072.0645  0.0000  RegFile
-i_MIPS/StallControl_U                 76.3830      0.0      76.3830      0.0000  0.0000  StallControl
-i_MIPS/add_204                       534.6810      0.2     534.6810      0.0000  0.0000  MIPS_Pipeline_DW01_inc_0
+i_MIPS/PC_U                         1296.8136      0.6      30.5532   1266.2604  0.0000  PC
+i_MIPS/RegFile_U                   52349.5139     23.3   26277.4494  26072.0645  0.0000  RegFile
+i_MIPS/StallControl_U                171.4374      0.1     171.4374      0.0000  0.0000  StallControl
+i_MIPS/add_202                      1155.9294      0.5    1155.9294      0.0000  0.0000  MIPS_Pipeline_DW01_inc_0
 --------------------------------  -----------  -------  -----------  ----------  ------  ------------------------
-Total                                                   121031.4094  94837.1329  0.0000
+Total                                                   129547.2652  95067.9793  0.0000
 
 1
 quit
+
+Memory usage for this session 332 Mbytes.
+Memory usage for this session including child processes 332 Mbytes.
+CPU usage for this session 81 seconds ( 0.02 hours ).
+Elapsed time for this session 84 seconds ( 0.02 hours ).
 
 Thank you...
