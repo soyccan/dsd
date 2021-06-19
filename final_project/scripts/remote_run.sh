@@ -32,7 +32,19 @@ while [[ "$1" ]]; do
             ;;
         -nohazard)
             # Without hazard
-            opt_hazard=0
+            opt_nohazard=1
+            ;;
+        -brpred)
+            # with branch predictor
+            opt_brpred=1
+            ;;
+        -l2)
+            # with L2 cache
+            opt_l2=1
+            ;;
+        -muldiv)
+            # with multiplier and divider
+            opt_muldiv=1
             ;;
     esac
 
@@ -55,21 +67,45 @@ rsync \
     "$proj_root/syn" \
     "$proj_root/include" \
     "$proj_root/test" \
+    "$proj_root/netlist" \
     b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR/"
 rsync \
     -e "ssh -S '$SOCKET'" \
     --archive --verbose --compress --update --progress --human-readable \
     "$proj_root/test/baseline/pattern/" \
+    "$proj_root/test/brPred/pattern/" \
+    "$proj_root/test/l2cache/pattern/" \
+    "$proj_root/test/mulDiv/pattern/" \
     b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR/"
+
+
+# compile macro definition
+defines=
+
+if (( opt_hazard )); then
+    defines="$defines +define+hasHazard"
+
+elif (( opt_nohazard )); then
+    defines="$defines +define+noHazard"
+
+elif (( opt_brpred )); then
+    defines="$defines +define+BrPred"
+
+elif (( opt_l2 )); then
+    defines="$defines +define+L2Cache"
+
+elif (( opt_muldiv )); then
+    defines="$defines +define+MultDiv"
+
+fi
+
+# cycle for post-synthesis simulation
+# should be same as in .sdc
+cycle=10
+
 
 # Simulate RTL
 if (( opt_rtl )); then
-    if (( opt_hazard )); then
-        define=hasHazard
-    else
-        define=noHazard
-    fi
-
     ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
         cd $REMOTE_DIR
         rm -rf INCA_libs
@@ -88,9 +124,12 @@ if (( opt_rtl )); then
             src/StallControl.v \
             lib/slow_memory.v \
             +incdir+test/baseline/testbench \
+            +incdir+test/brPred/testbench \
+            +incdir+test/l2cache/testbench \
+            +incdir+test/mulDiv/testbench \
             +incdir+include \
             +incdir+src \
-            +define+$define +access+r
+            $defines +access+r
     " | tee rtl.log
 fi
 
@@ -109,15 +148,25 @@ if (( opt_syn )); then
 fi
 
 # Post-synthesis simulation
-if (( mode & 4 )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw \
-        "cd $REMOTE_DIR
-         rm -rf INCA_libs
-         source /usr/cad/cadence/cshrc
-         source /usr/spring_soft/CIC/verdi.cshrc
-         sed -i 's/^\`define CYCLE.*$/\`define CYCLE 3.0/' tb_cache.v
-         ncverilog Final_tb.v CHIP_syn.v slow_memory.v tsmc13.v \
-                   +define+noHazard +define+SDF +access+r
-        " | tee postsyn.log
+if (( opt_gate )); then
+    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
+        cd $REMOTE_DIR
+        rm -rf INCA_libs
+        source /usr/cad/cadence/cshrc
+        sed -i 's/^\`define CYCLE.*$/\`define CYCLE $cycle/' \
+            test/baseline/testbench/Final_tb.v
+        ncverilog \
+            test/baseline/testbench/Final_tb.v \
+            netlist/CHIP_syn.v \
+            lib/slow_memory.v \
+            /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v \
+            +incdir+test/baseline/testbench \
+            +incdir+test/brPred/testbench \
+            +incdir+test/l2cache/testbench \
+            +incdir+test/mulDiv/testbench \
+            +incdir+include \
+            +incdir+src \
+            $defines +define+SDF +access+r
+    " | tee gate.log
 fi
 
