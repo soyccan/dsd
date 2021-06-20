@@ -116,6 +116,8 @@ if (( opt_rtl )); then
             test/baseline/testbench/Final_tb.v \
             src/CHIP.v \
             src/cacheD.v \
+            src/cacheI.v \
+            src/L2cache.v \
             src/MIPS_Pipeline.v \
             src/PC.v \
             src/Control.v \

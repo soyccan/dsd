@@ -15,10 +15,10 @@ module CHIP (	clk,
 				mem_wdata_I,
 				mem_rdata_I,
 				mem_ready_I,
-//----------for TestBed--------------				
-				DCACHE_addr, 
+//----------for TestBed--------------
+				DCACHE_addr,
 				DCACHE_wdata,
-				DCACHE_wen   
+				DCACHE_wen
 			);
 input			clk, rst_n;
 //--------------------------
@@ -66,9 +66,9 @@ wire [31:0] DCACHE_rdata;
 
 	MIPS_Pipeline i_MIPS(
 		// control interface
-		.clk            (clk)           , 
+		.clk            (clk)           ,
 		.rst_n          (rst_n)         ,
-//----------I cache interface-------		
+//----------I cache interface-------
 		.ICACHE_ren     (ICACHE_ren)    ,
 		.ICACHE_wen     (ICACHE_wen)    ,
 		.ICACHE_addr    (ICACHE_addr)   ,
@@ -83,8 +83,8 @@ wire [31:0] DCACHE_rdata;
 		.DCACHE_stall   (DCACHE_stall)  ,
 		.DCACHE_rdata   (DCACHE_rdata)
 	);
-	
-	cache D_cache(
+
+	cache_D D_cache(
         .clk        (clk)         ,
         .proc_reset (~rst_n)      ,
         .proc_read  (DCACHE_ren)  ,
@@ -101,7 +101,7 @@ wire [31:0] DCACHE_rdata;
         .mem_ready  (mem_ready_D)
 	);
 
-	cache I_cache(
+	cache_I I_cache(
         .clk        (clk)         ,
         .proc_reset (~rst_n)      ,
         .proc_read  (ICACHE_ren)  ,
