@@ -115,6 +115,9 @@ always @* begin
                 6'b011010: begin
                     // div
                     ALUCtl_o   = `ALU_CTL_DIV;
+                    
+                    // branch seen: insert bubble into ID stage
+                    Stall_o    = 1;
                 end
                 
                 6'b010000: begin
@@ -129,7 +132,10 @@ always @* begin
                 
                 6'b011000: begin
                     // mult
-                    ALUCtl_o   = `ALU_CTL_DMULT;
+                    ALUCtl_o   = `ALU_CTL_MULT;
+                    
+                    // branch seen: insert bubble into ID stage
+                    Stall_o    = 1;
                 end
                 //extension ends
             endcase
