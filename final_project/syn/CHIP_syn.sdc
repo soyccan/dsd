@@ -1,20 +1,21 @@
-read_file -format verilog src/CHIP.v
-read_file -format verilog src/cacheD.v
-read_file -format verilog src/MIPS_Pipeline.v
-read_file -format verilog src/PC.v
-read_file -format verilog src/Control.v
-read_file -format verilog src/RegFile.v
-read_file -format verilog src/Forward.v
-read_file -format verilog src/HazardDetect.v
-read_file -format verilog src/ALU.v
-read_file -format verilog src/StallControl.v
+read_file -format verilog ../src/CHIP.v
+read_file -format verilog ../src/cacheD.v
+read_file -format verilog ../src/cacheI.v
+read_file -format verilog ../src/MIPS_Pipeline.v
+read_file -format verilog ../src/PC.v
+read_file -format verilog ../src/Control.v
+read_file -format verilog ../src/RegFile.v
+read_file -format verilog ../src/Forward.v
+read_file -format verilog ../src/HazardDetect.v
+read_file -format verilog ../src/ALU.v
+read_file -format verilog ../src/StallControl.v
 
 current_design [get_designs CHIP]
 
 #You may modified the clock constraints
 #or add more constraints for your design
 ####################################################
-set cycle  10
+# set cycle  10
 ####################################################
 
 
