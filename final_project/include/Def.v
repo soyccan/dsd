@@ -14,6 +14,11 @@
 `define ALU_CTL_XOR  6'b100110
 `define ALU_CTL_NOR  6'b100111
 `define ALU_CTL_SLT  6'b101010
+//Jeffrey Lin: Suppuort extension MultiDiv
+`define ALU_CTL_DIV  6'b011010
+`define ALU_CTL_MFHI 6'b010000
+`define ALU_CTL_MFLO 6'b010010
+`define ALU_CTL_MULT 6'b011000
 
 // Control unit output "ALUOp"
 `define ALU_OP_REG        2'd0  // Integer register-register computation
