@@ -110,6 +110,28 @@ always @* begin
                     // slt
                     ALUCtl_o   = `ALU_CTL_SLT;
                 end
+                
+                //Multdiv extension: add 4 Inst and let stall=1;
+                6'b011010: begin
+                    // div
+                    ALUCtl_o   = `ALU_CTL_DIV;
+                end
+                
+                6'b010000: begin
+                    // mfhi
+                    ALUCtl_o   = `ALU_CTL_MFHI;
+                end
+                
+                6'b010010: begin
+                    // mflo
+                    ALUCtl_o   = `ALU_CTL_MFLO;
+                end
+                
+                6'b011000: begin
+                    // mult
+                    ALUCtl_o   = `ALU_CTL_DMULT;
+                end
+                //extension ends
             endcase
         end
 
