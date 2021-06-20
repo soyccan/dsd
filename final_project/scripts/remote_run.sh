@@ -12,7 +12,9 @@ SOCKET='/tmp/ssh.sock'
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
 # arguments
-cycle=10
+cycle_from=3
+cycle_to=4
+cycle_step=0.1
 while [[ "$1" ]]; do
     case $1 in
         -rtl)
@@ -49,7 +51,10 @@ while [[ "$1" ]]; do
             ;;
         *)
             # clock cycle
-            cycle="$1"
+            cycle_from="$1"
+            cycle_to="$2"
+            cycle_step="$3"
+            shift 3
             ;;
     esac
 
@@ -139,18 +144,55 @@ fi
 
 # Synthesize
 if (( opt_syn )); then
-    ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
-        cd $REMOTE_DIR
-        sed -i 's/^set cycle.*$/set cycle $cycle/' \
-            syn/CHIP_syn.sdc
-        source /usr/cad/synopsys/CIC/synthesis.cshrc
-        design_vision -no_gui -f syn/CHIP_syn.sdc
-    " | tee netlist/syn.log
+    pids=()
+    cycle_seq=($(seq $cycle_from $cycle_step $cycle_to))
 
-    # Download gate-level verilog
-    scp -o "ControlPath=$SOCKET" \
-        b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR"/CHIP_syn.{v,sdf,ddc} \
-        ./netlist
+    for i in $(seq 0 ${#cycle_seq[@]}); do
+        cycle=${cycle_seq[i]}
+        if [[ ! "$cycle" ]]; then
+            continue
+        fi
+        echo Synthesizing with cycle time $cycle
+        (
+            mkdir -pv netlist/syn_$cycle
+            cd netlist/syn_$cycle
+
+            ssh -S "$SOCKET" b7902143@cad30.ee.ntu.edu.tw "
+                cd $REMOTE_DIR
+                mkdir syn_$cycle
+                cd syn_$cycle
+                cp ../.synopsys_dc.setup .
+                source /usr/cad/synopsys/CIC/synthesis.cshrc
+                design_vision -no_gui -x ' \\
+                    set cycle $cycle \\
+                    source ../syn/CHIP_syn.sdc'
+            " | tee syn.log
+
+            # Download gate-level verilog
+            rsync -e "ssh -S '$SOCKET'" \
+                --archive --verbose --compress --progress --human-readable \
+                b7902143@cad30.ee.ntu.edu.tw:"$REMOTE_DIR/syn_$cycle/CHIP_syn.{v,sdf,ddc}" \
+                ./
+
+            area="$(sed -En 's/^ *Total cell area: *([0-9.]+)$/\1/p' < syn.log)"
+            time="$(sed -En 's/^ *data arrival time *([0-9.]+)$/\1/p' < syn.log)"
+            at=$(echo "$area * $time" | bc)
+
+            if grep 'slack (MET)' < syn.log > /dev/null; then
+                status=met
+            else
+                status=violated
+            fi
+
+            cd ..
+            mv syn_$cycle syn_${area}_${time}_${at}_${status}
+        ) & pids[i]=$!
+    done
+
+    for pid in "${pids[@]}"; do
+        echo Wating for $pid
+        wait $pid
+    done
 fi
 
 # Post-synthesis simulation
@@ -159,7 +201,7 @@ if (( opt_gate )); then
         cd $REMOTE_DIR
         rm -rf INCA_libs
         source /usr/cad/cadence/cshrc
-        sed -i 's/^\`define CYCLE.*$/\`define CYCLE $cycle/' \
+        sed -i 's/^\`define CYCLE.*$/\`define CYCLE $cycle_from/' \
             test/baseline/testbench/Final_tb.v
         ncverilog \
             test/baseline/testbench/Final_tb.v \
