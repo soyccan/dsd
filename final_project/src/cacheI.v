@@ -1,9 +1,4 @@
-//remove dirty bit and write-back state
-// proc_write and proc_wdata (iutput port) can be removed
-// mem_wdata (output port) can be removed
-//mem_write is always 1'b0;
-
-module cacheI(
+module cache_I( //cacheI _ directed-mapped _ 8block X 4words
     clk,
     proc_reset,
     proc_read,
@@ -15,8 +10,8 @@ module cacheI(
     mem_read,
     mem_write,
     mem_addr,
-    mem_wdata,
     mem_rdata,
+    mem_wdata,
     mem_ready
 );
 
@@ -37,136 +32,139 @@ module cacheI(
     output [127:0] mem_wdata;
 
 //==== wire/reg definition ================================
-    reg[1:0]   state, state_next;
+    reg            mem_read,mem_read_next;
+    reg     [27:0] mem_addr,mem_addr_next;
+ //   reg    [127:0] mem_wdata;
 
-   // output FF
-    reg proc_stall;
-    reg [31:0] proc_rdata;
-    reg mem_read, mem_read_next;
-    reg [27:0] mem_addr;
+    reg       state_w;
+    reg       state;
+    reg      [7:0] valid1, valid1_next;
 
-
-
-   //internal FF
-    reg [4:0]   cache_tag[7:0];
-    reg [4:0]   cache_tag_next[7:0];
-    reg         cache_valid[7:0];
-    reg         cache_valid_next[7:0];
-    reg [31:0]  cache_mem[31:0];
-    reg [31:0]  cache_mem_next[31:0];
-   // reg         cache_dirty[7:0];
-   // reg         cache_dirty_next[7:0];
-
-    parameter Idle = 2'd0;
-    parameter CompareTag = 2'd1;
-    parameter Allocate = 2'd2;
-    integer i;
+  //  reg      [3:0] lru,lru_next;             // 0:data1 1:data2
+    reg     [29:5] tag1    [0:7], tag1_next[0:7];
+    reg    [127:0] data1   [0:7], data1_next[0:7];
+    wire           hit1;
+    wire     [4:2] set = proc_addr[4:2];
+    wire     [1:0] off = proc_addr[1:0];
+    wire    [6:0] temp;
 //==== combinational circuit ==============================
-  assign  mem_write = 1'b0;
-  always@(*)begin  //FSM
-     //initial state(to avoid latch)
-     for (i=0;i<8;i=i+1) begin
+    localparam IDLE = 2'd0;
+   // localparam WB   = 2'd3;
+    localparam RD   = 2'd1;
+integer i;
+assign temp = (off << 5);
+assign proc_stall = ~(hit1) && (proc_read);
+assign proc_rdata =  data1[set][temp+:32];
 
-           cache_valid_next[i]=  cache_valid[i];
-           cache_tag_next[i] = cache_tag[i];
-     end
-     for (i=0;i<32;i=i+1) begin
-           cache_mem_next[i] = cache_mem[i];
-
-     end
-
-     mem_read_next = mem_read;
-
-     proc_rdata = 32'd0;
-     mem_addr =28'd0;
+assign mem_write = 1'b0;
+assign hit1 = valid1[set] & (tag1[set] == proc_addr[29:5]);
 
 
-     case(state)
-         Idle:
-             begin
-                 if (proc_read) begin
-                         state_next = CompareTag;
-                         proc_stall = 1'b1;
-                 end
-                 else begin
-                         state_next = Idle;
-                         proc_stall = 1'b0;
-                 end
+//assign mem_wdata = lru[set] ? data2[set]: data1[set];
 
-             end
-         CompareTag:
-              begin
-                  if ( (cache_tag[proc_addr[4:2]] == proc_addr[9:5]) && cache_valid[proc_addr[4:2]]) begin  //hit
 
-                       proc_rdata =  cache_mem[4*proc_addr[4:2]+proc_addr[1:0]];
-                       state_next = Idle;
-                       proc_stall = 1'b0;
-                  end
-                  else begin
-
-                         mem_read_next = 1'b1;
-                         state_next = Allocate;
-                         proc_stall = 1'b1;
-                  end
-              end
-
-         Allocate:  // read from mem //state 3
-             begin
-                  if (mem_ready == 1'b1 ) begin
-                           state_next = CompareTag;
-                           mem_read_next = 1'b0;
-                  end
-                  else begin   //memory_not_ready
-                           state_next = Allocate;
-                           mem_read_next = 1'b1;
-                  end
-               cache_valid_next[proc_addr[4:2]] = 1'b1;
-               cache_tag_next[proc_addr[4:2]]   =  proc_addr[9:5];
-
-               mem_addr = proc_addr[29:2];
-               cache_mem_next[4*proc_addr[4:2]]   = mem_rdata[31:0];
-               cache_mem_next[4*proc_addr[4:2]+1] = mem_rdata[63:32];
-               cache_mem_next[4*proc_addr[4:2]+2] = mem_rdata[95:64];
-               cache_mem_next[4*proc_addr[4:2]+3] = mem_rdata[127:96];
-               proc_stall = 1'b1;
-             end
-
-         default:
-              begin
-              state_next = Idle;
-              end
+always@(*) begin
+   
+    case (state)
+    IDLE:
+        state_w = proc_stall;
+    RD:
+        state_w = ~mem_ready;
+    default:
+        state_w = IDLE;
     endcase
-   end
+end
+
+
+always@(*) begin
+  //  mem_write_next = mem_write;
+    mem_read_next =mem_read;  
+    mem_addr_next =mem_addr;
+    valid1_next =valid1;
+  //  valid2_next =valid2;
+  //  be_dirty_next = (proc_read) ? 1'b0 : (proc_write) ? 1'b1 : be_dirty;
+   // dirty1_next =dirty1;
+   // dirty2_next =dirty2;
+
+for(i=0;i<8;i=i+1)begin
+    tag1_next[i] =tag1[i];
+  //  tag2_next[i] =tag2[i];
+
+end
+for(i=0;i<8;i=i+1)begin
+  
+    data1_next[i] =data1[i];
+  //  data2_next[i] =data2[i];  
+end
+
+    case (state)
+    IDLE: begin
+          if (proc_stall) begin 
+                mem_read_next = 1;
+                mem_addr_next = proc_addr[29:2];
+            end
+          end
+        RD:
+            if (mem_ready) begin
+                mem_read_next   = 0;
+    
+                    valid1_next[set] = 1;
+                    tag1_next  [set] = proc_addr[29:5];
+                    data1_next [set] = mem_rdata;
+                 
+            end
+//
+ 
+     
+
+    endcase
+
+
+end
+
+always@(*) begin
+  
+
+end
 //==== sequential circuit =================================
 always@( posedge clk ) begin
     if( proc_reset ) begin
-       for(i=0;i<8;i=i+1) begin
-         cache_valid[i]  <= 1'b0;
-
-
-         cache_tag[i]<=1'b0;
-         end
-
-       for(i=0;i<32;i=i+1) begin
-         cache_mem[i]  <= 1'b0;
-         end
-       state <= 1'b0;
-       mem_read <= 1'b0;
+        mem_read   <= 0;
+     //   mem_write  <= 0;
+        state   <= IDLE;
+        valid1  <= 0;
+     //   valid2  <= 4'b0;
+     //   dirty1  <= 4'b0;
+     //   dirty2  <= 4'b0;
+     //   lru     <= 4'b0;
 
     end
     else begin
-       for(i=0;i<8;i=i+1) begin
-         cache_valid[i]  <= cache_valid_next[i];
-         cache_tag[i]  <= cache_tag_next[i];
-         end
-       for(i=0;i<32;i=i+1) begin
-         cache_mem[i]  <= cache_mem_next[i];
-         end
-       state <= state_next;
-       mem_read <= mem_read_next;
+        state   <= state_w;
+      //  be_dirty <= be_dirty_next;
+      //  lru <= lru_next;
+
+      //  mem_write  <= mem_write_next;
+        mem_addr   <= mem_addr_next;
+        mem_read   <=mem_read_next;
+       // dirty1 <=  dirty1_next;
+       // dirty2 <=  dirty2_next ;
+       // valid2 <= valid2_next;
+        valid1 <= valid1_next;
+     for(i=0 ;i<8;i=i+1) begin
+        tag1[i] <= tag1_next[i];
+      //  tag2[i] <= tag2_next[i];          
+        data1[i] <=data1_next[i];
+      //  data2[i] <= data2_next[i];
+     end
+
+
+
+
+
+        
 
 
     end
 end
-
 endmodule
