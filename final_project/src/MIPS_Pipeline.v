@@ -1,5 +1,13 @@
 `include "Def.v"
-
+`ifdef MultDiv
+    `indef normal
+        `include MultDiv_normal.v
+    `elsif booth
+        `include MultDiv_booth.v
+    `elsif tree
+        `include Mult_tree.v
+        `include DIV.v
+`endif
 module MIPS_Pipeline(
     // control interface
     input clk,
@@ -180,8 +188,13 @@ wire SC_WriteEX;
 wire SC_WriteMEM;
 wire SC_WriteWB;
 
-
-
+//Multdiv extension
+`ifdef MultDiv
+    wire EX_Stall_ctrl;
+    wire ID_EX_Stall_ctrl;
+`endif
+//extension ends
+    
 //// Combinational ////
 
 assign rst = ~rst_n;
@@ -225,7 +238,12 @@ assign IF_Inst          = ICACHE_rdata;
 
 
 // ID Stage //
-
+//MultDiv extension
+`ifdef MultDiv
+    assign ID_EX_Stall_ctrl = ID_Stall_ctrl | EX_Stall_ctrl;
+`endif
+//extension ends
+    
 Control Control_U(
     .Opcode_i     (ID_Opcode    ),
     .Funct_i      (ID_Funct     ),
@@ -243,7 +261,13 @@ Control Control_U(
     .JumpReg_o    (ID_JumpReg   ),
     .Link_o       (ID_Link      ),
     .ALUCtl_o     (ID_ALUCtl    ),
-    .Stall_o      (ID_Stall_ctrl)
+    //MultDiv extension
+    `ifndef MultDiv
+        .Stall_o  (ID_Stall_ctrl)
+    `else
+        .Stall_o  (ID_EX_Stall_ctrl)
+    `endif
+    //extension ends
 );
 
 HazardDetect HazardDetect_U(
@@ -295,6 +319,27 @@ ALU ALU(
     .AdderRes_o(EX_ALUAdderRes)
 );
 
+//Multdiv extension
+`ifdef MultDiv
+    d
+    `indef normal
+        module MultDiv(
+            .ALUCtl_i(EX_ALUCtl),
+            .Op1_i(EX_ALUOp1),
+            .Op2_i(EX_ALUOp2),
+            .shamt_i(EX_Shamt),
+            .rst_i(rst),
+            .Res_o(EX_ALURes),
+            .Stall_o(EX_Stall_ctrl)
+        );
+    `elsif booth
+        `include MultDiv_normal.v
+    `elsif tree
+        `include Mult_tree.v
+        `include DIV.v
+`endif
+//extension ends
+            
 Forward Forward_U(
     .EX_Rs_i(EX_Rs),
     .EX_Rt_i(EX_Rt),
