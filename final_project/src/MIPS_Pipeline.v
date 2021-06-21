@@ -1,12 +1,12 @@
 `include "Def.v"
 `ifdef MultDiv
     `indef normal
-        `include MultDiv_normal.v
+        `include "./MultDiv_normal.v"
     `elsif booth
-        `include MultDiv_booth.v
+        `include "./MultDiv_booth.v"
     `elsif tree
-        `include Mult_tree.v
-        `include DIV.v
+        `include "./Mult_tree.v"
+        `include "./DIV.v"
 `endif
 module MIPS_Pipeline(
     // control interface
