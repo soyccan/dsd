@@ -110,7 +110,6 @@ always @* begin
                     // slt
                     ALUCtl_o   = `ALU_CTL_SLT;
                 end
-                
                 //Multdiv extension: add 4 Inst and let stall=1;
                 `ifdef MultDiv
                     6'b011010: begin
@@ -254,4 +253,3 @@ always @* begin
 end
 
 endmodule
-
