@@ -1,13 +1,15 @@
 `include "Def.v"
+/*
 `ifdef MultDiv
-    `indef normal
-        `include "./MultDiv_normal.v"
+    `ifdef normal
+        `include "./src/MultDiv_normal.v"
     `elsif booth
         `include "./MultDiv_booth.v"
     `elsif tree
         `include "./Mult_tree.v"
         `include "./DIV.v"
 `endif
+*/
 module MIPS_Pipeline(
     // control interface
     input clk,
@@ -238,11 +240,7 @@ assign IF_Inst          = ICACHE_rdata;
 
 
 // ID Stage //
-//MultDiv extension
-`ifdef MultDiv
-    assign ID_EX_Stall_ctrl = ID_Stall_ctrl | EX_Stall_ctrl;
-`endif
-//extension ends
+
     
 Control Control_U(
     .Opcode_i     (ID_Opcode    ),
@@ -261,13 +259,8 @@ Control Control_U(
     .JumpReg_o    (ID_JumpReg   ),
     .Link_o       (ID_Link      ),
     .ALUCtl_o     (ID_ALUCtl    ),
-    //MultDiv extension
-    `ifndef MultDiv
-        .Stall_o  (ID_Stall_ctrl)
-    `else
-        .Stall_o  (ID_EX_Stall_ctrl)
-    `endif
-    //extension ends
+
+    .Stall_o  (ID_Stall_ctrl)
 );
 
 HazardDetect HazardDetect_U(
@@ -321,9 +314,9 @@ ALU ALU(
 
 //Multdiv extension
 `ifdef MultDiv
-    d
-    `indef normal
-        module MultDiv(
+    `ifdef normal
+        MultDiv multdiv_U(
+            .clk_i(clk),
             .ALUCtl_i(EX_ALUCtl),
             .Op1_i(EX_ALUOp1),
             .Op2_i(EX_ALUOp2),
@@ -337,6 +330,7 @@ ALU ALU(
     `elsif tree
         `include Mult_tree.v
         `include DIV.v
+    `endif
 `endif
 //extension ends
             
@@ -391,7 +385,11 @@ assign MEM_DataFromMem  = DCACHE_rdata;
 
 assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
 
-
+//MultDiv extension
+`ifdef MultDiv
+    assign ID_EX_Stall_ctrl = ID_Stall_ctrl | EX_Stall_ctrl;
+`endif
+//extension ends
 
 // stall controller
 StallControl StallControl_U(
@@ -399,7 +397,13 @@ StallControl StallControl_U(
     .MEM_Stall_dcache_i    (MEM_Stall_dcache         ),
     .EX_BranchTaken_i      (EX_BranchTaken           ),
     .ID_Stall_hazard_i     (ID_Stall_hazard          ),
-    .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
+    //MultDiv extension
+    `ifndef MultDiv
+        .ID_Stall_ctrl_i   (ID_Stall_ctrl            ),
+    `else
+        .ID_Stall_ctrl_i   (ID_EX_Stall_ctrl            ),
+    `endif
+    //extension ends
     .EX_Jump_i             (EX_JumpImm || EX_JumpReg ),
 
     .FlushID_o             (SC_FlushID               ),
