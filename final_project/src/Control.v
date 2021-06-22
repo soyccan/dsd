@@ -110,6 +110,35 @@ always @* begin
                     // slt
                     ALUCtl_o   = `ALU_CTL_SLT;
                 end
+                //Multdiv extension: add 4 Inst and let stall=1;
+                `ifdef MultDiv
+                    6'b011010: begin
+                        // div
+                        ALUCtl_o   = `ALU_CTL_DIV;
+
+                        // branch seen: insert bubble into ID stage
+                        Stall_o    = 1;
+                    end
+
+                    6'b010000: begin
+                        // mfhi
+                        ALUCtl_o   = `ALU_CTL_MFHI;
+                    end
+
+                    6'b010010: begin
+                        // mflo
+                        ALUCtl_o   = `ALU_CTL_MFLO;
+                    end
+
+                    6'b011000: begin
+                        // mult
+                        ALUCtl_o   = `ALU_CTL_MULT;
+
+                        // branch seen: insert bubble into ID stage
+                        Stall_o    = 1;
+                    end
+                `endif
+                //extension ends
             endcase
         end
 
@@ -224,4 +253,3 @@ always @* begin
 end
 
 endmodule
-
