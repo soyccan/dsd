@@ -266,8 +266,7 @@ Control Control_U(
     .JumpReg_o    (ID_JumpReg   ),
     .Link_o       (ID_Link      ),
     .ALUCtl_o     (ID_ALUCtl    ),
-
-    .Stall_o  (ID_Stall_ctrl)
+    .Stall_o      (ID_Stall_ctrl)
 );
 
 HazardDetect HazardDetect_U(
