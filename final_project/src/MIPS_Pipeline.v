@@ -554,7 +554,7 @@ always @* begin
         nxt_WB_MemToReg    = MEM_MemToReg     ;
         nxt_WB_Rd          = MEM_Rd           ;
         nxt_WB_DataFromMem = MEM_DataFromMem  ;
-        nxt_WB_ALURes  = MEM_ALURes       ;
+        nxt_WB_ALURes      = MEM_ALURes       ;
     end
 end
 
