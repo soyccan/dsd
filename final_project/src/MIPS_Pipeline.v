@@ -1,5 +1,15 @@
 `include "Def.v"
-
+/*
+`ifdef MultDiv
+    `ifdef normal
+        `include "./src/MultDiv_normal.v"
+    `elsif booth
+        `include "./MultDiv_booth.v"
+    `elsif tree
+        `include "./Mult_tree.v"
+        `include "./DIV.v"
+`endif
+*/
 module MIPS_Pipeline(
     // control interface
     input clk,
@@ -89,7 +99,14 @@ wire [4:0]     EX_Shamt;
 
 wire           EX_Eq;
 wire           EX_BranchTaken;
-
+//MultDiv extension
+`ifdef MultDiv
+    `ifdef normal 
+        wire [31:0] EX_MultDivRes;
+    `ifdef booth
+        wire [31:0] EX_MultDivRes;
+    `endif
+`endif
 // ID/EX pipeline register
 reg            EX_RegWrite;
 reg            EX_MemToReg;
@@ -180,8 +197,13 @@ wire SC_WriteEX;
 wire SC_WriteMEM;
 wire SC_WriteWB;
 
-
-
+//Multdiv extension
+`ifdef MultDiv
+    wire EX_Stall_ctrl;
+    wire ID_EX_Stall_ctrl;
+`endif
+//extension ends
+    
 //// Combinational ////
 
 assign rst = ~rst_n;
@@ -226,6 +248,7 @@ assign IF_Inst          = ICACHE_rdata;
 
 // ID Stage //
 
+    
 Control Control_U(
     .Opcode_i     (ID_Opcode    ),
     .Funct_i      (ID_Funct     ),
@@ -295,6 +318,27 @@ ALU ALU(
     .AdderRes_o(EX_ALUAdderRes)
 );
 
+//Multdiv extension
+`ifdef MultDiv
+    `ifdef normal
+        MultDiv multdiv_U(
+            .clk_i(clk),
+            .ALUCtl_i(EX_ALUCtl),
+            .Op1_i(EX_ALUOp1),
+            .Op2_i(EX_ALUOp2),
+            .rst_i(rst),
+            .Res_o(EX_MultDivRes),
+            .Stall_o(EX_Stall_ctrl)
+        );
+    `elsif booth
+        `include MultDiv_normal.v
+    `elsif tree
+        `include Mult_tree.v
+        `include DIV.v
+    `endif
+`endif
+//extension ends
+            
 Forward Forward_U(
     .EX_Rs_i(EX_Rs),
     .EX_Rt_i(EX_Rt),
@@ -346,7 +390,11 @@ assign MEM_DataFromMem  = DCACHE_rdata;
 
 assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_ALURes;
 
-
+//MultDiv extension
+`ifdef MultDiv
+    assign ID_EX_Stall_ctrl = ID_Stall_ctrl | EX_Stall_ctrl;
+`endif
+//extension ends
 
 // stall controller
 StallControl StallControl_U(
@@ -354,7 +402,13 @@ StallControl StallControl_U(
     .MEM_Stall_dcache_i    (MEM_Stall_dcache         ),
     .EX_BranchTaken_i      (EX_BranchTaken           ),
     .ID_Stall_hazard_i     (ID_Stall_hazard          ),
-    .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
+    //MultDiv extension
+    `ifndef MultDiv
+        .ID_Stall_ctrl_i   (ID_Stall_ctrl            ),
+    `else
+        .ID_Stall_ctrl_i   (ID_EX_Stall_ctrl         ),
+    `endif
+    //extension ends
     .EX_Jump_i             (EX_JumpImm || EX_JumpReg ),
 
     .FlushID_o             (SC_FlushID               ),
@@ -476,7 +530,14 @@ always @* begin
         nxt_MEM_MemToReg   = EX_MemToReg      ;
         nxt_MEM_MemRead    = EX_MemRead       ;
         nxt_MEM_MemWrite   = EX_MemWrite      ;
-        nxt_MEM_ALURes     = EX_ALURes        ;
+        //MultDiv extension
+        `ifndef MultDiv
+            nxt_MEM_ALURes = EX_ALURes        ;
+        `else               //  mfhi, mflo              alu inst
+            nxt_MEM_ALURes = (EX_ALUCtl[5:2] == 4'b0100)?   EX_MultDivRes :
+                                                            EX_ALURes     ;
+        `endif 
+        //extension ends
         nxt_MEM_Rd         = EX_Rd            ;
         nxt_MEM_RtData     = EX_RtData        ;
     end
@@ -493,7 +554,7 @@ always @* begin
         nxt_WB_MemToReg    = MEM_MemToReg     ;
         nxt_WB_Rd          = MEM_Rd           ;
         nxt_WB_DataFromMem = MEM_DataFromMem  ;
-        nxt_WB_ALURes      = MEM_ALURes       ;
+        nxt_WB_ALURes  = MEM_ALURes       ;
     end
 end
 
