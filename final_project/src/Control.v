@@ -15,7 +15,7 @@ module Control(
     output reg JumpImm_o,
     output reg JumpReg_o,
     output reg Link_o,
-    output reg [5:0] ALUCtl_o,
+    output reg [`ALU_CTL_BITS-1:0] ALUCtl_o,
     output reg Stall_o
 );
 

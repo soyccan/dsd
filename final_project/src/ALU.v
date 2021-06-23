@@ -1,7 +1,7 @@
 `include "Def.v"
 
 module ALU(
-    input [5:0] ALUCtl_i,
+    input [`ALU_CTL_BITS-1:0] ALUCtl_i,
     input [31:0] Op1_i,
     input [31:0] Op2_i,
     input [4:0] shamt_i,
@@ -17,7 +17,7 @@ wire neg;
 // add(100000): 0
 // sub(100010), slt(101010): 1
 // otherwise: don't-care
-assign neg = ALUCtl_i[1];
+assign neg = ALUCtl_i == `ALU_CTL_SUB || ALUCtl_i == `ALU_CTL_SLT;
 
 // signed extension & negation
 assign adder_op1 = {Op1_i[31], Op1_i};
