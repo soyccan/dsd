@@ -45,7 +45,9 @@ set_output_delay $t_out -clock CLK [all_outputs]
 #Compile and save files
 #You may modified setting of compile
 #####################################################
-compile
+compile_ultra -timing_high_effort_script -area_high_effort_script
+optimize_registers -print_critical_loop
+compile -map_effort high -incremental_mapping
 write_sdf -version 2.1 CHIP_syn.sdf
 write -format verilog -hier -output CHIP_syn.v
 write -format ddc     -hier -output CHIP_syn.ddc
