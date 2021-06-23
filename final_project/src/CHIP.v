@@ -101,7 +101,7 @@ wire [31:0] DCACHE_rdata;
         .mem_ready  (mem_ready_D)
 	);
 
-	cache_I I_cache(
+	cache_D I_cache(
         .clk        (clk)         ,
         .proc_reset (~rst_n)      ,
         .proc_read  (ICACHE_ren)  ,

@@ -1,5 +1,6 @@
 read_file -format verilog ../src/CHIP.v
 read_file -format verilog ../src/cache_controller.v
+read_file -format verilog ../src/cache_sram_2way.v
 read_file -format verilog ../src/MIPS_Pipeline.v
 read_file -format verilog ../src/PC.v
 read_file -format verilog ../src/Control.v
