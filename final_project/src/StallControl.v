@@ -62,13 +62,13 @@ always @* begin
         // branch or jump seen: stall, insert bubble into ID stage
         // nxt_ID_PCPlus4 = don't care
         // nxt_ID_Inst = 0; // nop
-`ifdef BrPred
-        // PC will be predicted target
-        WritePC_o  = 1;
-`else
-        WritePC_o  = 0;
-`endif
-        FlushID_o  = 1;
+// `ifdef BrPred
+//         // PC will be predicted target
+//         WritePC_o  = 1;
+// `else
+//         WritePC_o  = 0;
+// `endif
+//         FlushID_o  = 1;
     end
     else if (ID_Stall_hazard_i) begin
         // load-use hazard: stall, insert bubble into EX stage

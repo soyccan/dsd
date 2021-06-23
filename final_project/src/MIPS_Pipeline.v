@@ -72,7 +72,16 @@ wire [4:0]     ID_Rs;
 wire [4:0]     ID_Rt;
 wire [31:0]    ID_RsData;
 wire [31:0]    ID_RtData;
+wire [31:0]    ID_RsData_reg;
+wire [31:0]    ID_RtData_reg;
 wire [31:0]    ID_Imm;
+
+wire           ID_Eq;
+wire           ID_BranchTaken;
+wire [31:0]    ID_BranchTarget;
+
+wire [1:0]     ID_Forward_A;
+wire [1:0]     ID_Forward_B;
 
 // IF/ID pipeline register
 reg [31:0]     ID_Inst;
@@ -242,13 +251,13 @@ assign IF_PCNxt =
 `endif
     IF_PCPlus4;
 
-assign IF_JumpImm       = EX_JumpImm;
-assign IF_JumpReg       = EX_JumpReg;
-assign IF_BranchTaken   = EX_BranchTaken;
-assign IF_BranchTarget  = EX_BranchTarget;
+assign IF_JumpImm       = ID_JumpImm;
+assign IF_JumpReg       = ID_JumpReg;
+assign IF_BranchTaken   = ID_BranchTaken;
+assign IF_BranchTarget  = ID_BranchTarget;
 assign IF_PCWrite       = SC_WritePC;
-assign IF_JumpImmTarget = EX_Imm;
-assign IF_RsData        = EX_RsFwd;
+assign IF_JumpImmTarget = ID_Imm;
+assign IF_RsData        = ID_RsData;
 assign IF_BPUse         =
     ID_BPHit && (ID_Beq || ID_Bne || ID_JumpImm || ID_JumpReg);
 assign IF_BPTarget      = ID_BPTarget;
@@ -294,6 +303,19 @@ HazardDetect HazardDetect_U(
     .Stall_o      (ID_Stall_hazard)
 );
 
+Forward Forward_U1(
+    .EX_Rs_i(ID_Rs),
+    .EX_Rt_i(ID_Rt),
+    .MEM_Rd_i(EX_Rd),
+    .WB_Rd_i(MEM_Rd),
+    .MEM_RegWrite_i(EX_RegWrite),
+    .WB_RegWrite_i(MEM_RegWrite),
+
+    .Forward_A_o(ID_Forward_A),
+    .Forward_B_o(ID_Forward_B)
+);
+
+
 RegFile RegFile_U(
     .clk_i(clk),
     .rst_i(rst),
@@ -304,8 +326,8 @@ RegFile RegFile_U(
     .RS2addr_i(ID_Rt),
     .RDdata_i(WB_WriteBackData),
 
-    .RS1data_o(ID_RsData),
-    .RS2data_o(ID_RtData)
+    .RS1data_o(ID_RsData_reg),
+    .RS2data_o(ID_RtData_reg)
 );
 
 assign ID_Opcode  = ID_Inst[31:26];
@@ -316,11 +338,24 @@ assign ID_Rd      = ID_JumpImm && ID_Link ? 5'd31 :
                     ID_Inst[15:11];
 assign ID_Funct   = ID_Inst[5:0];
 
+assign ID_RsData  =
+    ID_Forward_A == `FW_MEM ? EX_ALURes :
+    ID_Forward_A == `FW_WB ? MEM_ALURes :
+    ID_RsData_reg;
+
+assign ID_RtData  =
+    ID_Forward_B == `FW_MEM ? EX_ALURes :
+    ID_Forward_B == `FW_WB ? MEM_ALURes :
+    ID_RtData_reg;
+
 // sign extension
 assign ID_Imm     = ID_JumpImm ?
     { ID_Inst[25:0], 2'b00 } :
     { {16{ID_Inst[15]}}, ID_Inst[15:0]};
 
+assign ID_Eq = ID_RsData == ID_RtData;
+assign ID_BranchTaken = (ID_Beq && ID_Eq) || (ID_Bne && !ID_Eq);
+assign ID_BranchTarget = ID_PCPlus4 + { ID_Imm, 2'b00 };
 
 
 // EX Stage //
@@ -402,13 +437,13 @@ StallControl StallControl_U(
     .IF_Stall_icache_i     (IF_Stall_icache          ),
     .MEM_Stall_dcache_i    (MEM_Stall_dcache         ),
 `ifdef BrPred
-    .EX_WrongPredict_i     (EX_WrongPredict          ),
+    .EX_WrongPredict_i     (ID_WrongPredict          ),
 `else
-    .EX_BranchTaken_i      (EX_BranchTaken           ),
+    .EX_BranchTaken_i      (ID_BranchTaken           ),
 `endif
     .ID_Stall_hazard_i     (ID_Stall_hazard          ),
     .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
-    .EX_Jump_i             (EX_JumpImm || EX_JumpReg ),
+    .EX_Jump_i             (ID_JumpImm || ID_JumpReg ),
 
     .FlushID_o             (SC_FlushID               ),
     .FlushEX_o             (SC_FlushEX               ),
