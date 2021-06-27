@@ -142,7 +142,7 @@ module Final_tb;
 		#(`CYCLE*0.2) rst_n = 1'b0;
 		#(`CYCLE*8.5) rst_n = 1'b1;
 
-		#(`CYCLE*10000) // calculate clock cycles for all operation (you can modify it)
+		#(`CYCLE*100000) // calculate clock cycles for all operation (you can modify it)
 		$display("============================================================================");
 		$display("\n           Error!!! There is something wrong with your code ...!          ");
 		$display("\n                       The test result is .....FAIL                     \n");
@@ -157,9 +157,9 @@ module Final_tb;
 	always #(`CYCLE*0.5) clk = ~clk;
 
     always @(posedge clk) begin
-        if (chip0.i_MIPS.PC_U.PCWrite_i) begin
-            counter = counter + 1;
-        end
+        // if (chip0.i_MIPS.PC_U.PCWrite_i) begin
+        //     counter = counter + 1;
+        // end
     end
 
 	always@(finish)
