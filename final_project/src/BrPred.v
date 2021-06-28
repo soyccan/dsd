@@ -39,8 +39,8 @@ assign Hit_o =
     predict[read_index] == S_TAKEN
     || predict[read_index] == S_NEAR_TAKEN;
 
-assign read_index = ReadAddr_i[NUM_INDEX_BIT-1:0];
-assign write_index = WriteAddr_i[NUM_INDEX_BIT-1:0];
+assign read_index = ReadAddr_i[NUM_INDEX_BIT+1:2];
+assign write_index = WriteAddr_i[NUM_INDEX_BIT+1:2];
 
 always @* begin
     for (i = 0; i < NUM_ENTRY; i = i + 1) begin

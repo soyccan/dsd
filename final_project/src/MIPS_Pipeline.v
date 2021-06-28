@@ -35,7 +35,6 @@ wire [31:0]    IF_PCNxt;
 wire [31:0]    IF_Inst;
 wire           IF_PCWrite;
 wire           IF_JumpImm;
-wire           IF_JumpReg;
 wire [31:0]    IF_BranchTarget;
 wire           IF_Stall_icache;
 wire           IF_BPUse;
@@ -340,7 +339,7 @@ assign ID_Funct   = ID_Inst[5:0];
 
 assign ID_RsData  =
     ID_Forward_A == `FW_MEM ? EX_ALURes :
-    ID_Forward_A == `FW_WB ? MEM_ALURes :
+    ID_Forward_A == `FW_WB ? MEM_DataFromALU :
     ID_RsData_reg;
 
 assign ID_RtData  =
@@ -435,10 +434,10 @@ assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_DataFromALU;
 StallControl StallControl_U(
     .IF_Stall_icache_i     (IF_Stall_icache          ),
     .MEM_Stall_dcache_i    (MEM_Stall_dcache         ),
-    .EX_WrongPredict_i     (ID_WrongPredict          ),
+    .ID_WrongPredict_i     (ID_WrongPredict          ),
     .ID_Stall_hazard_i     (ID_Stall_hazard          ),
     .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
-    .EX_Jump_i             (ID_JumpImm || ID_JumpReg ),
+    .ID_JumpReg_i          (ID_JumpReg               ),
 
     .FlushID_o             (SC_FlushID               ),
     .FlushEX_o             (SC_FlushEX               ),
@@ -572,7 +571,7 @@ always @* begin
         nxt_MEM_Link       = EX_Link          ;
         nxt_MEM_LinkAddr   = EX_PCPlus4       ;
         nxt_MEM_Rd         = EX_Rd            ;
-        nxt_MEM_RtData     = EX_RtData        ;
+        nxt_MEM_RtData     = EX_RtFwd         ;
     end
 
     if (SC_FlushWB) begin
