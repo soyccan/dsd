@@ -33,16 +33,19 @@ wire [31:0]    IF_PC;
 wire [31:0]    IF_PCPlus4;
 wire [31:0]    IF_PCNxt;
 wire [31:0]    IF_Inst;
-wire [31:0]    IF_JumpImmTarget;
-wire [31:0]    IF_RsData;
 wire           IF_PCWrite;
 wire           IF_JumpImm;
 wire           IF_JumpReg;
 wire [31:0]    IF_BranchTarget;
-wire           IF_BranchTaken;
 wire           IF_Stall_icache;
 wire           IF_BPUse;
-wire [31:0]    IF_BPTarget;
+// wire [31:0]    IF_BPTarget;
+
+wire [5:0]     IF_Opcode;
+wire [31:0]    IF_Imm;
+wire           IF_Beq;
+wire           IF_Bne;
+wire           IF_BPHit;
 
 
 // Instruction-Decode stage
@@ -62,8 +65,7 @@ wire [`ALU_CTL_BITS-1:0]     ID_ALUCtl;
 
 wire           ID_Stall_ctrl;
 wire           ID_Stall_hazard;
-wire           ID_BPHit;
-wire [31:0]    ID_BPTarget;
+// wire [31:0]    ID_BPTarget;
 
 wire [5:0]     ID_Opcode;
 wire [5:0]     ID_Funct;
@@ -78,7 +80,8 @@ wire [31:0]    ID_Imm;
 
 wire           ID_Eq;
 wire           ID_BranchTaken;
-wire [31:0]    ID_BranchTarget;
+wire [31:0]    ID_RealTarget;
+wire           ID_WrongPredict;
 
 wire [1:0]     ID_Forward_A;
 wire [1:0]     ID_Forward_B;
@@ -86,8 +89,12 @@ wire [1:0]     ID_Forward_B;
 // IF/ID pipeline register
 reg [31:0]     ID_Inst;
 reg [31:0]     ID_PCPlus4;
+reg [31:0]     ID_BranchTarget;
+reg            ID_BPHit;
 reg [31:0]     nxt_ID_Inst;
 reg [31:0]     nxt_ID_PCPlus4;
+reg [31:0]     nxt_ID_BranchTarget;
+reg            nxt_ID_BPHit;
 
 
 // Execution stage
@@ -101,14 +108,7 @@ wire [31:0]    EX_ALURes;
 wire [31:0]    EX_ALUAdderRes;
 wire [4:0]     EX_Shamt;
 
-wire           EX_Eq;
-wire           EX_BranchTaken;
-wire [31:0]    EX_BranchTarget;
-wire           EX_WrongPredict;
-
 // ID/EX pipeline register
-reg            EX_BPHit;
-reg            EX_BPTarget;
 reg            EX_RegWrite;
 reg            EX_MemToReg;
 reg            EX_MemRead;
@@ -128,8 +128,6 @@ reg  [4:0]     EX_Rd;
 reg  [31:0]    EX_RsData;
 reg  [31:0]    EX_RtData;
 reg  [31:0]    EX_Imm;
-reg            nxt_EX_BPHit;
-reg            nxt_EX_BPTarget;
 reg            nxt_EX_RegWrite;
 reg            nxt_EX_MemToReg;
 reg            nxt_EX_MemRead;
@@ -224,43 +222,45 @@ PC PC_U(
     .PC_o(IF_PC)
 );
 
-`ifdef BrPred
 BrPred BrPred_U(
     .clk               (clk                ),
     .rst               (rst                ),
 
-    .BranchTaken_i     (EX_BranchTaken     ),
-    .WriteAddr_i       (EX_PCPlus4         ),
-    .WriteTarget_i     (EX_BranchTarget    ),
+    .BranchTaken_i     (ID_BranchTaken     ),
+    .WriteAddr_i       (ID_PCPlus4         ),
+    // .WriteTarget_i     (ID_BranchTarget    ),
 
-    .ReadAddr_i        (ID_PCPlus4         ),
-    .ReadTarget_o      (ID_BPTarget        ),
-    .Hit_o             (ID_BPHit           )
+    .ReadAddr_i        (IF_PCPlus4         ),
+    // .ReadTarget_o      (IF_BPTarget        ),
+    .Hit_o             (IF_BPHit           )
 );
-`endif
 
 assign IF_PCPlus4 = {IF_PC[31:2] + 1'b1, IF_PC[1:0]};
 
 assign IF_PCNxt =
-    IF_JumpImm ? IF_JumpImmTarget :
-    IF_JumpReg ? IF_RsData :
-    IF_BranchTaken ? IF_BranchTarget :
-`ifdef BrPred
-    EX_WrongPredict ? EX_PCPlus4 :
-    IF_BPUse ? IF_BPTarget :
-`endif
+    ID_JumpReg ? ID_RsData :
+    ID_WrongPredict ? ID_RealTarget :
+    IF_JumpImm ? IF_Imm :
+    IF_BPUse ? IF_BranchTarget :
     IF_PCPlus4;
 
-assign IF_JumpImm       = ID_JumpImm;
-assign IF_JumpReg       = ID_JumpReg;
-assign IF_BranchTaken   = ID_BranchTaken;
-assign IF_BranchTarget  = ID_BranchTarget;
 assign IF_PCWrite       = SC_WritePC;
-assign IF_JumpImmTarget = ID_Imm;
-assign IF_RsData        = ID_RsData;
+
+assign IF_BranchTarget  = IF_PCPlus4 + { IF_Imm, 2'b00 };
+
+assign IF_Opcode        = IF_Inst[31:26];
+
+assign IF_Imm           = IF_JumpImm ?
+    { IF_Inst[25:0], 2'b00 } :
+    { {16{IF_Inst[15]}}, IF_Inst[15:0]};
+
+assign IF_JumpImm       = IF_Opcode == 6'b000010
+                          || IF_Opcode == 6'b000011;
+assign IF_Beq           = IF_Opcode == 6'b000100;
+assign IF_Bne           = IF_Opcode == 6'b000101;
+
 assign IF_BPUse         =
-    ID_BPHit && (ID_Beq || ID_Bne || ID_JumpImm || ID_JumpReg);
-assign IF_BPTarget      = ID_BPTarget;
+    IF_BPHit && (IF_Beq || IF_Bne);
 
 // I mem
 assign ICACHE_ren       = 1'b1;
@@ -355,7 +355,15 @@ assign ID_Imm     = ID_JumpImm ?
 
 assign ID_Eq = ID_RsData == ID_RtData;
 assign ID_BranchTaken = (ID_Beq && ID_Eq) || (ID_Bne && !ID_Eq);
-assign ID_BranchTarget = ID_PCPlus4 + { ID_Imm, 2'b00 };
+
+assign ID_RealTarget = ID_BranchTaken ? ID_BranchTarget : ID_PCPlus4;
+
+assign ID_WrongPredict =
+    (ID_Beq || ID_Bne)
+    && (
+        ID_BPHit != ID_BranchTaken
+        // || ID_BPTarget != ID_BranchTarget
+    );
 
 
 // EX Stage //
@@ -381,15 +389,6 @@ Forward Forward_U(
     .Forward_B_o(EX_Forward_B)
 );
 
-assign EX_Eq = EX_RsFwd == EX_RtFwd;
-assign EX_BranchTaken = (EX_Beq && EX_Eq) || (EX_Bne && !EX_Eq);
-assign EX_BranchTarget = EX_PCPlus4 + { EX_Imm, 2'b00 };
-assign EX_WrongPredict =
-    (EX_Beq || EX_Bne)
-    && (
-        EX_BPHit != EX_BranchTaken
-        || EX_BPTarget != EX_BranchTarget
-    );
 assign EX_Shamt = EX_Imm[10:6];
 
 assign EX_ALUOp1 = EX_RsFwd;
@@ -436,11 +435,7 @@ assign WB_WriteBackData = WB_MemToReg ? WB_DataFromMem : WB_DataFromALU;
 StallControl StallControl_U(
     .IF_Stall_icache_i     (IF_Stall_icache          ),
     .MEM_Stall_dcache_i    (MEM_Stall_dcache         ),
-`ifdef BrPred
     .EX_WrongPredict_i     (ID_WrongPredict          ),
-`else
-    .EX_BranchTaken_i      (ID_BranchTaken           ),
-`endif
     .ID_Stall_hazard_i     (ID_Stall_hazard          ),
     .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
     .EX_Jump_i             (ID_JumpImm || ID_JumpReg ),
@@ -462,9 +457,9 @@ always @* begin
     // default: stall
     nxt_ID_PCPlus4     = ID_PCPlus4      ;
     nxt_ID_Inst        = ID_Inst         ;
+    nxt_ID_BranchTarget= ID_BranchTarget ;
+    nxt_ID_BPHit       = ID_BPHit        ;
 
-    nxt_EX_BPHit       = EX_BPHit        ;
-    nxt_EX_BPTarget    = EX_BPTarget     ;
     nxt_EX_RegWrite    = EX_RegWrite     ;
     nxt_EX_MemToReg    = EX_MemToReg     ;
     nxt_EX_MemRead     = EX_MemRead      ;
@@ -504,15 +499,17 @@ always @* begin
     if (SC_FlushID) begin
         nxt_ID_PCPlus4     = 0;
         nxt_ID_Inst        = 0;
+        nxt_ID_BranchTarget= 0;
+        nxt_ID_BPHit       = 0;
     end
     else if (SC_WriteID) begin
         nxt_ID_PCPlus4     = IF_PCPlus4       ;
         nxt_ID_Inst        = IF_Inst          ;
+        nxt_ID_BranchTarget= IF_BranchTarget  ;
+        nxt_ID_BPHit       = IF_BPHit         ;
     end
 
     if (SC_FlushEX) begin
-        nxt_EX_BPHit       = 0;
-        nxt_EX_BPTarget    = 0;
         nxt_EX_RegWrite    = 0;
         nxt_EX_MemToReg    = 0;
         nxt_EX_MemRead     = 0;
@@ -534,8 +531,6 @@ always @* begin
         nxt_EX_Imm         = 0;
     end
     else if (SC_WriteEX) begin
-        nxt_EX_BPHit       = ID_BPHit         ;
-        nxt_EX_BPTarget    = ID_BPTarget      ;
         nxt_EX_RegWrite    = ID_RegWrite      ;
         nxt_EX_MemToReg    = ID_MemToReg      ;
         nxt_EX_MemRead     = ID_MemRead       ;
@@ -603,8 +598,8 @@ always @(posedge clk) begin
     if (rst) begin
         ID_PCPlus4     <= 0;
         ID_Inst        <= 0;
-        EX_BPHit       <= 0;
-        EX_BPTarget    <= 0;
+        ID_BranchTarget<= 0;
+        ID_BPHit       <= 0;
         EX_RegWrite    <= 0;
         EX_MemToReg    <= 0;
         EX_MemRead     <= 0;
@@ -642,8 +637,8 @@ always @(posedge clk) begin
     else begin
         ID_PCPlus4     <= nxt_ID_PCPlus4      ;
         ID_Inst        <= nxt_ID_Inst         ;
-        EX_BPHit       <= nxt_EX_BPHit        ;
-        EX_BPTarget    <= nxt_EX_BPTarget     ;
+        ID_BranchTarget<= nxt_ID_BranchTarget ;
+        ID_BPHit       <= nxt_ID_BPHit        ;
         EX_RegWrite    <= nxt_EX_RegWrite     ;
         EX_MemToReg    <= nxt_EX_MemToReg     ;
         EX_MemRead     <= nxt_EX_MemRead      ;
