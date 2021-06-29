@@ -221,7 +221,9 @@ PC PC_U(
     .PC_o(IF_PC)
 );
 
-BrPred BrPred_U(
+BrPred_local_2bit #(
+    .NUM_INDEX_BIT(4)
+) BrPred_U(
     .clk               (clk                ),
     .rst               (rst                ),
 
