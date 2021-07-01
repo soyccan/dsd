@@ -4,21 +4,22 @@
 
 // ALU Control unit output "ALUctl"
 // Resembles funct as best as possible
-`define ALU_CTL_SLL  6'b000000
-`define ALU_CTL_SRL  6'b000010
-`define ALU_CTL_SRA  6'b000011
-`define ALU_CTL_ADD  6'b100000
-`define ALU_CTL_SUB  6'b100010
-`define ALU_CTL_AND  6'b100100
-`define ALU_CTL_OR   6'b100101
-`define ALU_CTL_XOR  6'b100110
-`define ALU_CTL_NOR  6'b100111
-`define ALU_CTL_SLT  6'b101010
+`define ALU_CTL_BITS 11
+`define ALU_CTL_SLL  11'h001
+`define ALU_CTL_SRL  11'h002
+`define ALU_CTL_SRA  11'h004
+`define ALU_CTL_ADD  11'h008
+`define ALU_CTL_SUB  11'h010
+`define ALU_CTL_AND  11'h020
+`define ALU_CTL_OR   11'h040
+`define ALU_CTL_XOR  11'h080
+`define ALU_CTL_NOR  11'h100
+`define ALU_CTL_SLT  11'h200
 //Jeffrey Lin: Suppuort extension MultiDiv
-`define ALU_CTL_DIV  6'b011010
-`define ALU_CTL_MFHI 6'b010000
-`define ALU_CTL_MFLO 6'b010010
-`define ALU_CTL_MULT 6'b011000
+`define ALU_CTL_DIV  11'h400
+`define ALU_CTL_MFHI 11'h401
+`define ALU_CTL_MFLO 11'h402
+`define ALU_CTL_MULT 11'h404
 
 // Control unit output "ALUOp"
 `define ALU_OP_REG        2'd0  // Integer register-register computation

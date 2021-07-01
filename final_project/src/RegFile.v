@@ -11,8 +11,8 @@ module RegFile(input clk_i,
 integer i;
 
 // Register File
-// TODO: indexed like: x4 = register[~4] so that FF for x0 is saved
-reg [31:0] register [0:31];
+// indexed like: x4 = register[~4] so that FF for x0 is saved
+reg [31:0] register [0:30];
 
 // Read Data
 always @* begin
@@ -21,7 +21,7 @@ always @* begin
             RS1data_o = RDdata_i;
         end
         else begin
-            RS1data_o = register[RS1addr_i];
+            RS1data_o = register[~RS1addr_i];
         end
     end
     else begin
@@ -33,7 +33,7 @@ always @* begin
             RS2data_o = RDdata_i;
         end
         else begin
-            RS2data_o = register[RS2addr_i];
+            RS2data_o = register[~RS2addr_i];
         end
     end
     else begin
@@ -44,12 +44,12 @@ end
 // Write Data
 always @(posedge clk_i) begin
     if (rst_i) begin
-        for (i = 0; i <= 31; i = i + 1) begin
+        for (i = 0; i <= 30; i = i + 1) begin
             register[i] <= 32'b0;
         end
     end
     else if (RegWrite_i && RDaddr_i) begin
-        register[RDaddr_i] <= RDdata_i;
+        register[~RDaddr_i] <= RDdata_i;
     end
 end
 

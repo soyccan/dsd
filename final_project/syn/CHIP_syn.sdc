@@ -1,6 +1,6 @@
 read_file -format verilog ../src/CHIP.v
-read_file -format verilog ../src/cacheD.v
-read_file -format verilog ../src/cacheI.v
+read_file -format verilog ../src/cache_controller.v
+read_file -format verilog ../src/cache_sram_2way.v
 read_file -format verilog ../src/MIPS_Pipeline.v
 read_file -format verilog ../src/PC.v
 read_file -format verilog ../src/Control.v
@@ -9,6 +9,7 @@ read_file -format verilog ../src/Forward.v
 read_file -format verilog ../src/HazardDetect.v
 read_file -format verilog ../src/ALU.v
 read_file -format verilog ../src/StallControl.v
+read_file -format verilog ../src/BrPred_local_2bit.v
 
 current_design [get_designs CHIP]
 
@@ -45,7 +46,10 @@ set_output_delay $t_out -clock CLK [all_outputs]
 #Compile and save files
 #You may modified setting of compile
 #####################################################
-compile
+complie
+# compile_ultra -timing_high_effort_script -area_high_effort_script
+# optimize_registers -print_critical_loop
+# compile -map_effort high -incremental_mapping
 write_sdf -version 2.1 CHIP_syn.sdf
 write -format verilog -hier -output CHIP_syn.v
 write -format ddc     -hier -output CHIP_syn.ddc

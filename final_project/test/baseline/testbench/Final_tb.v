@@ -58,6 +58,7 @@ module Final_tb;
 	wire finish;
 
     integer counter;
+    integer wrong_predict;
 
 	// Note the design is connected at testbench, include:
 	// 1. CHIP (MIPS + D_cache + I_chache)
@@ -137,6 +138,7 @@ module Final_tb;
 		$fsdbDumpvars;
 
         counter = 0;
+        wrong_predict = 0;
 		clk = 0;
 		rst_n = 1'b1;
 		#(`CYCLE*0.2) rst_n = 1'b0;
@@ -157,9 +159,21 @@ module Final_tb;
 	always #(`CYCLE*0.5) clk = ~clk;
 
     always @(posedge clk) begin
+`ifndef SDF
         if (chip0.i_MIPS.PC_U.PCWrite_i) begin
             counter = counter + 1;
+
+            if (chip0.i_MIPS.ID_WrongPredict) begin
+                wrong_predict = wrong_predict + 1;
+
+                $display("conuter = %d, PC = %x, wrong_predict = %d",
+                         counter,
+                         chip0.i_MIPS.IF_PC,
+                         wrong_predict);
+            end
         end
+`endif
+
     end
 
 	always@(finish)
