@@ -4,7 +4,7 @@ proj_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && cd .. && pwd)"
 
 REMOTE_DIR='~/final_project'
 
-HOST=
+HOST=b7902143@cad29.ee.ntu.edu.tw
 
 # Reuse connection
 SOCKET='/tmp/ssh.sock'
@@ -131,6 +131,10 @@ if (( opt_rtl )); then
             src/Forward.v \
             src/HazardDetect.v \
             src/ALU.v \
+            src/MultDiv_normal.v \
+            src/MultDiv_booth.v \
+            src/MultDiv_booth_pip.v \
+            src/MultDiv_tree.v \
             src/StallControl.v \
             src/BrPred_local_1bit.v \
             src/BrPred_local_2bit.v \
@@ -144,7 +148,6 @@ if (( opt_rtl )); then
             +incdir+test/l2cache/testbench \
             +incdir+test/mulDiv/testbench \
             +incdir+include \
-            +incdir+src \
             $defines +access+r
     " | tee rtl.log
 fi

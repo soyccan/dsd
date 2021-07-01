@@ -57,6 +57,7 @@ wire           ID_Bne;
 wire           ID_JumpReg;
 wire           ID_JumpImm;
 wire           ID_Link;
+wire           ID_MultDiv;
 wire [`ALU_CTL_BITS-1:0]     ID_ALUCtl;
 
 wire           ID_Stall_ctrl;
@@ -101,8 +102,11 @@ wire [31:0]    EX_ALUOp2;
 wire [31:0]    EX_RsFwd;
 wire [31:0]    EX_RtFwd;
 wire [31:0]    EX_ALURes;
+wire [31:0]    EX_ALUMultRes;
 wire [31:0]    EX_ALUAdderRes;
 wire [4:0]     EX_Shamt;
+wire [31:0]    EX_MultDivRes;
+wire           EX_MultDivRemain;
 
 // ID/EX pipeline register
 reg            EX_RegWrite;
@@ -116,6 +120,7 @@ reg            EX_Bne;
 reg            EX_Link;
 reg            EX_JumpImm;
 reg            EX_JumpReg;
+reg            EX_MultDiv;
 reg  [`ALU_CTL_BITS-1:0]     EX_ALUCtl;
 reg  [31:0]    EX_PCPlus4;
 reg  [4:0]     EX_Rs;
@@ -135,6 +140,7 @@ reg            nxt_EX_Bne;
 reg            nxt_EX_Link;
 reg            nxt_EX_JumpImm;
 reg            nxt_EX_JumpReg;
+reg            nxt_EX_MultDiv;
 reg  [`ALU_CTL_BITS-1:0]     nxt_EX_ALUCtl;
 reg  [31:0]    nxt_EX_PCPlus4;
 reg  [4:0]     nxt_EX_Rs;
@@ -298,6 +304,7 @@ Control Control_U(
     .JumpImm_o    (ID_JumpImm   ),
     .JumpReg_o    (ID_JumpReg   ),
     .Link_o       (ID_Link      ),
+    .MultDiv_o    (ID_MultDiv   ),
     .ALUCtl_o     (ID_ALUCtl    ),
     .Stall_o      (ID_Stall_ctrl)
 );
@@ -385,6 +392,53 @@ ALU ALU_U(
     .AdderRes_o         (EX_ALUAdderRes   )
 );
 
+`ifdef MultDiv
+    `ifdef normal
+        MultDiv_normal multdiv_U(
+            .clk_i(clk),
+            .ALUCtl_i(EX_ALUCtl),
+            .Op1_i(EX_ALUOp1),
+            .Op2_i(EX_ALUOp2),
+            .rst_i(rst),
+            .Res_o(EX_MultDivRes),
+            .remain_o(EX_MultDivRemain),
+            .Stall_o(EX_Stall_MultDiv)
+        );
+    `elsif booth
+        MultDiv_booth multdiv_U(
+            .clk_i(clk),
+            .ALUCtl_i(EX_ALUCtl),
+            .Op1_i(EX_ALUOp1),
+            .Op2_i(EX_ALUOp2),
+            .rst_i(rst),
+            .Res_o(EX_MultDivRes),
+            .Stall_o(EX_Stall_MultDiv)
+        );
+    `elsif booth_pip
+        MultDiv_booth_pip multdiv_U(
+            .clk_i(clk),
+            .ALUCtl_i(EX_ALUCtl),
+            .Op1_i(EX_ALUOp1),
+            .Op2_i(EX_ALUOp2),
+            .rst_i(rst),
+            .Res_o(EX_MultDivRes),
+            .remain_o(EX_MultDivRemain),
+            .Stall_o(EX_Stall_MultDiv)
+        );
+    `elsif tree
+        MultDiv_tree multdiv_U(
+            .clk_i(clk),
+            .ALUCtl_i(EX_ALUCtl),
+            .Op1_i(EX_ALUOp1),
+            .Op2_i(EX_ALUOp2),
+            .rst_i(rst),
+            .Res_o(EX_MultDivRes),
+            .remain_o(EX_MultDivRemain),
+            .Stall_o(EX_Stall_MultDiv)
+        );
+    `endif
+`endif // MultDiv
+
 Forward Forward_U(
     .EX_Rs_i(EX_Rs),
     .EX_Rt_i(EX_Rt),
@@ -396,6 +450,8 @@ Forward Forward_U(
     .Forward_A_o(EX_Forward_A),
     .Forward_B_o(EX_Forward_B)
 );
+
+assign EX_ALUMultRes = EX_MultDiv ? EX_MultDivRes : EX_ALURes;
 
 assign EX_Shamt = EX_Imm[10:6];
 
@@ -448,6 +504,7 @@ StallControl StallControl_U(
     .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
     .ID_JumpReg_i          (ID_JumpReg               ),
     .ID_BranchTaken_i      (ID_BranchTaken           ),
+    .EX_Stall_MultDiv_i    (EX_Stall_MultDiv         ),
 
     .FlushID_o             (SC_FlushID               ),
     .FlushEX_o             (SC_FlushEX               ),
@@ -480,6 +537,7 @@ always @* begin
     nxt_EX_Link        = EX_Link         ;
     nxt_EX_JumpImm     = EX_JumpImm      ;
     nxt_EX_JumpReg     = EX_JumpReg      ;
+    nxt_EX_MultDiv     = EX_MultDiv      ;
     nxt_EX_ALUCtl      = EX_ALUCtl       ;
     nxt_EX_PCPlus4     = EX_PCPlus4      ;
     nxt_EX_Rs          = EX_Rs           ;
@@ -530,6 +588,7 @@ always @* begin
         nxt_EX_Link        = 0;
         nxt_EX_JumpImm     = 0;
         nxt_EX_JumpReg     = 0;
+        nxt_EX_MultDiv     = 0;
         nxt_EX_ALUCtl      = 0;
         nxt_EX_PCPlus4     = 0;
         nxt_EX_Rs          = 0;
@@ -551,6 +610,7 @@ always @* begin
         nxt_EX_Link        = ID_Link          ;
         nxt_EX_JumpImm     = ID_JumpImm       ;
         nxt_EX_JumpReg     = ID_JumpReg       ;
+        nxt_EX_MultDiv     = ID_MultDiv       ;
         nxt_EX_ALUCtl      = ID_ALUCtl        ;
         nxt_EX_PCPlus4     = ID_PCPlus4       ;
         nxt_EX_Rs          = ID_Rs            ;
@@ -577,7 +637,7 @@ always @* begin
         nxt_MEM_MemToReg   = EX_MemToReg      ;
         nxt_MEM_MemRead    = EX_MemRead       ;
         nxt_MEM_MemWrite   = EX_MemWrite      ;
-        nxt_MEM_ALURes     = EX_ALURes        ;
+        nxt_MEM_ALURes     = EX_ALUMultRes    ;
         nxt_MEM_Link       = EX_Link          ;
         nxt_MEM_LinkAddr   = EX_PCPlus4       ;
         nxt_MEM_Rd         = EX_Rd            ;
@@ -620,6 +680,7 @@ always @(posedge clk) begin
         EX_Link        <= 0;
         EX_JumpImm     <= 0;
         EX_JumpReg     <= 0;
+        EX_MultDiv     <= 0;
         EX_ALUCtl      <= 0;
         EX_PCPlus4     <= 0;
         EX_Rs          <= 0;
@@ -659,6 +720,7 @@ always @(posedge clk) begin
         EX_Link        <= nxt_EX_Link         ;
         EX_JumpImm     <= nxt_EX_JumpImm      ;
         EX_JumpReg     <= nxt_EX_JumpReg      ;
+        EX_MultDiv     <= nxt_EX_MultDiv      ;
         EX_ALUCtl      <= nxt_EX_ALUCtl       ;
         EX_PCPlus4     <= nxt_EX_PCPlus4      ;
         EX_Rs          <= nxt_EX_Rs           ;

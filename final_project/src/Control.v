@@ -15,6 +15,7 @@ module Control(
     output reg JumpImm_o,
     output reg JumpReg_o,
     output reg Link_o,
+    output reg MultDiv_o,
     output reg [`ALU_CTL_BITS-1:0] ALUCtl_o,
     output reg Stall_o
 );
@@ -33,6 +34,7 @@ always @* begin
     JumpImm_o  = 0;
     JumpReg_o  = 0;
     Link_o     = 0;
+    MultDiv_o  = 0;
     Stall_o    = 0;
 
     case (Opcode_i)
@@ -61,7 +63,7 @@ always @* begin
                     JumpReg_o  = 1;
 
                     // TODO: should jal not stall due to branch delay slot?
-                    Stall_o    = 1;
+                    // Stall_o    = 1;
                 end
 
                 6'b001001: begin
@@ -73,8 +75,40 @@ always @* begin
                     RegWrite_o = 1;
 
                     // TODO: should jal not stall due to branch delay slot?
-                    Stall_o    = 1;
+                    // Stall_o    = 1;
                 end
+
+`ifdef MultDiv
+                6'b011010: begin
+                    // div
+                    ALUCtl_o   = `ALU_CTL_DIV;
+                    MultDiv_o  = 1;
+
+                    // insert bubble into ID stage
+                    // Stall_o    = 1;
+                end
+
+                6'b010000: begin
+                    // mfhi
+                    ALUCtl_o   = `ALU_CTL_MFHI;
+                    MultDiv_o  = 1;
+                end
+
+                6'b010010: begin
+                    // mflo
+                    ALUCtl_o   = `ALU_CTL_MFLO;
+                    MultDiv_o  = 1;
+                end
+
+                6'b011000: begin
+                    // mult
+                    ALUCtl_o   = `ALU_CTL_MULT;
+                    MultDiv_o  = 1;
+
+                    // insert bubble into ID stage
+                    // Stall_o    = 1;
+                end
+`endif
 
                 6'b100000: begin
                     // add
@@ -119,7 +153,7 @@ always @* begin
             // RegDst_o   = 1'bx;
 
             // TODO: should jal not stall due to branch delay slot?
-            Stall_o    = 1;
+            // Stall_o    = 1;
         end
 
         6'b000011: begin
@@ -133,7 +167,7 @@ always @* begin
             RegWrite_o = 1;
 
             // TODO: should jal not stall due to branch delay slot?
-            Stall_o    = 1;
+            // Stall_o    = 1;
         end
 
         6'b000100: begin
@@ -146,7 +180,7 @@ always @* begin
             Beq_o      = 1;
 
             // branch seen: insert bubble into ID stage
-            Stall_o    = 1;
+            // Stall_o    = 1;
         end
 
         6'b000101: begin
@@ -159,7 +193,7 @@ always @* begin
             Bne_o      = 1;
 
             // branch seen: insert bubble into ID stage
-            Stall_o    = 1;
+            // Stall_o    = 1;
         end
 
         6'b001000: begin

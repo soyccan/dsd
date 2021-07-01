@@ -163,6 +163,7 @@ module Final_tb;
         if (chip0.i_MIPS.PC_U.PCWrite_i) begin
             counter = counter + 1;
 
+`ifdef BrPred
             if (chip0.i_MIPS.ID_WrongPredict) begin
                 wrong_predict = wrong_predict + 1;
 
@@ -171,6 +172,7 @@ module Final_tb;
                          chip0.i_MIPS.IF_PC,
                          wrong_predict);
             end
+`endif
         end
 `endif
 

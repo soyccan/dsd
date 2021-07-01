@@ -16,10 +16,11 @@
 `define ALU_CTL_NOR  11'h100
 `define ALU_CTL_SLT  11'h200
 //Jeffrey Lin: Suppuort extension MultiDiv
-`define ALU_CTL_DIV  11'h400
-`define ALU_CTL_MFHI 11'h401
-`define ALU_CTL_MFLO 11'h402
-`define ALU_CTL_MULT 11'h404
+`define ALU_CTL_DIV  11'b10000011010
+`define ALU_CTL_MFHI 11'b10000010000
+`define ALU_CTL_MFLO 11'b10000010010
+`define ALU_CTL_MULT 11'b10000011000
+`define ALU_CTL_MULTDIV_IDX 10 // ALUCtl[10] indicates mult or div
 
 // Control unit output "ALUOp"
 `define ALU_OP_REG        2'd0  // Integer register-register computation

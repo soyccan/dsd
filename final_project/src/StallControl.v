@@ -6,6 +6,7 @@ module StallControl(
     input ID_Stall_ctrl_i,
     input ID_JumpReg_i,
     input ID_BranchTaken_i,
+    input EX_Stall_MultDiv_i,
 
     output reg FlushID_o,
     output reg FlushEX_o,
@@ -39,6 +40,16 @@ always @* begin
         WriteMEM_o = 0;
         WriteWB_o  = 0;
     end
+`ifdef MultDiv
+    else if (EX_Stall_MultDiv_i) begin
+        // multiplier stall: stall all stages
+        WritePC_o  = 0;
+        WriteID_o  = 0;
+        WriteEX_o  = 0;
+        WriteMEM_o = 0;
+        WriteWB_o  = 0;
+    end
+`endif
     else if (ID_WrongPredict_i) begin
         // branch taken: flush IF
         // nxt_ID_PCPlus4 = don't care
@@ -60,10 +71,10 @@ always @* begin
     end
 `endif
     else if (ID_Stall_ctrl_i) begin
-        // branch or jump seen: stall, insert bubble into ID stage
+        // stall by control unit (like branch, jump): stall, insert bubble into ID stage
         // nxt_ID_PCPlus4 = don't care
         // nxt_ID_Inst = 0; // nop
-        // FlushID_o  = 1;
+        FlushID_o  = 1;
     end
     else if (ID_Stall_hazard_i) begin
         // load-use hazard: stall, insert bubble into EX stage
