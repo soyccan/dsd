@@ -1,8 +1,5 @@
 `include "Def.v"
 
-// TODO debug, to remove
-// `define BrPred
-
 module MIPS_Pipeline(
     // control interface
     input clk,
@@ -221,6 +218,7 @@ PC PC_U(
     .PC_o(IF_PC)
 );
 
+`ifdef BrPred
 BrPred_local_2bit #(
     .NUM_INDEX_BIT(4)
 ) BrPred_U(
@@ -235,15 +233,24 @@ BrPred_local_2bit #(
     // .ReadTarget_o      (IF_BPTarget        ),
     .Hit_o             (IF_BPHit           )
 );
+`endif
 
 assign IF_PCPlus4 = {IF_PC[31:2] + 1'b1, IF_PC[1:0]};
 
+`ifdef BrPred
 assign IF_PCNxt =
     ID_JumpReg ? ID_RsData :
     ID_WrongPredict ? ID_RealTarget :
     IF_JumpImm ? IF_Imm :
     IF_BPUse ? IF_BranchTarget :
     IF_PCPlus4;
+`else
+assign IF_PCNxt =
+    ID_JumpReg ? ID_RsData :
+    ID_BranchTaken ? ID_BranchTarget :
+    IF_JumpImm ? IF_Imm :
+    IF_PCPlus4;
+`endif
 
 assign IF_PCWrite       = SC_WritePC;
 
@@ -440,6 +447,7 @@ StallControl StallControl_U(
     .ID_Stall_hazard_i     (ID_Stall_hazard          ),
     .ID_Stall_ctrl_i       (ID_Stall_ctrl            ),
     .ID_JumpReg_i          (ID_JumpReg               ),
+    .ID_BranchTaken_i      (ID_BranchTaken           ),
 
     .FlushID_o             (SC_FlushID               ),
     .FlushEX_o             (SC_FlushEX               ),
