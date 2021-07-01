@@ -4,7 +4,7 @@ proj_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && cd .. && pwd)"
 
 REMOTE_DIR='~/final_project'
 
-HOST=b7902143@cad29.ee.ntu.edu.tw
+HOST=
 
 # Reuse connection
 SOCKET='/tmp/ssh.sock'
