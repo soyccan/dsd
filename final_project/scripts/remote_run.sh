@@ -108,7 +108,7 @@ elif (( opt_l2 )); then
     defines="$defines +define+L2Cache"
 
 elif (( opt_muldiv )); then
-    defines="$defines +define+MultDiv"
+    defines="$defines +define+MultDiv +define+booth"
 
 fi
 
